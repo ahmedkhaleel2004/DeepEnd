@@ -1,10 +1,27 @@
 "use client";
 
 import React from "react";
-import { signInWithPopup, GithubAuthProvider } from "firebase/auth";
+import { signInWithPopup, GithubAuthProvider, signOut } from "firebase/auth";
 import { auth, provider } from "./firebase";
 
 const signInWithGithub = () => {
+	signOut(auth)
+		.then((result) => {
+			console.log("working");
+		})
+		.catch((error) => {
+			console.log(`not working`);
+			// Handle Errors here.
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			// The email of the user's account used.
+			const email = error.customData.email;
+			// The AuthCredential type that was used.
+			const credential = GithubAuthProvider.credentialFromError(error);
+			// ...
+		});
+};
+const signout = () => {
 	signInWithPopup(auth, provider)
 		.then((result) => {
 			console.log("working");
@@ -35,6 +52,8 @@ export default function Home() {
 			Hello benji!
 			<br />
 			<button onClick={signInWithGithub}>Sign in with GitHub</button>
+			<br />
+			<button onClick={signout}>Sign out</button>
 		</main>
 	);
 }
