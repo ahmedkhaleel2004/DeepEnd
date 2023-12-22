@@ -38,8 +38,8 @@ export default function Home() {
 	};
 	return (
 		<>
-			<div className="h-screen max-w-xl flex flex-col justify-center items-center">
-				<Card>
+			<div className="h-screen max-w-screen flex flex-col justify-center items-center">
+				<Card className="flex flex-col items-center">
 					<CardHeader>
 						<CardTitle>Welcome to Linus</CardTitle>
 					</CardHeader>
@@ -50,6 +50,7 @@ export default function Home() {
 					</CardContent>
 				</Card>
 			</div>
+			{/* 			
 			<div className="flex flex-col h-screen justify-center items-center">
 				<div
 					id="container"
@@ -65,7 +66,8 @@ export default function Home() {
 						Sign in with GitHub
 					</button>
 				</div>
-			</div>
+			</div> 
+			*/}
 		</>
 	);
 }
