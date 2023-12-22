@@ -1,9 +1,12 @@
 import React from "react";
+import { SurveyQuestion } from "@/components/component/survey-question";
 
-type Props = {};
-
-const page = (props: Props) => {
-	return <div>page</div>;
+const Survey = () => {
+	return (
+		<div>
+			Survey <SurveyQuestion />{" "}
+		</div>
+	);
 };
 
-export default page;
+export default Survey;
