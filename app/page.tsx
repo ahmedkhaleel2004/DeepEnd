@@ -37,7 +37,7 @@ export default function Home() {
 		<div className="flex flex-col h-screen justify-center items-center">
 			<div
 				id="container"
-				className="w-1/4 h-1/4 border-zinc-800 border-4 rounded-xl flex flex-col justify-center items-center gap-10"
+				className="w-1/4 h-1/4 border-zinc-800 border-4 rounded-xl flex flex-col justify-center items-center gap-10 bg-zinc-900"
 			>
 				<p className="text-3xl font-extrabold italic text-center">
 					Welcome to Linus

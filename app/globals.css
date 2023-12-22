@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer {
-	body {
-		@apply bg-zinc-900;
-		@apply text-white;
-	}
-}
-
 @layer base {
 	:root {
 		--background: 0 0% 100%;
@@ -71,4 +64,7 @@
 		--input: 240 3.7% 15.9%;
 		--ring: 240 4.9% 83.9%;
 	}
+}
+body {
+	font-family: var(--font-sans);
 }

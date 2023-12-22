@@ -1,10 +1,10 @@
 import React from "react";
-import { SurveyQuestion } from "@/components/component/survey-question";
+import { InputForm } from "@/components/component/input-form";
 
 const Survey = () => {
 	return (
 		<div>
-			Survey <SurveyQuestion />{" "}
+			Survey <InputForm />{" "}
 		</div>
 	);
 };
