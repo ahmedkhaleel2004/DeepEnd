@@ -3,33 +3,36 @@
 import React from "react";
 import { signInWithPopup, GithubAuthProvider, signOut } from "firebase/auth";
 import { auth, provider } from "./firebase";
-
-const signInWithGithub = async () => {
-	try {
-		const result = await signInWithPopup(auth, provider);
-		console.log("working");
-
-		// This gives you a GitHub Access Token. You can use it to access the GitHub API.
-		const credential = GithubAuthProvider.credentialFromResult(result);
-		const token = credential?.accessToken;
-
-		// user info
-		const user = result.user;
-	} catch (err) {
-		console.error(err);
-	}
-};
-const logout = async () => {
-	signOut(auth)
-		.then(() => {
-			// Sign-out successful.
-		})
-		.catch((error) => {
-			// An error happened.
-		});
-};
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+	const router = useRouter();
+	const signInWithGithub = async () => {
+		try {
+			const result = await signInWithPopup(auth, provider);
+			console.log("working");
+
+			// This gives you a GitHub Access Token. You can use it to access the GitHub API.
+			const credential = GithubAuthProvider.credentialFromResult(result);
+			const token = credential?.accessToken;
+
+			// user info
+			const user = result.user;
+
+			router.push("/survey");
+		} catch (err) {
+			console.error(err);
+		}
+	};
+	const logout = async () => {
+		signOut(auth)
+			.then(() => {
+				// Sign-out successful.
+			})
+			.catch((error) => {
+				// An error happened.
+			});
+	};
 	return (
 		<div className="flex flex-col h-screen justify-center items-center">
 			<div
