@@ -31,10 +31,11 @@ const signInWithGithub = () => {
 
 export default function Home() {
 	return (
-		<main>
-			Hello benji!
-			<br />
-			<button onClick={signInWithGithub}>Sign in with GitHub</button>
-		</main>
+		<div className="flex flex-col h-screen justify-center items-center">
+			<p className="text-3xl font-extrabold italic">Welcome to Linus</p>
+			<button onClick={signInWithGithub} className="">
+				Sign in with GitHub
+			</button>
+		</div>
 	);
 }
