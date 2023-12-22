@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
+import { ModeToggle } from "@/components/component/mode-toggle";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -20,10 +21,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body
 				className={cn(
-					"min-h-screen bg-zinc-950 font-sans antialiased text-white",
+					"min-h-screen font-sans antialiased ",
 					fontSans.variable
 				)}
 			>
@@ -33,6 +34,7 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
+					<ModeToggle />
 					{children}
 				</ThemeProvider>
 			</body>

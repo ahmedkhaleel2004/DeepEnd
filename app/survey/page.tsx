@@ -1,6 +1,7 @@
 import React from "react";
 import { InputForm } from "@/components/component/input-form";
 import ProfileIcon from "@/components/component/profile-icon";
+import { Card } from "@/components/ui/card";
 
 const Survey = () => {
 	return (
@@ -9,7 +10,9 @@ const Survey = () => {
 				<div>Logo</div>
 				<ProfileIcon />
 			</div>
-			<InputForm />
+			<Card className="p-4 flex w-[40vh]">
+				<InputForm />
+			</Card>
 		</>
 	);
 };
