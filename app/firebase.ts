@@ -1,11 +1,6 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { GithubAuthProvider } from "firebase/auth";
-import { getAuth } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { signInWithPopup, GithubAuthProvider, getAuth } from "firebase/auth";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
 	apiKey: process.env.NEXT_PUBLIC_API_KEY,
 	authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
@@ -15,8 +10,36 @@ const firebaseConfig = {
 	appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const provider = new GithubAuthProvider();
-provider.addScope("repo");
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
+// github provider
+const provider = new GithubAuthProvider();
+
+provider.addScope("repo"); // add more scopes here
+
+export const signInWithGithub = async () => {
+	const auth = getAuth();
+	signInWithPopup(auth, provider)
+		.then((result: any) => {
+			console.log("result: ", result);
+			// This gives you a GitHub Access Token. You can use it to access the GitHub API.
+			const credential = GithubAuthProvider.credentialFromResult(result);
+			const token = credential?.accessToken;
+
+			// The signed-in user info.
+			const user = result.user;
+			// IdP data available using getAdditionalUserInfo(result)
+			// ...
+			console.log("user: ", user);
+		})
+		.catch((error) => {
+			// Handle Errors here.
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			// The email of the user's account used.
+			const email = error.customData.email;
+			// The AuthCredential type that was used.
+			const credential = GithubAuthProvider.credentialFromError(error);
+			// ...
+		});
+};
