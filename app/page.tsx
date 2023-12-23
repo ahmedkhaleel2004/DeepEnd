@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import { signInWithGithub } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import { auth } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function Home() {
 	const router = useRouter();
@@ -16,7 +17,12 @@ export default function Home() {
 			router.push("/survey");
 		} else {
 			await signInWithGithub().then(() => {
-				// if no errors then push to survey page
+				if (auth.currentUser) {
+					setDoc(doc(db, "users", auth.currentUser.uid), {
+						doneSurvey: false,
+						photoURL: auth.currentUser.photoURL,
+					});
+				}
 				router.push("/survey");
 			});
 			// if no errors then push to survey page
