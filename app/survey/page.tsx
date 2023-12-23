@@ -5,12 +5,16 @@ import { InputForm } from "@/components/component/input-form";
 import ProfileIcon from "@/components/component/profile-icon";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { signOutFunc } from "@/lib/firebase";
 import { auth } from "@/lib/firebase";
 
 const Survey = () => {
 	const router = useRouter();
+
+	if (!auth.currentUser) {
+		redirect("/");
+	}
 
 	const handleSignOut = async () => {
 		console.log("onclick sign out: ", auth.currentUser);
