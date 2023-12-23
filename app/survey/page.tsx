@@ -26,7 +26,9 @@ const Survey = () => {
 			<Card className="p-4 flex w-[40vh]">
 				<InputForm />
 			</Card>
-			<Button onClick={handleSignOut}>Sign Out</Button>
+			<div className="p-4">
+				<Button onClick={handleSignOut}>Sign Out</Button>
+			</div>
 		</>
 	);
 };
