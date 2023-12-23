@@ -13,9 +13,11 @@ const Survey = () => {
 	const router = useRouter();
 	const handleSignOut = async () => {
 		console.log("onclick sign out: ", auth.currentUser);
-		await signOutFunc();
+		await signOutFunc().then(() => {
+			// if no errors then push to survey page
+			router.push("/");
+		});
 		// if no errors then push to home page
-		router.push("/");
 	};
 	return (
 		<>

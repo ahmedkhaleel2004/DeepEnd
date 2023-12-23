@@ -15,9 +15,11 @@ export default function Home() {
 		if (auth.currentUser) {
 			router.push("/survey");
 		} else {
-			await signInWithGithub();
+			await signInWithGithub().then(() => {
+				// if no errors then push to survey page
+				router.push("/survey");
+			});
 			// if no errors then push to survey page
-			router.push("/survey");
 		}
 	};
 
