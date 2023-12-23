@@ -33,7 +33,7 @@ const Projects = () => {
 		};
 
 		checkAuthState();
-	}, []);
+	}, [router]);
 
 	if (loading) {
 		return <div>Loading...</div>; // Or replace with a loading spinner
