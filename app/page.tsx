@@ -6,7 +6,7 @@ import React from "react";
 import { signInWithGithub } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 export default function Home() {
 	const router = useRouter();
@@ -14,7 +14,15 @@ export default function Home() {
 	const handleSignIn = async () => {
 		console.log("onclick sign in: ", auth.currentUser);
 		if (auth.currentUser) {
-			router.push("/survey");
+			const docRef = doc(db, "users", auth.currentUser.uid);
+			const docSnap = await getDoc(docRef);
+			if (docSnap.data()?.doneSurvey) {
+				router.push("/projects");
+			} else if (!docSnap.data()?.doneSurvey) {
+				router.push("/survey");
+			} else {
+				console.log("error");
+			}
 		} else {
 			await signInWithGithub().then(() => {
 				if (auth.currentUser) {

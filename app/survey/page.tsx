@@ -12,10 +12,6 @@ import { auth } from "@/lib/firebase";
 const Survey = () => {
 	const router = useRouter();
 
-	if (!auth.currentUser) {
-		router.push("/");
-	}
-
 	const handleSignOut = async () => {
 		console.log("onclick sign out: ", auth.currentUser);
 		await signOutFunc().then(() => {
