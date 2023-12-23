@@ -24,14 +24,20 @@ export default function Home() {
 				console.log("error");
 			}
 		} else {
-			await signInWithGithub().then(() => {
+			await signInWithGithub().then(async () => {
 				if (auth.currentUser) {
-					setDoc(doc(db, "users", auth.currentUser.uid), {
-						doneSurvey: false,
-						photoURL: auth.currentUser.photoURL,
-					});
+					const docRef = doc(db, "users", auth.currentUser.uid);
+					const docSnap = await getDoc(docRef);
+					if (docSnap.exists()) {
+						router.push("/projects");
+					} else {
+						setDoc(doc(db, "users", auth.currentUser.uid), {
+							doneSurvey: false,
+							photoURL: auth.currentUser.photoURL,
+						});
+						router.push("/survey");
+					}
 				}
-				router.push("/survey");
 			});
 			// if no errors then push to survey page
 		}
