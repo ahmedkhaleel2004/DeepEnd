@@ -1,5 +1,10 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { signInWithPopup, GithubAuthProvider, getAuth } from "firebase/auth";
+import {
+	signInWithPopup,
+	GithubAuthProvider,
+	getAuth,
+	signOut,
+} from "firebase/auth";
 
 const firebaseConfig = {
 	apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -15,13 +20,26 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 // github provider
 const provider = new GithubAuthProvider();
 
+export const auth = getAuth();
+
 provider.addScope("repo"); // add more scopes here
 
-export const signInWithGithub = async () => {
-	const auth = getAuth();
+export const signOutFunc = () => {
+	console.log("before user: (should only be a user here)", auth.currentUser);
+	signOut(auth)
+		.then(() => {
+			console.log("after user: (should be null here)", auth.currentUser);
+		})
+		.catch((error) => {
+			console.log("sign out error: ", error);
+		});
+};
+
+export const signInWithGithub = () => {
+	console.log("before user: (should be null)", auth.currentUser);
 	signInWithPopup(auth, provider)
 		.then((result: any) => {
-			console.log("result: ", result);
+			console.log("after user: ", auth.currentUser);
 			// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 			const credential = GithubAuthProvider.credentialFromResult(result);
 			const token = credential?.accessToken;
@@ -30,7 +48,6 @@ export const signInWithGithub = async () => {
 			const user = result.user;
 			// IdP data available using getAdditionalUserInfo(result)
 			// ...
-			console.log("user: ", user);
 		})
 		.catch((error) => {
 			// Handle Errors here.

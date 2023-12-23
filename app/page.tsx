@@ -2,11 +2,25 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import React from "react";
-import { signInWithGithub } from "./firebase";
+import { signInWithGithub } from "@/lib/firebase";
+import { useRouter } from "next/navigation";
+import { auth } from "@/lib/firebase";
 
 export default function Home() {
+	const router = useRouter();
+
+	const handleSignIn = async () => {
+		console.log("onclick sign in: ", auth.currentUser);
+		if (auth.currentUser) {
+			router.push("/survey");
+		} else {
+			await signInWithGithub();
+			// if no errors then push to survey page
+			router.push("/survey");
+		}
+	};
+
 	return (
 		<>
 			<div className="h-screen max-w-screen flex flex-col justify-center items-center">
@@ -15,7 +29,7 @@ export default function Home() {
 						<CardTitle>Welcome to Linus</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<Button onClick={signInWithGithub}>
+						<Button onClick={handleSignIn}>
 							Sign in with GitHub
 						</Button>
 					</CardContent>
