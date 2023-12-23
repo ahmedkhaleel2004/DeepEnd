@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
 
 const Projects = () => {
