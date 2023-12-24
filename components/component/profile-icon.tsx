@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { signOutFunc } from "@/lib/firebase";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import {
 	DropdownMenuTrigger,
 	DropdownMenuItem,
@@ -12,6 +14,7 @@ import { auth } from "@/lib/firebase";
 
 const ProfileIcon = () => {
 	const [photoURL, setPhotoURL] = useState<string | null>("");
+	const router = useRouter();
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {

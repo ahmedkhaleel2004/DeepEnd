@@ -34,13 +34,6 @@ const Survey = () => {
 		checkAuthState();
 	}, [router]);
 
-	const handleSignOut = async () => {
-		await signOutFunc().then(() => {
-			// if no errors then push to home page
-			router.push("/");
-		});
-	};
-
 	return (
 		<>
 			<>
