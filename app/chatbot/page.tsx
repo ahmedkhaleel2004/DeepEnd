@@ -19,13 +19,18 @@ interface Message {
 const Chatbot = () => {
 	const router = useRouter();
 	const [userInput, setUserInput] = useState("");
-	const [messages, setMessages] = useState<Message[]>([]);
+	const [conversation, setConversation] = useState<Message[]>([]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserInput(e.target.value);
 	};
 
 	const handleSubmit = async () => {
+		setConversation([
+			...conversation,
+			{ role: "username goes here", content: userInput },
+		]);
+		console.log("before", conversation);
 		setUserInput("");
 		const response = await fetch("/api/gpt", {
 			method: "POST",
@@ -36,14 +41,13 @@ const Chatbot = () => {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
 		const linusMessage = {
 			role: "Linus",
 			content: responseData.message.content,
 		};
-		console.log(linusMessage);
 
-		setMessages([...messages, linusMessage]);
+		setConversation([...conversation, linusMessage]);
+		console.log("after", conversation);
 	};
 
 	useEffect(() => {
@@ -75,7 +79,7 @@ const Chatbot = () => {
 			</header>
 			<ScrollArea className="rounded-lg h-[70vh] border border-zinc-200 dark:border-zinc-800">
 				<div className="p-4">
-					{messages.map((message, index) => (
+					{conversation.map((message, index) => (
 						<Message
 							key={index}
 							role={message.role}
