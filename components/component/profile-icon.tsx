@@ -1,15 +1,25 @@
 import React from "react";
 import { signOutFunc } from "@/lib/firebase";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import router from "next/router";
 import {
 	DropdownMenuTrigger,
 	DropdownMenuItem,
-	DropdownMenuSeparator,
 	DropdownMenuContent,
 	DropdownMenu,
 } from "@/components/ui/dropdown-menu";
 
-const ProfileIcon = ({ onSignOut }: { onSignOut: () => void }) => {
+const ProfileIcon = () => {
+	const handleSignOut = async () => {
+		try {
+			await signOutFunc();
+			// if no errors then push to home page
+			router.push("/");
+		} catch (error) {
+			console.error("Failed to sign out:", error);
+			// handle error, e.g. show a message to the user
+		}
+	};
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -19,7 +29,7 @@ const ProfileIcon = ({ onSignOut }: { onSignOut: () => void }) => {
 				</Avatar>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
-				<DropdownMenuItem onClick={onSignOut}>
+				<DropdownMenuItem onClick={handleSignOut}>
 					Sign Out
 				</DropdownMenuItem>
 			</DropdownMenuContent>

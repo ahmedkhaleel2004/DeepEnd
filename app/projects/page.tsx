@@ -5,6 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import ProfileIcon from "@/components/component/profile-icon";
 
 const Projects = () => {
 	const router = useRouter();
@@ -31,9 +32,15 @@ const Projects = () => {
 	}, [router]);
 
 	return (
-		<div>
-			<h1>projects</h1>
-		</div>
+		<>
+			<div>
+				<div>Logo</div>
+				<ProfileIcon />
+			</div>
+			<div>
+				<h1>projects</h1>
+			</div>
+		</>
 	);
 };
 

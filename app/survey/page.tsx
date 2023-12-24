@@ -46,7 +46,7 @@ const Survey = () => {
 			<>
 				<div className="flex justify-between items-center pr-4 pt-4">
 					<div>Logo</div>
-					<ProfileIcon onSignOut={handleSignOut} />
+					<ProfileIcon />
 				</div>
 				<Card className="p-4 flex w-[40vh]">
 					<InputForm />
