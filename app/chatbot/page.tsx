@@ -72,6 +72,7 @@ const Chatbot = () => {
 					<Message />
 					<Message />
 					<Message />
+					<Message />
 				</div>
 			</ScrollArea>
 			<div className="my-8">
