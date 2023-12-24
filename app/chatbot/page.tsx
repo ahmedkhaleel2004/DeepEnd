@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
@@ -11,9 +11,15 @@ import Message from "@/components/component/message";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+interface Message {
+	role: string;
+	content: string;
+}
+
 const Chatbot = () => {
 	const router = useRouter();
-	const [userInput, setUserInput] = React.useState("");
+	const [userInput, setUserInput] = useState("");
+	const [messages, setMessages] = useState<Message[]>([]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserInput(e.target.value);
@@ -30,7 +36,8 @@ const Chatbot = () => {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		const linusMessage = { role: "Linus", content: responseData.text };
+		setMessages([...messages, linusMessage]);
 	};
 
 	useEffect(() => {
@@ -62,17 +69,9 @@ const Chatbot = () => {
 			</header>
 			<ScrollArea className="rounded-lg h-[70vh] border border-zinc-200 dark:border-zinc-800">
 				<div className="p-4">
-					<Message />
-					<Message />
-					<Message />
-					<Message />
-					<Message />
-					<Message />
-					<Message />
-					<Message />
-					<Message />
-					<Message />
-					<Message />
+					{messages.map((message, index) => (
+						<Message key={index} content={message.content} />
+					))}
 				</div>
 			</ScrollArea>
 			<div className="my-8">

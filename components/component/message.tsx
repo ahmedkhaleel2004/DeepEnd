@@ -3,7 +3,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
-const Message = () => {
+interface MessageProps {
+	key: number;
+	content: string;
+}
+
+const Message: React.FC<MessageProps> = ({ content }) => {
 	return (
 		<div className="flex items-start space-x-4 mb-4">
 			<Avatar>
@@ -17,7 +22,7 @@ const Message = () => {
 				<Badge className="mb-1">User or Chatbot</Badge>
 				<Card>
 					<CardContent>
-						<p className="p-4">hello!</p>
+						<p className="p-4">{content}</p>
 					</CardContent>
 				</Card>
 			</div>
