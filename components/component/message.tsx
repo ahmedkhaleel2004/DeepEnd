@@ -14,7 +14,7 @@ const Message = () => {
 				<AvatarFallback>CN</AvatarFallback>
 			</Avatar>
 			<div>
-				<Badge>User or Chatbot</Badge>
+				<Badge className="mb-1">User or Chatbot</Badge>
 				<Card>
 					<CardContent>
 						<p className="p-4">hello!</p>

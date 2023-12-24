@@ -5,12 +5,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { ChatbotInput } from "@/components/component/chatbot-input";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Message from "@/components/component/message";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 const Chatbot = () => {
 	const router = useRouter();
@@ -37,24 +37,33 @@ const Chatbot = () => {
 	}, [router]);
 
 	return (
-		<main className="w-full h-full max-w-5xl flex flex-col justify-between p-8 min-h-screen mx-auto">
+		<main className="max-w-5xl p-8 mx-auto">
 			<header className="mb-4">
 				<h1 className="text-3xl font-bold">Chatbot</h1>
 				<Label>Interact with Linus!</Label>
 			</header>
-			<section className="flex-grow overflow-y-auto rounded-lg p-6 shadow-md">
-				<Message />
-				<Message />
-				<Message />
-			</section>
+			<ScrollArea className="rounded-lg h-[70vh] border border-zinc-200 dark:border-zinc-800">
+				<div className="p-4">
+					<Message />
+					<Message />
+					<Message />
+					<Message />
+					<Message />
+					<Message />
+					<Message />
+					<Message />
+					<Message />
+					<Message />
+				</div>
+			</ScrollArea>
 			<div className="my-8">
 				<div className="flex items-center space-x-2">
 					<Input
-						className="flex-grow"
+						className="flex-grow mr-1"
 						placeholder="Type your message here..."
-						type="text"
+						type="message"
 					/>
-					<Button>Send</Button>
+					<Button type="submit">Send</Button>
 				</div>
 			</div>
 		</main>
