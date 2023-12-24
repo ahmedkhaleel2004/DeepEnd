@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import Message from "@/components/component/message";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useChat } from "ai/react";
 
 interface Message {
 	role: string;
@@ -18,44 +19,46 @@ interface Message {
 
 const Chatbot = () => {
 	const router = useRouter();
-	const [userInput, setUserInput] = useState("");
-	const [conversation, setConversation] = useState<Message[]>([]);
+	const { messages, input, handleInputChange, handleSubmit } = useChat();
+	// const [userInput, setUserInput] = useState("");
+	// const [conversation, setConversation] = useState<Message[]>([]);
 	const [username, setUsername] = useState("");
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setUserInput(e.target.value);
-	};
+	// const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	setUserInput(e.target.value);
+	// };
 
-	const fetchResponse = async (userInput: any) => {
-		const response = await fetch("/api/gpt", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ userInput }),
-		});
-		return response.json();
-	};
+	// const fetchResponse = async (userInput: any) => {
+	// 	const response = await fetch("/api/gpt", {
+	// 		method: "POST",
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 		},
+	// 		body: JSON.stringify({ userInput }),
+	// 	});
+	// 	return response.json();
+	// };
 
-	const handleSubmit = async () => {
-		const userMessage = { role: username, content: userInput }; // Replace "User" from db
-		setConversation((prevConversation) => [
-			...prevConversation,
-			userMessage,
-		]);
-		setUserInput("");
+	// const handleSubmit = async () => {
+	// 	const userMessage = { role: username, content: userInput }; // Replace "User" from db
+	// 	setConversation((prevConversation) => [
+	// 		...prevConversation,
+	// 		userMessage,
+	// 	]);
+	// 	setUserInput("");
 
-		const responseData = await fetchResponse(userInput);
-		const linusMessage = {
-			role: "Linus",
-			content: responseData.message.content,
-		};
+	// 	const responseData = await fetchResponse(userInput);
+	// 	const linusMessage = {
+	// 		role: "Linus",
+	// 		content: responseData.message.content,
+	// 	};
+	// 	console.log(linusMessage);
 
-		setConversation((prevConversation) => [
-			...prevConversation,
-			linusMessage,
-		]);
-	};
+	// 	setConversation((prevConversation) => [
+	// 		...prevConversation,
+	// 		linusMessage,
+	// 	]);
+	// };
 
 	useEffect(() => {
 		const checkAuthState = async () => {
@@ -88,27 +91,36 @@ const Chatbot = () => {
 				</header>
 				<ScrollArea className="rounded-lg h-[75vh]">
 					<div className="p-4">
-						{conversation.map((message, index) => (
+						{/* {conversation.map((message, index) => (
 							<Message
 								key={index}
 								role={message.role}
 								content={message.content}
+							/>
+						))} */}
+						{messages.map((m: any) => (
+							<Message
+								key={m.id}
+								role={m.role === "user" ? username : "Linus"}
+								content={m.content}
 							/>
 						))}
 					</div>
 				</ScrollArea>
 			</div>
 			<div className="">
-				<div className="flex items-center space-x-2">
-					<Input
-						className="flex-grow"
-						placeholder="Type your message here..."
-						type="text"
-						value={userInput}
-						onChange={handleChange}
-					/>
-					<Button onClick={handleSubmit}>Send</Button>
-				</div>
+				<form onSubmit={handleSubmit}>
+					<div className="flex items-center space-x-2">
+						<Input
+							className="flex-grow"
+							placeholder="Type your message here..."
+							type="text"
+							value={input}
+							onChange={handleInputChange}
+						/>
+						<Button type="submit">Send</Button>
+					</div>
+				</form>
 			</div>
 		</main>
 	);

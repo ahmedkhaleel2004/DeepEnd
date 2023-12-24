@@ -27,8 +27,7 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 		}
 	}, []);
 
-	const avatarSrc =
-		role === "Linus" ? "https://github.com/shadcn.png" : photoURL;
+	const avatarSrc = role === "Linus" ? "/linus.png" : photoURL;
 
 	return (
 		<div className="flex items-start space-x-4 mb-4">
@@ -36,7 +35,7 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 				{avatarSrc ? (
 					<AvatarImage src={avatarSrc} />
 				) : (
-					<AvatarFallback>CN</AvatarFallback>
+					<AvatarFallback></AvatarFallback>
 				)}
 			</Avatar>
 
