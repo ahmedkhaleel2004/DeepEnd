@@ -27,20 +27,13 @@ provider.addScope("repo"); // add more scopes here
 
 export const signOutFunc = () => {
 	return new Promise<void>((resolve, reject) => {
-		console.log(
-			"before user: (should only be a user here)",
-			auth.currentUser
-		);
 		signOut(auth)
 			.then(() => {
-				console.log(
-					"after user: (should be null here)",
-					auth.currentUser
-				);
+				// Sign-out successful.
 				resolve();
 			})
 			.catch((error) => {
-				console.log("sign out error: ", error);
+				// An error happened.
 				reject(error);
 			});
 	});
@@ -48,10 +41,9 @@ export const signOutFunc = () => {
 
 export const signInWithGithub = () => {
 	return new Promise<void>((resolve, reject) => {
-		console.log("before user: (should be null)", auth.currentUser);
 		signInWithPopup(auth, provider)
 			.then((result: any) => {
-				console.log("after user: ", auth.currentUser);
+				// Sign in successful.
 				// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 				const credential =
 					GithubAuthProvider.credentialFromResult(result);
@@ -64,6 +56,7 @@ export const signInWithGithub = () => {
 				resolve();
 			})
 			.catch((error) => {
+				// Sign in failed.
 				// Handle Errors here.
 				const errorCode = error.code;
 				const errorMessage = error.message;

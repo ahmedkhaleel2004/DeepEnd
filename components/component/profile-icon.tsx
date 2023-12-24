@@ -41,7 +41,7 @@ const ProfileIcon = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Avatar className="align-right h-9 w-9">
+				<Avatar className="align-right h-9 w-9 cursor-pointer">
 					{photoURL ? <AvatarImage src={photoURL} /> : null}
 					<AvatarFallback>CN</AvatarFallback>
 				</Avatar>
