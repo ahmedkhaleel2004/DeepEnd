@@ -25,7 +25,7 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 			// Cleanup subscription on unmount
 			return () => unsubscribe();
 		}
-	}, []);
+	}, [role]);
 
 	const avatarSrc = role === "Linus" ? "/linus.png" : photoURL;
 
