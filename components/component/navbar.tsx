@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 	return (
 		<div>
 			<nav className="flex items-center justify-between p-3 w-full bg-transparent">
-				<div className="mx-2">"Logo"</div>
+				<div className="mx-2">Logo</div>
 				<div className="flex items-center justify-end space-x-4">
 					{mainPage && (
 						<div className="flex space-x-8">
