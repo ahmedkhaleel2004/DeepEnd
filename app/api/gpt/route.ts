@@ -7,7 +7,7 @@ const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 async function complete(userInput: string) {
   const completion = await openai.chat.completions.create({
     messages: [{ role: "system", content: userInput }],
-    model: "gpt-4",
+    model: "gpt-4-1106-preview",
   });
 
   return completion.choices[0];
