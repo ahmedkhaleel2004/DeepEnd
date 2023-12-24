@@ -22,8 +22,8 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 			<div>
 				<Badge className="mb-1">{role}</Badge>
 				<Card>
-					<CardContent>
-						<p className="p-4">{content}</p>
+					<CardContent className="px-2 py-1">
+						<p className="p-2">{content}</p>
 					</CardContent>
 				</Card>
 			</div>

@@ -78,23 +78,25 @@ const Chatbot = () => {
 	}, [router]);
 
 	return (
-		<main className="max-w-5xl p-8 mx-auto">
-			<header className="mb-4">
-				<h1 className="text-3xl font-bold">Chatbot</h1>
-				<Label>Interact with Linus!</Label>
-			</header>
-			<ScrollArea className="rounded-lg h-[70vh] border border-zinc-200 dark:border-zinc-800">
-				<div className="p-4">
-					{conversation.map((message, index) => (
-						<Message
-							key={index}
-							role={message.role}
-							content={message.content}
-						/>
-					))}
-				</div>
-			</ScrollArea>
-			<div className="my-8">
+		<main className="max-w-5xl h-screen p-8 mx-auto flex flex-col justify-between">
+			<div className="">
+				<header className="mb-4">
+					<h1 className="text-3xl font-bold">Chatbot</h1>
+					<Label>Interact with Linus!</Label>
+				</header>
+				<ScrollArea className="rounded-lg h-[75vh]">
+					<div className="p-4">
+						{conversation.map((message, index) => (
+							<Message
+								key={index}
+								role={message.role}
+								content={message.content}
+							/>
+						))}
+					</div>
+				</ScrollArea>
+			</div>
+			<div className="">
 				<div className="flex items-center space-x-2">
 					<Input
 						className="flex-grow"
