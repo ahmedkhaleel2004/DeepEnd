@@ -10,10 +10,28 @@ import { Input } from "@/components/ui/input";
 import Message from "@/components/component/message";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 
 const Chatbot = () => {
 	const router = useRouter();
+	const [userInput, setUserInput] = React.useState("");
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUserInput(e.target.value);
+	};
+
+	const handleSubmit = async () => {
+		console.log(userInput);
+		const response = await fetch("/api/gpt", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ userInput }),
+		});
+
+		const responseData = await response.json();
+		console.log(responseData);
+	};
 
 	useEffect(() => {
 		const checkAuthState = async () => {
@@ -59,11 +77,13 @@ const Chatbot = () => {
 			<div className="my-8">
 				<div className="flex items-center space-x-2">
 					<Input
-						className="flex-grow mr-1"
+						className="flex-grow"
 						placeholder="Type your message here..."
-						type="message"
+						type="text"
+						value={userInput}
+						onChange={handleChange}
 					/>
-					<Button type="submit">Send</Button>
+					<Button onClick={handleSubmit}>Send</Button>
 				</div>
 			</div>
 		</main>
