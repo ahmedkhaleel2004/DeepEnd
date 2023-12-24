@@ -62,6 +62,8 @@ export default function Home() {
 						setDoc(doc(db, "users", auth.currentUser.uid), {
 							doneSurvey: false,
 							photoURL: auth.currentUser.photoURL,
+							email: auth.currentUser.email,
+							name: auth.currentUser.displayName,
 						});
 						router.push("/survey");
 					}

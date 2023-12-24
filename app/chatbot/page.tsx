@@ -20,6 +20,7 @@ const Chatbot = () => {
 	const router = useRouter();
 	const [userInput, setUserInput] = useState("");
 	const [conversation, setConversation] = useState<Message[]>([]);
+	const [username, setUsername] = useState("");
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserInput(e.target.value);
@@ -37,7 +38,7 @@ const Chatbot = () => {
 	};
 
 	const handleSubmit = async () => {
-		const userMessage = { role: "User", content: userInput }; // Replace "User" from db
+		const userMessage = { role: username, content: userInput }; // Replace "User" from db
 		setConversation((prevConversation) => [
 			...prevConversation,
 			userMessage,
@@ -62,6 +63,7 @@ const Chatbot = () => {
 				if (user) {
 					const docRef = doc(db, "users", user.uid);
 					const docSnap = await getDoc(docRef);
+					setUsername(docSnap.data()?.name);
 					if (!docSnap.data()?.doneSurvey) {
 						router.push("/survey");
 					}
