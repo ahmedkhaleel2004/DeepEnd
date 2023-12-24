@@ -2,34 +2,57 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React from "react";
+import React, { useEffect } from "react";
 import { signInWithGithub } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Home() {
 	const router = useRouter();
 
+	useEffect(() => {
+		const checkAuthState = async () => {
+			const unsubscribe = onAuthStateChanged(auth, async (user) => {
+				if (user) {
+					const docRef = doc(db, "users", user.uid);
+					const docSnap = await getDoc(docRef);
+					if (docSnap.data()?.doneSurvey) {
+						router.push("/projects");
+					} else if (!docSnap.data()?.doneSurvey) {
+						router.push("/survey");
+					}
+				} else {
+					router.push("/");
+				}
+			});
+
+			// Cleanup subscription on unmount
+			return () => unsubscribe();
+		};
+
+		checkAuthState();
+	}, [router]);
+
 	const handleSignIn = async () => {
-		console.log("onclick sign in: ", auth.currentUser);
 		if (auth.currentUser) {
+			// if he is signed in
 			const docRef = doc(db, "users", auth.currentUser.uid);
 			const docSnap = await getDoc(docRef);
 			if (docSnap.data()?.doneSurvey) {
 				router.push("/projects");
 			} else if (!docSnap.data()?.doneSurvey) {
 				router.push("/survey");
-			} else {
-				console.log("error");
 			}
 		} else {
 			await signInWithGithub().then(async () => {
 				if (auth.currentUser) {
+					// should always be true
 					const docRef = doc(db, "users", auth.currentUser.uid);
 					const docSnap = await getDoc(docRef);
 					if (docSnap.exists()) {
-						router.push("/projects");
+						router.push("/projects"); // wrong <- fix
 					} else {
 						setDoc(doc(db, "users", auth.currentUser.uid), {
 							doneSurvey: false,
@@ -39,7 +62,6 @@ export default function Home() {
 					}
 				}
 			});
-			// if no errors then push to survey page
 		}
 	};
 
@@ -57,24 +79,6 @@ export default function Home() {
 					</CardContent>
 				</Card>
 			</div>
-			{/* 			
-			<div className="flex flex-col h-screen justify-center items-center">
-				<div
-					id="container"
-					className="w-1/4 h-1/4 border-zinc-800 border-4 rounded-xl flex flex-col justify-center items-center gap-10 bg-zinc-900"
-				>
-					<p className="text-3xl font-extrabold italic text-center">
-						Welcome to Linus
-					</p>
-					<button
-						onClick={signInWithGithub}
-						className="w-1/2 h-1/4 border-zinc-800 border-2 rounded-xl hover:bg-zinc-800 hover:text-white transition duration-500 ease-in-out"
-					>
-						Sign in with GitHub
-					</button>
-				</div>
-			</div> 
-			*/}
 		</>
 	);
 }

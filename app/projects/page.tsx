@@ -8,7 +8,6 @@ import { doc, getDoc } from "firebase/firestore";
 
 const Projects = () => {
 	const router = useRouter();
-	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const checkAuthState = async () => {
@@ -16,12 +15,8 @@ const Projects = () => {
 				if (user) {
 					const docRef = doc(db, "users", user.uid);
 					const docSnap = await getDoc(docRef);
-					if (docSnap.data()?.doneSurvey) {
-						setLoading(false);
-					} else if (!docSnap.data()?.doneSurvey) {
+					if (!docSnap.data()?.doneSurvey) {
 						router.push("/survey");
-					} else {
-						console.log("error");
 					}
 				} else {
 					router.push("/");
@@ -34,10 +29,6 @@ const Projects = () => {
 
 		checkAuthState();
 	}, [router]);
-
-	if (loading) {
-		return <div>Loading...</div>; // Or replace with a loading spinner
-	}
 
 	return (
 		<div>
