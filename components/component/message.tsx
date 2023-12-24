@@ -6,9 +6,10 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 interface MessageProps {
 	key: number;
 	content: string;
+	role: string;
 }
 
-const Message: React.FC<MessageProps> = ({ content }) => {
+const Message: React.FC<MessageProps> = ({ role, content }) => {
 	return (
 		<div className="flex items-start space-x-4 mb-4">
 			<Avatar>
@@ -19,7 +20,7 @@ const Message: React.FC<MessageProps> = ({ content }) => {
 				<AvatarFallback>CN</AvatarFallback>
 			</Avatar>
 			<div>
-				<Badge className="mb-1">User or Chatbot</Badge>
+				<Badge className="mb-1">{role}</Badge>
 				<Card>
 					<CardContent>
 						<p className="p-4">{content}</p>

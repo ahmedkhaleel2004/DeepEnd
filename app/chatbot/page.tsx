@@ -26,7 +26,7 @@ const Chatbot = () => {
 	};
 
 	const handleSubmit = async () => {
-		console.log(userInput);
+		setUserInput("");
 		const response = await fetch("/api/gpt", {
 			method: "POST",
 			headers: {
@@ -36,7 +36,13 @@ const Chatbot = () => {
 		});
 
 		const responseData = await response.json();
-		const linusMessage = { role: "Linus", content: responseData.text };
+		console.log(responseData);
+		const linusMessage = {
+			role: "Linus",
+			content: responseData.message.content,
+		};
+		console.log(linusMessage);
+
 		setMessages([...messages, linusMessage]);
 	};
 
@@ -70,7 +76,11 @@ const Chatbot = () => {
 			<ScrollArea className="rounded-lg h-[70vh] border border-zinc-200 dark:border-zinc-800">
 				<div className="p-4">
 					{messages.map((message, index) => (
-						<Message key={index} content={message.content} />
+						<Message
+							key={index}
+							role={message.role}
+							content={message.content}
+						/>
 					))}
 				</div>
 			</ScrollArea>
