@@ -25,13 +25,7 @@ const Chatbot = () => {
 		setUserInput(e.target.value);
 	};
 
-	const handleSubmit = async () => {
-		setConversation([
-			...conversation,
-			{ role: "username goes here", content: userInput },
-		]);
-		console.log("before", conversation);
-		setUserInput("");
+	const fetchResponse = async (userInput: any) => {
 		const response = await fetch("/api/gpt", {
 			method: "POST",
 			headers: {
@@ -39,15 +33,27 @@ const Chatbot = () => {
 			},
 			body: JSON.stringify({ userInput }),
 		});
+		return response.json();
+	};
 
-		const responseData = await response.json();
+	const handleSubmit = async () => {
+		const userMessage = { role: "User", content: userInput }; // Replace "User" from db
+		setConversation((prevConversation) => [
+			...prevConversation,
+			userMessage,
+		]);
+		setUserInput("");
+
+		const responseData = await fetchResponse(userInput);
 		const linusMessage = {
 			role: "Linus",
 			content: responseData.message.content,
 		};
 
-		setConversation([...conversation, linusMessage]);
-		console.log("after", conversation);
+		setConversation((prevConversation) => [
+			...prevConversation,
+			linusMessage,
+		]);
 	};
 
 	useEffect(() => {
