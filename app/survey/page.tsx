@@ -9,6 +9,7 @@ import { signOutFunc } from "@/lib/firebase";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
+import Navbar from "@/components/component/navbar";
 
 const Survey = () => {
 	const router = useRouter();
@@ -37,10 +38,7 @@ const Survey = () => {
 	return (
 		<>
 			<>
-				<div className="flex justify-between items-center pr-4 pt-4">
-					<div>Logo</div>
-					<ProfileIcon />
-				</div>
+				<Navbar mainPage={false} />
 				<Card className="p-4 flex w-[40vh]">
 					<InputForm />
 				</Card>

@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import ProfileIcon from "@/components/component/profile-icon";
+import Navbar from "@/components/component/navbar";
 
 const Projects = () => {
 	const router = useRouter();
@@ -33,10 +33,7 @@ const Projects = () => {
 
 	return (
 		<>
-			<div className="flex justify-between items-center pr-4 pt-4">
-				<div>Logo</div>
-				<ProfileIcon />
-			</div>
+			<Navbar mainPage={false} />
 			<div>
 				<h1>projects</h1>
 			</div>

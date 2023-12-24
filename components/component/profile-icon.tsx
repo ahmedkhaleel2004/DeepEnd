@@ -41,10 +41,15 @@ const ProfileIcon = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Avatar className="align-right h-9 w-9 cursor-pointer">
-					{photoURL ? <AvatarImage src={photoURL} /> : null}
-					<AvatarFallback>CN</AvatarFallback>
-				</Avatar>
+				<div className="w-9 h-9">
+					<Avatar className="align-right h-full w-full cursor-pointer">
+						{photoURL ? (
+							<AvatarImage src={photoURL} />
+						) : (
+							<AvatarFallback>CN</AvatarFallback>
+						)}
+					</Avatar>
+				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuItem onClick={handleSignOut}>

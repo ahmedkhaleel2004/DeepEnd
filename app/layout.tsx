@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "@/components/component/mode-toggle";
+import Navbar from "@/components/component/navbar";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -34,7 +35,6 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<ModeToggle />
 					{children}
 				</ThemeProvider>
 			</body>

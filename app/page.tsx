@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import Navbar from "@/components/component/navbar";
 
 export default function Home() {
 	const router = useRouter();
@@ -71,6 +72,7 @@ export default function Home() {
 
 	return (
 		<>
+			<Navbar mainPage={true} />
 			<div className="h-screen max-w-screen flex flex-col justify-center items-center">
 				<Card className="flex flex-col items-center">
 					<CardHeader>
