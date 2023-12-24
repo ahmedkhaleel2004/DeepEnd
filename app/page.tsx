@@ -52,7 +52,11 @@ export default function Home() {
 					const docRef = doc(db, "users", auth.currentUser.uid);
 					const docSnap = await getDoc(docRef);
 					if (docSnap.exists()) {
-						router.push("/projects"); // wrong <- fix
+						if (docSnap.data()?.doneSurvey) {
+							router.push("/projects");
+						} else if (!docSnap.data()?.doneSurvey) {
+							router.push("/survey");
+						}
 					} else {
 						setDoc(doc(db, "users", auth.currentUser.uid), {
 							doneSurvey: false,
