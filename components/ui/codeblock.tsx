@@ -42,48 +42,44 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
 	};
 
 	return (
-		<div className="">
-			<div className="relative w-full font-sans codeblock dark:bg-zinc-950 bg-zinc-100 rounded-xl mb-4">
-				<div className="flex items-center justify-between w-full px-6 pr-4 dark:bg-zinc-800 bg-zinc-600 dark:text-zinc-100 text-white rounded-t-xl">
-					<span className="text-xs lowercase font-mono">
-						{language}
-					</span>
-					<div className=" items-center">
-						<Button
-							variant="ghost"
-							size="icon"
-							className="text-xs hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
-							onClick={onCopy}
-						>
-							{isCopied ? <IconCheck /> : <IconCopy />}
-							<span className="sr-only">Copy code</span>
-						</Button>
-					</div>
+		<div className="relative w-full font-sans codeblock dark:bg-zinc-950 bg-zinc-100 rounded-xl mb-4">
+			<div className="flex items-center justify-between w-full px-6 pr-4 dark:bg-zinc-800 bg-zinc-600 dark:text-zinc-100 text-white rounded-t-xl">
+				<span className="text-xs lowercase font-mono">{language}</span>
+				<div className=" items-center">
+					<Button
+						variant="ghost"
+						size="icon"
+						className="text-xs hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
+						onClick={onCopy}
+					>
+						{isCopied ? <IconCheck /> : <IconCopy />}
+						<span className="sr-only">Copy code</span>
+					</Button>
 				</div>
-				<SyntaxHighlighter
-					language={language}
-					style={isDarkTheme ? materialDark : materialLight}
-					PreTag="div"
-					showLineNumbers
-					customStyle={{
-						margin: 0,
-						width: "100%",
-						background: "transparent",
-						padding: "1.5rem 1rem",
-					}}
-					lineNumberStyle={{
-						userSelect: "none",
-					}}
-					codeTagProps={{
-						style: {
-							fontSize: "0.9rem",
-							fontFamily: "var(--font-mono)",
-						},
-					}}
-				>
-					{value}
-				</SyntaxHighlighter>
 			</div>
+			<SyntaxHighlighter
+				language={language}
+				style={isDarkTheme ? materialDark : materialLight}
+				PreTag="div"
+				showLineNumbers
+				customStyle={{
+					margin: 0,
+					width: "100%",
+					background: "transparent",
+					padding: "1.5rem 1rem",
+				}}
+				lineNumberStyle={{
+					userSelect: "none",
+				}}
+				codeTagProps={{
+					style: {
+						fontSize: "0.9rem",
+						fontFamily: "var(--font-mono)",
+					},
+				}}
+			>
+				{value}
+			</SyntaxHighlighter>
 		</div>
 	);
 });
