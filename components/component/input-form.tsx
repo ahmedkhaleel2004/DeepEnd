@@ -27,6 +27,7 @@ interface FormQuestionProps {
 	placeholder: string;
 	desc: string;
 	onSuccessfulSubmit: () => void;
+	valueOfUser: (userResponse: string) => Promise<void>;
 }
 
 export function FormQuestion({
@@ -34,6 +35,7 @@ export function FormQuestion({
 	placeholder,
 	desc,
 	onSuccessfulSubmit,
+	valueOfUser,
 }: FormQuestionProps) {
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -50,6 +52,7 @@ export function FormQuestion({
 		console.log(values);
 		form.reset({ input: "" });
 		onSuccessfulSubmit();
+		valueOfUser(values.input);
 	}
 
 	return (

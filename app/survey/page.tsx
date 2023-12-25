@@ -5,9 +5,10 @@ import { FormQuestion } from "@/components/component/input-form";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import Navbar from "@/components/component/navbar";
 import { Card } from "@/components/ui/card";
+import { set } from "react-hook-form";
 
 // Define your questions
 const questions = [
@@ -49,6 +50,8 @@ const Survey = () => {
 	const nextQuestion = () => {
 		if (currentQuestionIndex < questions.length - 1) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
+		} else {
+			router.push("/survey/thank-survey");
 		}
 	};
 	const handleSuccessfulSubmit = () => {
@@ -76,6 +79,31 @@ const Survey = () => {
 		checkAuthState();
 	}, [router]);
 
+	const userInput = async (userResponse: string) => {
+		if (auth.currentUser) {
+			// Create or update the document with the user's UID
+			const docRef = doc(db, "questions", auth.currentUser.uid);
+
+			// Prepare the update object
+			let updateData: { [key: string]: string } = {};
+			updateData[`Q${currentQuestionIndex + 1}`] = userResponse;
+
+			// Update the document with the new response
+			await setDoc(docRef, updateData, { merge: true });
+
+			// Check if this was the last question
+			if (currentQuestionIndex === questions.length - 1) {
+				// Update the user document to indicate the survey is done
+				await setDoc(doc(db, "users", auth.currentUser.uid), {
+					doneSurvey: true,
+				});
+				router.push("/survey/thank-survey");
+			} else {
+				// Move to the next question
+				nextQuestion();
+			}
+		}
+	};
 	return (
 		<>
 			<main className="max-w-2xl mx-auto">
@@ -90,6 +118,7 @@ const Survey = () => {
 						placeholder={currentQuestion.placeholder}
 						desc={currentQuestion.desc}
 						onSuccessfulSubmit={handleSuccessfulSubmit}
+						valueOfUser={userInput}
 					/>
 				</Card>
 			</main>
