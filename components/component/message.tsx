@@ -45,6 +45,7 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 			<div>
 				<Badge className="mb-2">{role}</Badge>
 				<MemoizedReactMarkdown
+					className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
 					remarkPlugins={[remarkGfm, remarkMath]}
 					components={{
 						p({ children }) {
@@ -54,7 +55,6 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 							const match = /language-(\w+)/.exec(
 								className || ""
 							);
-
 							if (inline) {
 								return (
 									<code className={className} {...props}>
