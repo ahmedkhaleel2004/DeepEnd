@@ -5,8 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import Navbar from "@/components/component/navbar";
-
+import { NavigationMenuDemo } from "@/components/component/navbar-projects";
 const Projects = () => {
 	const router = useRouter();
 
@@ -32,12 +31,13 @@ const Projects = () => {
 	}, [router]);
 
 	return (
-		<>
-			<Navbar mainPage={false} />
+		<main>
+			<NavigationMenuDemo />
 			<div>
-				<h1>projects</h1>
+				<h1 className="text-3xl font-bold">Projects</h1>
+				<p>Choose a project to view</p>
 			</div>
-		</>
+		</main>
 	);
 };
 
