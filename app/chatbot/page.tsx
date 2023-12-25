@@ -21,7 +21,8 @@ interface Message {
 
 const Chatbot = () => {
 	const router = useRouter();
-	const { messages, input, handleInputChange, handleSubmit } = useChat();
+	const { messages, input, handleInputChange, handleSubmit, isLoading } =
+		useChat();
 	const [username, setUsername] = useState("");
 
 	useEffect(() => {
@@ -79,7 +80,9 @@ const Chatbot = () => {
 							value={input}
 							onChange={handleInputChange}
 						/>
-						<Button type="submit">Send</Button>
+						<Button type="submit" disabled={isLoading}>
+							Send
+						</Button>
 					</div>
 				</form>
 			</div>
