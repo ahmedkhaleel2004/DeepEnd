@@ -21,45 +21,7 @@ interface Message {
 const Chatbot = () => {
 	const router = useRouter();
 	const { messages, input, handleInputChange, handleSubmit } = useChat();
-	// const [userInput, setUserInput] = useState("");
-	// const [conversation, setConversation] = useState<Message[]>([]);
 	const [username, setUsername] = useState("");
-
-	// const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-	// 	setUserInput(e.target.value);
-	// };
-
-	// const fetchResponse = async (userInput: any) => {
-	// 	const response = await fetch("/api/gpt", {
-	// 		method: "POST",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 		},
-	// 		body: JSON.stringify({ userInput }),
-	// 	});
-	// 	return response.json();
-	// };
-
-	// const handleSubmit = async () => {
-	// 	const userMessage = { role: username, content: userInput }; // Replace "User" from db
-	// 	setConversation((prevConversation) => [
-	// 		...prevConversation,
-	// 		userMessage,
-	// 	]);
-	// 	setUserInput("");
-
-	// 	const responseData = await fetchResponse(userInput);
-	// 	const linusMessage = {
-	// 		role: "Linus",
-	// 		content: responseData.message.content,
-	// 	};
-	// 	console.log(linusMessage);
-
-	// 	setConversation((prevConversation) => [
-	// 		...prevConversation,
-	// 		linusMessage,
-	// 	]);
-	// };
 
 	useEffect(() => {
 		const checkAuthState = async () => {
@@ -93,13 +55,6 @@ const Chatbot = () => {
 				</header>
 				<ScrollArea className="rounded-lg h-[75vh]">
 					<div className="p-4">
-						{/* {conversation.map((message, index) => (
-							<Message
-								key={index}
-								role={message.role}
-								content={message.content}
-							/>
-						))} */}
 						{messages.map((m, index) => (
 							<Message
 								key={index}
