@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 export function ThankSurvey() {
 	const router = useRouter();
+
 	const nextPage = () => {
 		router.push("/projects");
 	};

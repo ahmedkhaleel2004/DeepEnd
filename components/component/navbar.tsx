@@ -25,7 +25,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
-	const navItems = ["About", "features", "Demo", "Contact"];
+	const navItems = ["About", "Features", "Demo", "Contact"];
 	const user = useUser(); // get the current user
 
 	return (
