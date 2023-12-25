@@ -42,14 +42,14 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
 	};
 
 	return (
-		<div className="relative w-full font-sans codeblock dark:bg-zinc-950 bg-zinc-100 rounded-xl mb-4">
-			<div className="flex items-center justify-between w-full px-6 pr-4 dark:bg-zinc-800 bg-zinc-600 dark:text-zinc-100 text-white rounded-t-xl">
+		<div className="relative w-full font-sans codeblock dark:bg-zinc-950 bg-zinc-100">
+			<div className="flex items-center justify-between px-6 pr-4 dark:bg-zinc-800 bg-zinc-600 dark:text-zinc-100 text-white ">
 				<span className="text-xs lowercase font-mono">{language}</span>
 				<div className=" items-center">
 					<Button
 						variant="ghost"
 						size="icon"
-						className="text-xs hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
+						className="hover:bg-transparent hover:text-current hover:border-transparent"
 						onClick={onCopy}
 					>
 						{isCopied ? <IconCheck /> : <IconCopy />}
