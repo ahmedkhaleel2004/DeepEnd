@@ -1,9 +1,12 @@
-import React from "react";
+import React, { ClassAttributes, HTMLAttributes } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { useState, useEffect } from "react";
 import { auth } from "@/lib/firebase";
+import { MemoizedReactMarkdown } from "./markdown";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import { CodeBlock } from "@/components/ui/codeblock";
 
 interface MessageProps {
 	key: number;
@@ -41,11 +44,38 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 
 			<div>
 				<Badge className="mb-2">{role}</Badge>
-				<Card>
-					<CardContent className="px-2 py-1">
-						<p className="p-2">{content}</p>
-					</CardContent>
-				</Card>
+				<MemoizedReactMarkdown
+					remarkPlugins={[remarkGfm, remarkMath]}
+					components={{
+						p({ children }) {
+							return <p className="mb-2 last:mb-0">{children}</p>;
+						},
+						code({ node, inline, className, children, ...props }) {
+							const match = /language-(\w+)/.exec(
+								className || ""
+							);
+
+							if (inline) {
+								return (
+									<code className={className} {...props}>
+										{children}
+									</code>
+								);
+							}
+
+							return (
+								<CodeBlock
+									key={Math.random()}
+									language={(match && match[1]) || ""}
+									value={String(children).replace(/\n$/, "")}
+									{...props}
+								/>
+							);
+						},
+					}}
+				>
+					{content}
+				</MemoizedReactMarkdown>
 			</div>
 		</div>
 	);

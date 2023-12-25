@@ -11,6 +11,7 @@ import Message from "@/components/component/message";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChat } from "ai/react";
+import Navbar from "@/components/component/navbar";
 
 interface Message {
 	role: string;
@@ -83,7 +84,8 @@ const Chatbot = () => {
 	}, [router]);
 
 	return (
-		<main className="max-w-5xl h-screen p-8 mx-auto flex flex-col justify-between">
+		<main className="max-w-4xl h-screen p-8 mx-auto flex flex-col justify-between">
+			<Navbar mainPage={false} />
 			<div className="">
 				<header className="mb-4">
 					<h1 className="text-3xl font-bold">Chatbot</h1>
@@ -98,9 +100,9 @@ const Chatbot = () => {
 								content={message.content}
 							/>
 						))} */}
-						{messages.map((m: any) => (
+						{messages.map((m, index) => (
 							<Message
-								key={m.id}
+								key={index}
 								role={m.role === "user" ? username : "Linus"}
 								content={m.content}
 							/>
