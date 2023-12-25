@@ -21,19 +21,31 @@ interface Props {
 
 const CodeBlock: FC<Props> = memo(({ language, value }) => {
 	const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
-	const [isDarkTheme, setIsDarkTheme] = useState(false);
+	const [isDarkTheme, setIsDarkTheme] = useState(true);
 
 	useEffect(() => {
-		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-		setIsDarkTheme(mediaQuery.matches);
-
-		const handler = (e: any) => {
-			setIsDarkTheme(e.matches);
+		const updateTheme = () => {
+			const colorScheme =
+				document.documentElement.style.getPropertyValue("color-scheme");
+			setIsDarkTheme(colorScheme === "dark");
 		};
 
-		mediaQuery.addEventListener("change", handler);
-		console.log(isDarkTheme);
-		return () => mediaQuery.removeEventListener("change", handler);
+		// Call once on mount to set the initial theme
+		updateTheme();
+
+		// Add event listener for changes on the html element's style attribute
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (mutation.attributeName === "style") {
+					updateTheme();
+				}
+			});
+		});
+
+		observer.observe(document.documentElement, { attributes: true });
+
+		// Cleanup observer on component unmount
+		return () => observer.disconnect();
 	}, []);
 
 	const onCopy = () => {
