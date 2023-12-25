@@ -3,10 +3,16 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
+import { JetBrains_Mono } from "next/font/google";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
 	variable: "--font-sans",
+});
+
+const fontMono = JetBrains_Mono({
+	subsets: ["latin"],
+	variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +30,8 @@ export default function RootLayout({
 			<body
 				className={cn(
 					"min-h-screen font-sans antialiased ",
-					fontSans.variable
+					fontSans.variable,
+					fontMono.variable
 				)}
 			>
 				<ThemeProvider

@@ -45,19 +45,22 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 			<div>
 				<Badge className="mb-2">{role}</Badge>
 				<MemoizedReactMarkdown
+					className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0" // literally no idea what this does
 					remarkPlugins={[remarkGfm, remarkMath]}
 					components={{
 						p({ children }) {
-							return <p className="mb-2 last:mb-0">{children}</p>;
+							return <p className="mb-4 last:mb-0">{children}</p>;
 						},
 						code({ node, inline, className, children, ...props }) {
 							const match = /language-(\w+)/.exec(
 								className || ""
 							);
-
 							if (inline) {
 								return (
-									<code className={className} {...props}>
+									<code
+										className={`font-mono ${className}`}
+										{...props}
+									>
 										{children}
 									</code>
 								);

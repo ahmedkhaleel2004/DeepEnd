@@ -12,6 +12,7 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChat } from "ai/react";
 import Navbar from "@/components/component/navbar";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Message {
 	role: string;
@@ -53,7 +54,7 @@ const Chatbot = () => {
 					<h1 className="text-3xl font-bold">Chatbot</h1>
 					<Label>Interact with Linus!</Label>
 				</header>
-				<ScrollArea className="rounded-lg h-[75vh]">
+				<ScrollArea className="rounded-lg h-[70vh]">
 					<div className="p-4">
 						{messages.map((m, index) => (
 							<Message
@@ -68,10 +69,9 @@ const Chatbot = () => {
 			<div className="">
 				<form onSubmit={handleSubmit}>
 					<div className="flex items-center space-x-2">
-						<Input
+						<Textarea
 							className="flex-grow"
 							placeholder="Type your message here..."
-							type="text"
 							value={input}
 							onChange={handleInputChange}
 						/>
