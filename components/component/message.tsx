@@ -1,6 +1,5 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
 import { auth } from "@/lib/firebase";
 import { MemoizedReactMarkdown } from "./markdown";
@@ -9,7 +8,6 @@ import remarkMath from "remark-math";
 import { CodeBlock } from "@/components/ui/codeblock";
 
 interface MessageProps {
-	key: number;
 	content: string;
 	role: string;
 }
