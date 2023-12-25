@@ -15,6 +15,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ButtonIcon } from "./button-right";
 
 const formSchema = z.object({
 	input: z.string().min(2, {
@@ -27,6 +28,7 @@ interface FormQuestionProps {
 	placeholder: string;
 	desc: string;
 	onSuccessfulSubmit: () => void;
+	valueOfUser: (userResponse: string) => Promise<void>;
 }
 
 export function FormQuestion({
@@ -34,6 +36,7 @@ export function FormQuestion({
 	placeholder,
 	desc,
 	onSuccessfulSubmit,
+	valueOfUser,
 }: FormQuestionProps) {
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -50,6 +53,7 @@ export function FormQuestion({
 		console.log(values);
 		form.reset({ input: "" });
 		onSuccessfulSubmit();
+		valueOfUser(values.input);
 	}
 
 	return (
@@ -69,7 +73,7 @@ export function FormQuestion({
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Submit</Button>
+				<ButtonIcon />
 			</form>
 		</Form>
 	);
