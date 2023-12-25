@@ -6,6 +6,7 @@ import {
 	signOut,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+// import { getAdditionalUserInfo } from "@firebase/auth";
 
 const firebaseConfig = {
 	apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -46,12 +47,13 @@ export const signInWithGithub = () => {
 				// Sign in successful.
 				// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 				const credential =
-					GithubAuthProvider.credentialFromResult(result);
+					GithubAuthProvider.credentialFromResult(result);					
 				const token = credential?.accessToken;
 
 				// The signed-in user info.
 				const user = result.user;
 				// IdP data available using getAdditionalUserInfo(result)
+				// getAdditionalUserInfo(result)
 				// ...
 				resolve();
 			})

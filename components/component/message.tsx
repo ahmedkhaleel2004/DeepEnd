@@ -33,17 +33,19 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 	const avatarSrc = role === "Linus" ? "/linus.png" : photoURL;
 
 	return (
-		<div className="flex items-start space-x-4 mb-4">
+		<div className="flex items-start space-x-3 mb-4">
 			<Avatar>
 				{avatarSrc ? (
-					<AvatarImage src={avatarSrc} />
+					<AvatarImage
+						className="scale-[.77] rounded-3xl"
+						src={avatarSrc}
+					/>
 				) : (
 					<AvatarFallback></AvatarFallback>
 				)}
 			</Avatar>
-
-			<div>
-				<Badge className="mb-2">{role}</Badge>
+			<div className="mt-2">
+				<strong>{role}</strong>
 				<MemoizedReactMarkdown
 					className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
 					remarkPlugins={[remarkGfm, remarkMath]}
