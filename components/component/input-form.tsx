@@ -15,6 +15,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ButtonIcon } from "./button-right";
 
 const formSchema = z.object({
 	input: z.string().min(2, {
@@ -72,7 +73,7 @@ export function FormQuestion({
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Submit</Button>
+				<ButtonIcon />
 			</form>
 		</Form>
 	);

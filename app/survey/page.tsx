@@ -51,7 +51,7 @@ const Survey = () => {
 		if (currentQuestionIndex < questions.length - 1) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
 		} else {
-			router.push("/survey/thank-survey");
+			router.push("/survey/thanksurvey");
 		}
 	};
 	const handleSuccessfulSubmit = () => {
@@ -96,8 +96,10 @@ const Survey = () => {
 				// Update the user document to indicate the survey is done
 				await setDoc(doc(db, "users", auth.currentUser.uid), {
 					doneSurvey: true,
+					email: auth.currentUser.email,
+					name: auth.currentUser.displayName,
+					photoURL: auth.currentUser.photoURL,
 				});
-				router.push("/survey/thank-survey");
 			} else {
 				// Move to the next question
 				nextQuestion();

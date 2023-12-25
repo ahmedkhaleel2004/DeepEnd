@@ -1,16 +1,17 @@
+"use client";
+
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-export function thankSurvey() {
+export function ThankSurvey() {
+	const router = useRouter();
+	const nextPage = () => {
+		router.push("/projects");
+	};
+
 	return (
 		<div className="space-y-8">
-			<div className="space-y-2">
-				<h2 className="text-3xl font-bold">Submission Completed</h2>
-				<p className="text-gray-500 dark:text-gray-400">
-					Thank you for completing the questionnaire. Below is a
-					summary of your responses.
-				</p>
-			</div>
 			<Card>
 				<CardHeader>
 					<CardTitle>Submitted Information</CardTitle>
@@ -18,22 +19,22 @@ export function thankSurvey() {
 				<CardContent className="space-y-4">
 					<div className="flex items-center justify-between">
 						<span className="font-medium">Name</span>
-						<span className="text-gray-500">John Doe</span>
+						<span className="text-gray-500">{}</span>
 					</div>
 					<div className="flex items-center justify-between">
-						<span className="font-medium">Email</span>
-						<span className="text-gray-500">
-							johndoe@example.com
-						</span>
+						<span className="font-medium"></span>
+						<span className="text-gray-500">{}</span>
 					</div>
 					<div className="flex items-center justify-between">
-						<span className="font-medium">Occupation</span>
-						<span className="text-gray-500">Software Engineer</span>
+						<span className="font-medium">Question 3</span>
+						<span className="text-gray-500">{}</span>
 					</div>
 				</CardContent>
 			</Card>
 			<div className="flex items-center justify-center">
-				<Button variant="outline">Download Summary</Button>
+				<Button variant="outline" onClick={nextPage}>
+					Go To Projects
+				</Button>
 			</div>
 			<div className="p-4 bg-green-100 text-green-900 rounded-md">
 				<div className="flex">
