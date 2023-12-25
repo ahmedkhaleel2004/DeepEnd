@@ -58,9 +58,8 @@ const Chatbot = () => {
 				<ScrollArea className="rounded-lg h-[70vh]">
 					<div>
 						{messages.map((m, index) => (
-							<div className="mb-4">
+							<div key={index} className="mb-4">
 								<Message
-									key={index}
 									role={
 										m.role === "user" ? username : "Linus"
 									}
