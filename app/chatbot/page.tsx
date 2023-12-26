@@ -48,7 +48,7 @@ const Chatbot = () => {
 	}, [router]);
 
 	return (
-		<main className="max-w-4xl h-screen p-4 mx-auto flex flex-col justify-between">
+		<main className="max-w-4xl h-screen mx-auto">
 			<Navbar mainPage={false} />
 			<div>
 				<header className="mb-4">
