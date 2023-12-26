@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useChat, type Message } from "ai/react";
 import ChatList from "./chat-list";
 import EmptyScreen from "./empty-screen";
@@ -34,6 +34,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 	};
 
 	if (!isLoading) {
+		// only updated once done loading
 		updateConversation(messages);
 	}
 
