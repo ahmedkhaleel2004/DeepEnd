@@ -31,16 +31,18 @@ const ChatPanel = ({
 	messages,
 }: ChatPanelProps) => {
 	return (
-		<div className="flex flex-col justify-end">
+		<div className="flex flex-col items-end gap-2">
 			{isLoading ? (
-				<Button
-					variant="outline"
-					onClick={() => stop()}
-					className="bg-background"
-				>
-					<IconStop className="mr-2" />
-					Stop generating
-				</Button>
+				<div>
+					<Button
+						variant="outline"
+						onClick={() => stop()}
+						className="bg-background"
+					>
+						<IconStop className="mr-2" />
+						Stop generating
+					</Button>
+				</div>
 			) : (
 				messages?.length >= 2 && (
 					<div className="flex space-x-2">

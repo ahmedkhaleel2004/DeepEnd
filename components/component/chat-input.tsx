@@ -33,7 +33,7 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 			}}
 			ref={formRef}
 		>
-			<div className="flex w-screen max-w-4xl resize-none">
+			<div className="flex w-screen max-w-4xl gap-2">
 				<Textarea
 					ref={inputRef}
 					tabIndex={0}
@@ -43,7 +43,7 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 					onChange={(e: any) => setInput(e.target.value)}
 					placeholder="Send a message."
 					spellCheck={false}
-					className="resize-none"
+					className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
 				/>
 				<Button
 					type="submit"
