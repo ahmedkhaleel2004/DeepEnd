@@ -58,7 +58,7 @@ const ChatMessage: React.FC<MessageProps> = ({ role, content }) => {
 							if (inline) {
 								return (
 									<code
-										className={`font-mono ${className}`}
+										className={`font-mono relative rounded bg-muted px-[0.3rem] py-[0.2rem] mx-[0.2rem] text-sm font-semibold ${className}`}
 										{...props}
 									>
 										{children}

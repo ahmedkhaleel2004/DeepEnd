@@ -21,15 +21,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function EmptyScreen({ setInput }: Pick<UseChatHelpers, "setInput">) {
 	return (
-		<div className="">
-			<Card className="max-w-sm dark:bg-zinc-800 mx-auto flex flex-col items-center">
-				<CardHeader>
-					<CardTitle>General Conversation</CardTitle>
-				</CardHeader>
-				<CardContent>
-					Ask Linus about your journey in software engineering.
-				</CardContent>
-			</Card>
+		<div>
+			<h1 className=" text-2xl">General Conversation</h1>
 		</div>
 	);
 }
