@@ -21,7 +21,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function EmptyScreen({ setInput }: Pick<UseChatHelpers, "setInput">) {
 	return (
-		<div className="flex justify-center pt-[25vh] h-screen">
+		<div className="flex justify-center pt-[25vh]">
 			<div className="flex flex-col items-center text-center">
 				<h1 className="text-3xl text-muted-foreground">
 					General Conversation

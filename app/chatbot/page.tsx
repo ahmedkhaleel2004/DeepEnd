@@ -38,7 +38,7 @@ const Chatbot = () => {
 
 	return (
 		<>
-			<main className="p-4 max-w-4xl flex flex-col justify-between h-screen mx-auto">
+			<main className="p-4 max-w-4xl flex flex-col justify-between mx-auto">
 				<div>
 					<header className="mb-4">
 						<h1 className="text-3xl font-bold">Chatbot</h1>

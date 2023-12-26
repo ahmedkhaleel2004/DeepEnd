@@ -15,7 +15,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 		useChat({ initialMessages, id }); // i dont even know if id is needed
 	return (
 		<>
-			<div className="pt-4">
+			<div>
 				{messages.length ? (
 					<>
 						<ChatList messages={messages} />

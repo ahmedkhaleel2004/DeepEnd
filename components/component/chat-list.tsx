@@ -34,7 +34,7 @@ const ChatList = ({ messages }: ChatList) => {
 		<div>
 			<ScrollArea className="rounded-lg h-[70vh]">
 				{messages.map((m, index) => (
-					<div key={index} className="mb-4">
+					<div key={index}>
 						<ChatMessage
 							role={m.role === "user" ? username : "Linus"}
 							content={m.content}
