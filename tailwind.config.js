@@ -17,6 +17,9 @@ module.exports = {
 			},
 		},
 		extend: {
+			backgroundImage: theme => ({
+				'gradient-to-t': 'linear-gradient(to top, var(--tw-gradient-stops))',
+			}),
 			fontFamily: {
 				sans: ["var(--font-sans)", ...fontFamily.sans],
 				mono: ["var(--font-mono)", ...fontFamily.mono],

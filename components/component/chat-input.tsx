@@ -46,7 +46,7 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 					spellCheck={false}
 					className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none"
 				/>
-				<div className="absolute right-0 top-[11px] sm:right-4">
+				<div className="absolute right-0 top-[13px] sm:right-4">
 					<Button
 						type="submit"
 						size="icon"

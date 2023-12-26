@@ -31,7 +31,7 @@ const ChatList = ({ messages }: ChatList) => {
 	}
 
 	return (
-		<div>
+		<div className="mb-40">
 			{messages.map((m, index) => (
 				<div key={index}>
 					<ChatMessage
