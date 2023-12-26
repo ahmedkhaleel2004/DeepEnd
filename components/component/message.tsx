@@ -12,7 +12,7 @@ interface MessageProps {
 	role: string;
 }
 
-const Message: React.FC<MessageProps> = ({ role, content }) => {
+const ChatMessage: React.FC<MessageProps> = ({ role, content }) => {
 	const [photoURL, setPhotoURL] = useState<string | null>("");
 
 	useEffect(() => {
@@ -84,4 +84,4 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 	);
 };
 
-export default Message;
+export default ChatMessage;

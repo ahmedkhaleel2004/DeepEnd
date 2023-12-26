@@ -1,0 +1,49 @@
+import React, { useState, useEffect } from "react";
+import ChatMessage from "./message";
+import { type Message } from "ai";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+export interface ChatList {
+	messages: Message[];
+}
+
+const ChatList = ({ messages }: ChatList) => {
+	const [username, setUsername] = useState("");
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
+			if (user) {
+				const docRef = doc(db, "users", user.uid);
+				const docSnap = await getDoc(docRef);
+				setUsername(docSnap.data()?.name);
+			}
+		});
+
+		// Cleanup subscription on unmount
+		return () => unsubscribe();
+	}, []); // Empty dependency array means this effect runs once on mount and cleanup on unmount
+
+	if (!messages.length) {
+		return null;
+	}
+
+	return (
+		<div>
+			<ScrollArea className="rounded-lg h-[70vh]">
+				{messages.map((m, index) => (
+					<div key={index} className="mb-4">
+						<ChatMessage
+							role={m.role === "user" ? username : "Linus"}
+							content={m.content}
+						/>
+					</div>
+				))}
+			</ScrollArea>
+		</div>
+	);
+};
+
+export default ChatList;
