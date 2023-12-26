@@ -33,11 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 	const user = useUser();
 
 	return (
-<<<<<<< HEAD
 		<NavigationMenu className=" items-center justify-between max-w-full mb-2 px-2 border-b border-border/40 py-2">
-=======
-		<NavigationMenu className="relative z-10 flex px-2 flex-1 items-center justify-between space-x-4 max-w-full border-b mb-2 border-border/40 py-2">
->>>>>>> 16fa1207c49f68eb37b799289bcd0ceea2818714
 			<div className="group list-none items-center space-x-1 flex justify-end ml-auto">
 				{mainPage &&
 					mainNavItems.map((item, index) => (
