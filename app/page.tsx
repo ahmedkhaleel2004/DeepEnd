@@ -108,8 +108,8 @@ export default function Home() {
 						<p className="text-gray-700 dark:text-gray-300 pb-6 ">
 							Welcome to Linus, your companion, instructor, and
 							copilot as you pursue programming expertise. Linus
-							is more than just a platform; it's your clever
-							partner made to assist you in honing your project
+							is more than just a platform; it&apos;s your clever
+							partner made to assist you in honing your project
 							and programming skills.
 						</p>
 
@@ -174,9 +174,7 @@ export default function Home() {
 					<a href="mailto:zakamm@gmail.com?subject = Feedback&body = Message">
 						Send Us Feedback
 					</a>
-					<a href="tel:365-883-2277">
-						Click to call us at (365) 883 2277
-					</a>
+					<a href="tel:365-883-2277">Click to call us</a>
 				</div>
 				<footer className="mt-5 pt-5 border-t border-border/40 text-center">
 					© LinusCorp 2023
