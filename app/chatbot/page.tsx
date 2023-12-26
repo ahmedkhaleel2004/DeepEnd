@@ -18,7 +18,6 @@ const Chatbot = () => {
 		const checkAuthState = async () => {
 			const unsubscribe = onAuthStateChanged(auth, async (user) => {
 				if (user) {
-					console.log(id);
 					const docRef = doc(db, "users", user.uid);
 					const docSnap = await getDoc(docRef);
 					if (!docSnap.data()?.doneSurvey) {
