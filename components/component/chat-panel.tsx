@@ -31,19 +31,7 @@ const ChatPanel = ({
 	messages,
 }: ChatPanelProps) => {
 	return (
-		<div className="flex">
-			<ChatInput
-				onSubmit={async (value) => {
-					await append({
-						id,
-						content: value,
-						role: "user",
-					});
-				}}
-				input={input}
-				setInput={setInput}
-				isLoading={isLoading}
-			/>
+		<div className="flex flex-col justify-end">
 			{isLoading ? (
 				<Button
 					variant="outline"
@@ -63,6 +51,18 @@ const ChatPanel = ({
 					</div>
 				)
 			)}
+			<ChatInput
+				onSubmit={async (value) => {
+					await append({
+						id,
+						content: value,
+						role: "user",
+					});
+				}}
+				input={input}
+				setInput={setInput}
+				isLoading={isLoading}
+			/>
 		</div>
 	);
 };

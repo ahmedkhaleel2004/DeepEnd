@@ -25,7 +25,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 					<EmptyScreen setInput={setInput} />
 				)}
 			</div>
-			<div className="fixed bottom-0 mb-6">
+			<div className="fixed bottom-0 mb-6 max-4xl">
 				<ChatPanel
 					id={id}
 					isLoading={isLoading}
