@@ -9,6 +9,7 @@ import { auth, db } from "@/lib/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import Navbar from "@/components/component/navbar";
+import { getAdditionalUserInfo } from "firebase/auth";
 
 export default function Home() {
 	const router = useRouter();
@@ -47,7 +48,7 @@ export default function Home() {
 				router.push("/survey");
 			}
 		} else {
-			await signInWithGithub().then(async () => {
+			await signInWithGithub().then(async (result) => {
 				if (auth.currentUser) {
 					// should always be true
 					const docRef = doc(db, "users", auth.currentUser.uid);
@@ -59,11 +60,15 @@ export default function Home() {
 							router.push("/survey");
 						}
 					} else {
+						const additionalUserInfo =
+							getAdditionalUserInfo(result);
 						setDoc(doc(db, "users", auth.currentUser.uid), {
 							doneSurvey: false,
 							photoURL: auth.currentUser.photoURL,
 							email: auth.currentUser.email,
-							name: auth.currentUser.displayName,
+							name: auth.currentUser.displayName
+								? auth.currentUser.displayName
+								: additionalUserInfo?.username,
 						});
 						router.push("/survey");
 					}

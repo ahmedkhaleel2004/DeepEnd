@@ -41,13 +41,13 @@ export const signOutFunc = () => {
 };
 
 export const signInWithGithub = () => {
-	return new Promise<void>((resolve, reject) => {
+	return new Promise<any>((resolve, reject) => {
 		signInWithPopup(auth, provider)
 			.then((result: any) => {
 				// Sign in successful.
 				// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 				const credential =
-					GithubAuthProvider.credentialFromResult(result);					
+					GithubAuthProvider.credentialFromResult(result);
 				const token = credential?.accessToken;
 
 				// The signed-in user info.
@@ -55,7 +55,9 @@ export const signInWithGithub = () => {
 				// IdP data available using getAdditionalUserInfo(result)
 				// getAdditionalUserInfo(result)
 				// ...
-				resolve();
+
+				// Resolve the promise with the result object
+				resolve(result);
 			})
 			.catch((error) => {
 				// Sign in failed.
@@ -68,6 +70,8 @@ export const signInWithGithub = () => {
 				const credential =
 					GithubAuthProvider.credentialFromError(error);
 				// ...
+
+				// Reject the promise with the error
 				reject(error);
 			});
 	});
