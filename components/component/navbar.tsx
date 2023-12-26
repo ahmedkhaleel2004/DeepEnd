@@ -7,7 +7,6 @@ import { getAuth } from "firebase/auth";
 import {
 	NavigationMenu,
 	NavigationMenuLink,
-	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
 function useUser() {
@@ -32,8 +31,19 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 	const mainNavItems = ["About", "Features", "Demo", "Contact"];
 	const user = useUser();
 
+	const handleNavClick = (
+		event: React.MouseEvent<HTMLAnchorElement>,
+		id: string
+	) => {
+		event.preventDefault();
+		document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+	};
+
 	return (
-		<NavigationMenu className=" items-center justify-between max-w-full mb-2 px-2 border-b border-border/40 py-2">
+		<NavigationMenu
+			className=" items-center justify-between max-w-full mb-2 px-2 border-b border-border/40 py-2"
+			style={{ backgroundColor: "hsl(var(--background))" }}
+		>
 			<div className="group list-none items-center space-x-1 flex justify-end ml-auto">
 				{mainPage &&
 					mainNavItems.map((item, index) => (
@@ -41,6 +51,9 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 							<a
 								href={`#${item.toLowerCase()}`}
 								className="px-2 py-1"
+								onClick={(event) =>
+									handleNavClick(event, item.toLowerCase())
+								}
 							>
 								{item}
 							</a>
