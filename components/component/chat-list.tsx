@@ -32,16 +32,14 @@ const ChatList = ({ messages }: ChatList) => {
 
 	return (
 		<div>
-			<ScrollArea className="rounded-lg h-[70vh]">
-				{messages.map((m, index) => (
-					<div key={index}>
-						<ChatMessage
-							role={m.role === "user" ? username : "Linus"}
-							content={m.content}
-						/>
-					</div>
-				))}
-			</ScrollArea>
+			{messages.map((m, index) => (
+				<div key={index}>
+					<ChatMessage
+						role={m.role === "user" ? username : "Linus"}
+						content={m.content}
+					/>
+				</div>
+			))}
 		</div>
 	);
 };
