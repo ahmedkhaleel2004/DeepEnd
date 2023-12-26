@@ -22,6 +22,12 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 		}
 	}, []);
 
+	const newOnKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		if (!isLoading) {
+			onKeyDown(event);
+		}
+	};
+
 	return (
 		<form
 			onSubmit={async (e) => {
@@ -39,7 +45,7 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 				<Textarea
 					ref={inputRef}
 					tabIndex={0}
-					onKeyDown={onKeyDown}
+					onKeyDown={newOnKeyDown}
 					rows={1}
 					value={input}
 					onChange={(e: any) => setInput(e.target.value)}
