@@ -31,26 +31,26 @@ const ChatPanel = ({
 	messages,
 }: ChatPanelProps) => {
 	return (
-		<div className="flex flex-col items-end gap-2">
+		<div className="flex flex-col items-end">
 			{isLoading ? (
-				<div>
-					<Button
-						variant="outline"
-						onClick={() => stop()}
-						className="bg-background"
-					>
-						<IconStop className="mr-2" />
-						Stop generating
-					</Button>
-				</div>
+				<Button
+					className="mb-4"
+					variant="outline"
+					onClick={() => stop()}
+				>
+					<IconStop className="mr-2" />
+					Stop generating
+				</Button>
 			) : (
 				messages?.length >= 2 && (
-					<div className="flex space-x-2">
-						<Button variant="outline" onClick={() => reload()}>
-							<IconRefresh className="mr-2" />
-							Regenerate response
-						</Button>
-					</div>
+					<Button
+						className="mb-4"
+						variant="outline"
+						onClick={() => reload()}
+					>
+						<IconRefresh className="mr-2" />
+						Regenerate response
+					</Button>
 				)
 			)}
 			<ChatInput
