@@ -25,7 +25,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 					<EmptyScreen setInput={setInput} />
 				)}
 			</div>
-			<div className="fixed bottom-0 py-6 max-4xl bg-gradient-to-t from-zinc-900">
+			<div className="fixed w-[92%] lg:max-w-4xl lg:w-screen  bottom-0 py-6 bg-gradient-to-t from-zinc-900">
 				<ChatPanel
 					id={id}
 					isLoading={isLoading}

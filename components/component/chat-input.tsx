@@ -33,8 +33,9 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 				await onSubmit(input);
 			}}
 			ref={formRef}
+			className="w-full"
 		>
-			<div className="rounded-2xl flex w-screen max-w-4xl relative overflow-hidden max-h-60 border pr-[4.5rem] grow flex-col bg-background ">
+			<div className="rounded-2xl flex relative overflow-hidden max-h-60 border pr-[4.5rem] grow flex-col bg-background ">
 				<Textarea
 					ref={inputRef}
 					tabIndex={0}
@@ -46,7 +47,7 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 					spellCheck={false}
 					className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none"
 				/>
-				<div className="absolute right-0 top-[13px] sm:right-4">
+				<div className="absolute top-[13px] right-4">
 					<Button
 						type="submit"
 						size="icon"
