@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { NavigationMenuDemo } from "@/components/component/navbar-projects";
+import Navbar from "@/components/component/navbar";
 const Projects = () => {
 	const router = useRouter();
 
@@ -32,7 +33,7 @@ const Projects = () => {
 
 	return (
 		<main>
-			<NavigationMenuDemo />
+			<Navbar mainPage={false} />
 			<div>
 				<h1 className="text-3xl font-bold">Projects</h1>
 				<p>Choose a project to view</p>

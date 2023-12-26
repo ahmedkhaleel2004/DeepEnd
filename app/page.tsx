@@ -75,18 +75,23 @@ export default function Home() {
 	return (
 		<>
 			<Navbar mainPage={true} />
-			<div className="h-screen max-w-screen flex flex-col justify-center items-center">
-				<Card className="flex flex-col items-center">
-					<CardHeader>
-						<CardTitle>Welcome to Linus</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<Button onClick={handleSignIn}>
-							Sign in with GitHub
-						</Button>
-					</CardContent>
-				</Card>
-			</div>
+			<main className="mx-6">
+				<div>
+					<h1 className="text-3xl font-bold"> Welcome to Linus</h1>
+				</div>
+				<div className="h-screen max-w-screen flex flex-col justify-center items-center">
+					<Card className="flex flex-col items-center">
+						<CardHeader>
+							<CardTitle>Welcome to Linus</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<Button onClick={handleSignIn}>
+								Sign in with GitHub
+							</Button>
+						</CardContent>
+					</Card>
+				</div>
+			</main>
 		</>
 	);
 }

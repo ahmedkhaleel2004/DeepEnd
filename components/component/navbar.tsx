@@ -1,9 +1,14 @@
 "use client";
-import React from "react";
+import * as React from "react";
 import { ModeToggle } from "./mode-toggle";
-import ProfileIcon from "../component/profile-icon"; // import ProfileIcon component
+import ProfileIcon from "../component/profile-icon";
 import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
+import {
+	NavigationMenu,
+	NavigationMenuLink,
+	NavigationMenuList,
+} from "@/components/ui/navigation-menu";
 
 function useUser() {
 	const [user, setUser] = useState(getAuth().currentUser);
@@ -23,38 +28,34 @@ function useUser() {
 interface NavbarProps {
 	mainPage?: boolean;
 }
-
 const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
-	const navItems = ["About", "Features", "Demo", "Contact"];
-	const user = useUser(); // get the current user
+	const mainNavItems = ["About", "Features", "Demo", "Contact"];
+	const user = useUser();
 
 	return (
-		<div>
-			<nav className="flex items-center justify-between p-3 w-full bg-transparent">
-				<div className="mx-2">Logo</div>
-				<div className="flex items-center justify-end space-x-4">
-					{mainPage && (
-						<div className="flex space-x-8">
-							{navItems.map((item, index) => (
-								<div key={index} className="text-center">
-									{item}
-								</div>
-							))}
-						</div>
-					)}
+		<NavigationMenu className="relative z-10 flex flex-1 items-center justify-between space-x-4 max-w-full border-b border-border/40 py-2">
+			<div className="group list-none items-center space-x-1 flex justify-end ml-auto">
+				{mainPage &&
+					mainNavItems.map((item, index) => (
+						<NavigationMenuLink key={index} asChild>
+							<a
+								href={`#${item.toLowerCase()}`}
+								className="px-2 py-1"
+							>
+								{item}
+							</a>
+						</NavigationMenuLink>
+					))}
+				<div className="flex space-x-4">
 					<ModeToggle />
 					{mainPage ? (
-						<div className="w-8"></div>
+						<div className="w-5 h-8"></div>
 					) : (
-						user && (
-							<div className="w-12">
-								<ProfileIcon />
-							</div>
-						)
+						!mainPage && user && <ProfileIcon />
 					)}
 				</div>
-			</nav>
-		</div>
+			</div>
+		</NavigationMenu>
 	);
 };
 
