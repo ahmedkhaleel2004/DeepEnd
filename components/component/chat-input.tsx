@@ -34,7 +34,7 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 			}}
 			ref={formRef}
 		>
-			<div className="items-center rounded-2xl flex w-screen max-w-4xl gap-2 relative overflow-hidden max-h-60 border px-6">
+			<div className="rounded-2xl flex w-screen max-w-4xl relative overflow-hidden max-h-60 border pr-[4.5rem] grow flex-col bg-background ">
 				<Textarea
 					ref={inputRef}
 					tabIndex={0}
@@ -44,16 +44,18 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 					onChange={(e: any) => setInput(e.target.value)}
 					placeholder="Send a message."
 					spellCheck={false}
-					className="min-h-[60px] w-full resize-none bg-transparent py-[1.3rem] focus-within:outline-none"
+					className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
 				/>
-				<Button
-					type="submit"
-					size="icon"
-					disabled={isLoading || input === ""}
-				>
-					<IconArrowElbow />
-					<span className="sr-only">Send message</span>
-				</Button>
+				<div className="absolute right-0 top-[11px] sm:right-4">
+					<Button
+						type="submit"
+						size="icon"
+						disabled={isLoading || input === ""}
+					>
+						<IconArrowElbow />
+						<span className="sr-only">Send message</span>
+					</Button>
+				</div>
 			</div>
 		</form>
 	);
