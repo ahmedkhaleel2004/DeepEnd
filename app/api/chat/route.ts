@@ -10,7 +10,6 @@ const openai = new OpenAI({
 export const runtime = "edge";
 
 export async function POST(req: Request) {
-	console.log("hello from api!");
 	const { messages } = await req.json();
 
 	// Ask OpenAI for a streaming chat completion given the prompt
@@ -21,19 +20,7 @@ export async function POST(req: Request) {
 	});
 
 	// Convert the response into a friendly text-stream
-	const stream = OpenAIStream(response, {
-		async onCompletion(completion) {
-			const payload = {
-				messages: [
-					...messages,
-					{
-						content: completion,
-						role: "assistant",
-					},
-				],
-			};
-		},
-	});
+	const stream = OpenAIStream(response);
 	// Respond with the stream
 	return new StreamingTextResponse(stream);
 }
