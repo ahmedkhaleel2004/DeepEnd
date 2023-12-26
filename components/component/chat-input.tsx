@@ -2,7 +2,7 @@ import * as React from "react";
 import { UseChatHelpers } from "ai/react";
 import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
 import { useRouter } from "next/navigation";
-import { Textarea } from "@/components/ui/textarea";
+import Textarea from "react-textarea-autosize";
 import { Button } from "@/components/ui/button";
 import { IconArrowElbow } from "@/components/ui/icons";
 
@@ -21,6 +21,7 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 			inputRef.current.focus();
 		}
 	}, []);
+
 	return (
 		<form
 			onSubmit={async (e) => {
@@ -33,7 +34,7 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 			}}
 			ref={formRef}
 		>
-			<div className="flex w-screen max-w-4xl gap-2">
+			<div className="items-center rounded-2xl flex w-screen max-w-4xl gap-2 relative overflow-hidden max-h-60 border px-6">
 				<Textarea
 					ref={inputRef}
 					tabIndex={0}
@@ -43,7 +44,7 @@ const ChatInput = ({ onSubmit, input, setInput, isLoading }: PromptProps) => {
 					onChange={(e: any) => setInput(e.target.value)}
 					placeholder="Send a message."
 					spellCheck={false}
-					className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
+					className="min-h-[60px] w-full resize-none bg-transparent py-[1.3rem] focus-within:outline-none"
 				/>
 				<Button
 					type="submit"
