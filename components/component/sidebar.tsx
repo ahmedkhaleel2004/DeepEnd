@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 
 import NavbarSmall from "./navbars/navbar-small";
+import { Separator } from "../ui/separator";
 
 interface SidebarProps {
 	loggedIn: boolean;
@@ -19,7 +20,10 @@ interface SidebarProps {
 const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 	return (
 		<div className="p-6 w-full max-w-xs h-screen border-r">
-			<NavbarSmall />
+			<div className="pb-6 flex justify-center">
+				<NavbarSmall />
+			</div>
+			<Separator />
 			{loggedIn && userId && (
 				<Accordion type="single" collapsible className="w-full">
 					<AccordionItem value="item-1">
