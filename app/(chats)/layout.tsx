@@ -40,7 +40,7 @@ function ChatLayout({ children }: ChatLayoutProps) {
 	}, [router]);
 
 	return (
-		<div>
+		<div className="flex">
 			<Sidebar userId={userId} loggedIn={loggedIn} />
 			{children}
 		</div>

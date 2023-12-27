@@ -14,7 +14,7 @@ const NavbarSmall = () => {
 		<NavigationMenu>
 			<div>
 				{navbarItems.map((item, index) => (
-					<NavigationMenuLink key={index}>
+					<NavigationMenuLink key={index} asChild>
 						<Link
 							href={`/${item.toLowerCase()}`}
 							className="px-2 py-1"

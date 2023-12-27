@@ -8,6 +8,7 @@ import {
 	NavigationMenu,
 	NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
+import Link from "next/link";
 
 function useUser() {
 	const [user, setUser] = useState(getAuth().currentUser);
@@ -48,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 				{mainPage &&
 					mainNavItems.map((item, index) => (
 						<NavigationMenuLink key={index} asChild>
-							<a
+							<Link
 								href={`#${item.toLowerCase()}`}
 								className="px-2 py-1"
 								onClick={(event) =>
@@ -56,7 +57,7 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 								}
 							>
 								{item}
-							</a>
+							</Link>
 						</NavigationMenuLink>
 					))}
 				<div className="flex space-x-4">

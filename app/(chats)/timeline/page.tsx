@@ -1,7 +1,7 @@
 import React from "react";
 
 const Timeline = () => {
-	return <div>Timeline</div>;
+	return <main>and this is the timeline page!!</main>;
 };
 
 export default Timeline;
