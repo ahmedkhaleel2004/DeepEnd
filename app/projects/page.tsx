@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { NavigationMenuDemo } from "@/components/component/navbar-projects";
 import Navbar from "@/components/component/navbar";
 const Projects = () => {
 	const router = useRouter();
