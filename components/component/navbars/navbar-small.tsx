@@ -5,6 +5,7 @@ import {
 	NavigationMenu,
 	NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
+import Link from "next/link";
 
 const NavbarSmall = () => {
 	const navbarItems = ["Projects", "Chatbot", "Timeline"];
@@ -14,12 +15,12 @@ const NavbarSmall = () => {
 			<div>
 				{navbarItems.map((item, index) => (
 					<NavigationMenuLink key={index}>
-						<a
+						<Link
 							href={`/${item.toLowerCase()}`}
 							className="px-2 py-1"
 						>
 							{item}
-						</a>
+						</Link>
 					</NavigationMenuLink>
 				))}
 			</div>
