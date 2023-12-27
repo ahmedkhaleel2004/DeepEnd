@@ -1,9 +1,18 @@
-import React from "react";
+"use client";
 
-const Sidebar = () => {
+import React, { useEffect } from "react";
+import ChatHistory from "@/components/component/chat-history";
+
+interface SidebarProps {
+	loggedIn: boolean;
+	userId: string;
+}
+
+const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 	return (
 		<div className="max-w-xs w-full h-screen border">
-			<h1>this is the sidebar</h1>
+			yurr
+			<ChatHistory loggedIn={loggedIn} userId={userId} isGeneral={true} />
 		</div>
 	);
 };
