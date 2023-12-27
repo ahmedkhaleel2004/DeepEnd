@@ -1,7 +1,14 @@
 "use client";
 
-import React, { useEffect } from "react";
-import ChatHistory from "@/components/component/chat-history";
+import React from "react";
+
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion";
+
 import NavbarSmall from "./navbars/navbar-small";
 
 interface SidebarProps {
@@ -13,14 +20,24 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 	return (
 		<div className="p-6 max-w-xs w-full h-screen border-r">
 			<NavbarSmall />
-			<p className="text-3xl font-bold">General</p>
-			<ChatHistory loggedIn={loggedIn} userId={userId} isGeneral={true} />
-			<p className="text-3xl font-bold">Projects</p>
-			<ChatHistory
-				loggedIn={loggedIn}
-				userId={userId}
-				isGeneral={false}
-			/>
+			{loggedIn && userId && (
+				<Accordion type="single" collapsible className="w-full">
+					<AccordionItem value="item-1">
+						<AccordionTrigger className="text-2xl font-bold">
+							General
+						</AccordionTrigger>
+						<AccordionContent>Conversation 1</AccordionContent>
+						<AccordionContent>Conversation 2</AccordionContent>
+					</AccordionItem>
+					<AccordionItem value="item-2">
+						<AccordionTrigger className="text-2xl font-bold">
+							Projects
+						</AccordionTrigger>
+						<AccordionContent>Project 1</AccordionContent>
+						<AccordionContent>Project 2</AccordionContent>
+					</AccordionItem>
+				</Accordion>
+			)}
 		</div>
 	);
 };
