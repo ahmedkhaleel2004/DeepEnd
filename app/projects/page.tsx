@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import Navbar from "@/components/component/navbar";
+import Navbar from "@/components/component/navbars/navbar";
 const Projects = () => {
 	const router = useRouter();
 

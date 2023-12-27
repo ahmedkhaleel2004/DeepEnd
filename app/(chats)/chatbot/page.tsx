@@ -7,7 +7,7 @@ import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { nanoid } from "@/lib/utils";
-import Chat from "@/components/component/chat";
+import Chat from "@/components/component/chatbot/chat";
 import Sidebar from "@/components/component/sidebar";
 
 const Chatbot = () => {

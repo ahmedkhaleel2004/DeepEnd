@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import Navbar from "@/components/component/navbar";
+import Navbar from "@/components/component/navbars/navbar";
 import { getAdditionalUserInfo } from "firebase/auth";
 
 export default function Home() {

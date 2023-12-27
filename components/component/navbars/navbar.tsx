@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { ModeToggle } from "./mode-toggle";
-import ProfileIcon from "../component/profile-icon";
+import ProfileIcon from "./profile-icon";
 import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import {

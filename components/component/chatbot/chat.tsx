@@ -3,7 +3,7 @@ import { useChat, type Message } from "ai/react";
 import ChatList from "./chat-list";
 import EmptyScreen from "./empty-screen";
 import ChatPanel from "./chat-panel";
-import ChatScrollAnchor from "@/components/component/chat-scroll-anchor";
+import ChatScrollAnchor from "@/components/component/chatbot/chat-scroll-anchor";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 

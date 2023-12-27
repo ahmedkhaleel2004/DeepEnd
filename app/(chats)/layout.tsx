@@ -1,4 +1,4 @@
-import NavbarSmall from "@/components/component/navbar-small";
+import NavbarSmall from "@/components/component/navbars/navbar-small";
 
 interface ChatLayoutProps {
 	children: React.ReactNode;
