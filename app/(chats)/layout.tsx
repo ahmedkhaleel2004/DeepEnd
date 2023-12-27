@@ -42,7 +42,7 @@ function ChatLayout({ children }: ChatLayoutProps) {
 	return (
 		<div className="flex">
 			<Sidebar userId={userId} loggedIn={loggedIn} />
-			{children}
+			<div className="flex grow">{children}</div>
 		</div>
 	);
 }

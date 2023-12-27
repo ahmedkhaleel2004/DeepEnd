@@ -18,7 +18,7 @@ interface SidebarProps {
 
 const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 	return (
-		<div className="p-6 w-full h-screen border-r">
+		<div className="p-6 w-full max-w-xs h-screen border-r">
 			<NavbarSmall />
 			{loggedIn && userId && (
 				<Accordion type="single" collapsible className="w-full">

@@ -8,7 +8,7 @@ const Chatbot = () => {
 	const id = nanoid();
 
 	return (
-		<main>
+		<main className="w-full flex justify-center">
 			<div className="flex flex-col max-w-4xl w-full">
 				<header className="mb-4">
 					<h1 className="text-3xl font-bold">Chatbot</h1>
