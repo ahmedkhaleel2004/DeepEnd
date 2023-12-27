@@ -15,10 +15,6 @@ export default function Home() {
 	const router = useRouter();
 
 	useEffect(() => {
-		// This is for background, use the other use effect on projects page for other pages.
-		document.body.style.background =
-			"linear-gradient(to right, #18181b, #3f3f46)";
-
 		const checkAuthState = async () => {
 			const unsubscribe = onAuthStateChanged(auth, async (user) => {
 				if (user) {
@@ -35,10 +31,7 @@ export default function Home() {
 			});
 
 			// Cleanup subscription on unmount
-			return () => {
-				unsubscribe();
-				document.body.style.background = "";
-			};
+			return () => unsubscribe();
 		};
 
 		checkAuthState();
@@ -85,7 +78,7 @@ export default function Home() {
 	};
 
 	return (
-		<>
+		<div className="main-page-body">
 			<div className="navbar sticky top-0 bg-dark">
 				<Navbar mainPage={true} />
 			</div>
@@ -187,6 +180,6 @@ export default function Home() {
 					© LinusCorp 2023
 				</footer>
 			</main>
-		</>
+		</div>
 	);
 }
