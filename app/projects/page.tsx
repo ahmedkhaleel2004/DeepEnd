@@ -6,10 +6,14 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import Navbar from "@/components/component/navbars/navbar";
+
 const Projects = () => {
 	const router = useRouter();
 
 	useEffect(() => {
+		// Set the background color
+		document.body.style.background = "dark";
+
 		const checkAuthState = async () => {
 			const unsubscribe = onAuthStateChanged(auth, async (user) => {
 				if (user) {
@@ -24,7 +28,10 @@ const Projects = () => {
 			});
 
 			// Cleanup subscription on unmount
-			return () => unsubscribe();
+			return () => {
+				unsubscribe();
+				document.body.style.background = ""; // reset color when component unmounts
+			};
 		};
 
 		checkAuthState();
