@@ -15,6 +15,15 @@ export default function Home() {
 	const router = useRouter();
 
 	useEffect(() => {
+		document.body.style.background =
+			"linear-gradient(to right, #18181b, #3f3f46)"; // replace 'yourSecondColorHere' with your second color
+
+		return () => {
+			document.body.style.backgroundColor = ""; // reset color when component unmounts
+		};
+	}, []);
+
+	useEffect(() => {
 		const checkAuthState = async () => {
 			const unsubscribe = onAuthStateChanged(auth, async (user) => {
 				if (user) {
