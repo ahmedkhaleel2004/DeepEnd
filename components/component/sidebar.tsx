@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import ChatHistory from "@/components/component/chat-history";
+import NavbarSmall from "./navbars/navbar-small";
 
 interface SidebarProps {
 	loggedIn: boolean;
@@ -10,7 +11,8 @@ interface SidebarProps {
 
 const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 	return (
-		<div className="p-6 max-w-xs w-full h-screen border">
+		<div className="p-6 max-w-xs w-full h-screen border-r">
+			<NavbarSmall />
 			<p className="text-3xl font-bold">General</p>
 			<ChatHistory loggedIn={loggedIn} userId={userId} isGeneral={true} />
 			<p className="text-3xl font-bold">Projects</p>
