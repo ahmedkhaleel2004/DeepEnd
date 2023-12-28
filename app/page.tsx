@@ -90,7 +90,7 @@ export default function Home() {
 
 	return (
 		<div>
-			<Navbar mainPage={true} />
+			<Navbar />
 			<main className="px-12 mx-auto max-w-[80rem]">
 				<div className="grid sm:grid-cols-1 mt-16 md:grid-cols-2">
 					<div>

@@ -17,7 +17,7 @@ interface NavbarProps {
 	mainPage?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
+const Navbar: React.FC<NavbarProps> = () => {
 	const mainNavItems = ["About", "Features", "Demo", "Contact"];
 	const [scrolled, setScrolled] = useState(false);
 
@@ -46,40 +46,38 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 
 	return (
 		<NavigationMenu
-			className={`sticky top-0 w-full bg-transparent max-w-none items-center mb-2 px-2 py-4 backdrop-blur-lg transition-colors duration-300 ${
+			className={`sticky top-0 w-full bg-transparent max-w-none items-center mb-2 px-4 py-4 backdrop-blur-lg transition-colors duration-300 ${
 				scrolled &&
 				"bg-black bg-opacity-[0.2] border-b border-border/80 "
 			}`}
 		>
-			<div className="items-center flex w-full px-12 max-w-[80rem] justify-between">
+			<div className="items-center flex w-full justify-between">
 				<Link className="font-bold text-2xl" href="/">
 					Logo
 				</Link>
-				<NavigationMenuList className="space-x-4 -mr-4">
-					{mainPage &&
-						mainNavItems.map((item, index) => (
-							<NavigationMenuItem key={index}>
-								<Link
-									href={`#${item.toLowerCase()}`}
-									legacyBehavior
-									passHref
+				<NavigationMenuList className="space-x-4">
+					{mainNavItems.map((item, index) => (
+						<NavigationMenuItem key={index}>
+							<Link
+								href={`#${item.toLowerCase()}`}
+								legacyBehavior
+								passHref
+							>
+								<NavigationMenuLink
+									className={` bg-transparent dark:hover:bg-foreground/50 hover:text-foreground ${navigationMenuTriggerStyle()}`}
+									onClick={(event) =>
+										handleNavClick(
+											event,
+											item.toLowerCase()
+										)
+									}
 								>
-									<NavigationMenuLink
-										className={` bg-transparent dark:hover:bg-foreground/50 hover:text-foreground ${navigationMenuTriggerStyle()}`}
-										onClick={(event) =>
-											handleNavClick(
-												event,
-												item.toLowerCase()
-											)
-										}
-									>
-										{item}
-									</NavigationMenuLink>
-								</Link>
-							</NavigationMenuItem>
-						))}
+									{item}
+								</NavigationMenuLink>
+							</Link>
+						</NavigationMenuItem>
+					))}
 					<ModeToggle />
-					<div className="flex">{!mainPage && <ProfileIcon />}</div>
 				</NavigationMenuList>
 			</div>
 		</NavigationMenu>
