@@ -10,6 +10,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import Navbar from "@/components/component/navbars/navbar";
 import { getAdditionalUserInfo } from "firebase/auth";
 import { useTheme } from "next-themes";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 
 export default function Home() {
 	const router = useRouter();
@@ -96,19 +103,11 @@ export default function Home() {
 	};
 
 	return (
-		<div
-			className={
-				isDarkTheme
-					? "main-page-body"
-					: isLightTheme
-					? "light-mode-body"
-					: "default-mode-body"
-			}
-		>
-			<div className="navbar sticky top-0 bg-transparent">
+		<div>
+			<div className="sticky top-0 w-full bg-transparent">
 				<Navbar mainPage={true} />
 			</div>
-			<main className="mx-11">
+			<main className="px-12 mx-auto max-w-[90rem]">
 				<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
 					<div className="border-b border-border/40 pb-10">
 						<h1 className="text-5xl font-bold pt-24 pb-6">
@@ -124,50 +123,14 @@ export default function Home() {
 							</Button>
 						</div>
 					</div>
-					<div
-						id="about"
-						className=" bg-transparent p-6 rounded-lg shadow-lg border-b border-border/40 "
-					>
-						<h1 className="text-3xl font-bold pt-20 pb-6 dark:text-white">
-							What is Linus?
-						</h1>
-						<p className="text-gray-700 dark:text-gray-300 pb-6 ">
-							Welcome to Linus, your companion, instructor, and
-							copilot as you pursue programming expertise. Linus
-							is more than just a platform; it&apos;s your clever
-							partner made to assist you in honing your project
-							and programming skills.
-						</p>
-
-						<h2 className="pb-4">
-							Envision an environment where your goals are guided
-							by a customized AI assistant and where your
-							aspirations and expertise come together. Linus gives
-							aspiring software engineers the tools they need to
-							approach their coding projects with clarity and
-							direction. Linus learns about you—your abilities,
-							aspirations, and distinct goals—through
-							a questionnaire.
-						</h2>
-						<h2 className="pb-4">
-							After getting to know you, Linus evolves from a tool
-							into a virtual partner that makes project
-							recommendations that are precisely matched to your
-							interests and skill level. Select a project, and
-							watch as Linus fits in seamlessly with your
-							workflow, providing guidance, suggestions, and
-							assistance along the way.
-						</h2>
-						<h2 className="pb-4">
-							Linus is by your side as you go on coding
-							adventures, using AI to improve your skills and help
-							you reach your objectives. Discover the endless
-							possibilities with Linus, where software engineering
-							and self-learning collide to elevate your coding
-							journey to new heights. Welcome to a smarter, more
-							efficient way to code—welcome to Linus.
-						</h2>
-					</div>
+					<Card>
+						<CardHeader>
+							<CardTitle>Try it out!</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<h1>Demo here</h1>
+						</CardContent>
+					</Card>
 				</div>
 				<div id="features" className="border-b border-border/40 pb-10">
 					<h1 className="text-3xl font-bold pt-24 pb-6 ">Features</h1>
