@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { signInWithGithub } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
@@ -13,19 +13,21 @@ import { useTheme } from "next-themes";
 
 export default function Home() {
 	const router = useRouter();
-	const { theme, setTheme } = useTheme();
-
-	let prefersDarkMode;
-	let prefersLightMode;
+	const { theme, setTheme, resolvedTheme } = useTheme();
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		prefersDarkMode =
-			window.matchMedia &&
-			window.matchMedia("(prefers-color-scheme: dark)").matches;
-		prefersLightMode =
-			window.matchMedia &&
-			window.matchMedia("(prefers-color-scheme: light)").matches;
-	}, []);
+		if (resolvedTheme) {
+			setLoading(false);
+		}
+	}, [resolvedTheme]);
+
+	const prefersDarkMode =
+		window.matchMedia &&
+		window.matchMedia("(prefers-color-scheme: dark)").matches;
+	const prefersLightMode =
+		window.matchMedia &&
+		window.matchMedia("(prefers-color-scheme: light)").matches;
 
 	const isDarkTheme =
 		theme === "dark" || (theme === "system" && prefersDarkMode);
@@ -54,6 +56,10 @@ export default function Home() {
 
 		checkAuthState();
 	}, [router]);
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
 
 	const handleSignIn = async () => {
 		if (auth.currentUser) {
