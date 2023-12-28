@@ -22,7 +22,7 @@ const NavbarLarge = ({ projects = true }) => {
 							<NavigationMenuLink key={index} asChild>
 								<Link
 									href={`/${item.toLowerCase()}`}
-									className="px-2 py-1"
+									className="px-2 py-1 hover:underline"
 								>
 									{item}
 								</Link>
