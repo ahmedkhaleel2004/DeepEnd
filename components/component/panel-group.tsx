@@ -4,8 +4,6 @@ import {
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
 
-import { NavigationMenuDemo } from "@/components/component/navbar-projects";
-
 export function PanelGroup() {
 	return (
 		<ResizablePanelGroup
