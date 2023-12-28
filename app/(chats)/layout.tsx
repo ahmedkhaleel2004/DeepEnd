@@ -6,6 +6,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
+import { ModeToggle } from "@/components/component/navbars/mode-toggle";
+import ProfileIcon from "@/components/component/navbars/profile-icon";
 
 interface ChatLayoutProps {
 	children: React.ReactNode;
@@ -46,6 +48,10 @@ function ChatLayout({ children }: ChatLayoutProps) {
 				<div className="flex flex-col w-full h-full overflow-auto">
 					{children}
 				</div>
+			</div>
+			<div className="flex top-5 right-5 fixed space-x-4">
+				<ModeToggle />
+				<ProfileIcon />
 			</div>
 		</div>
 	);
