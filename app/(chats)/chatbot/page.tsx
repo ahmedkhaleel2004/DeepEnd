@@ -5,7 +5,7 @@ import { nanoid } from "@/lib/utils";
 import Chat from "@/components/component/chatbot/chat";
 
 const Chatbot = () => {
-	const id = nanoid();
+	const id = nanoid(); //creating an id
 
 	return (
 		<main className="w-full flex justify-center">
