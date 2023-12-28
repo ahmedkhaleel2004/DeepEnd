@@ -104,11 +104,9 @@ export default function Home() {
 
 	return (
 		<div>
-			<div className="sticky top-0 w-full bg-transparent">
-				<Navbar mainPage={true} />
-			</div>
+			<Navbar mainPage={true} />
 			<main className="px-12 mx-auto max-w-[90rem]">
-				<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+				<div className="grid sm:grid-cols-1 mt-16 md:grid-cols-2 gap-4">
 					<div className="border-b border-border/40 pb-10">
 						<h1 className="text-5xl font-bold pt-24 pb-6">
 							Your Personal Project Partner
@@ -118,12 +116,15 @@ export default function Home() {
 							engineers
 						</h2>
 						<div className="pt-5">
-							<Button onClick={handleSignIn}>
+							<Button
+								className="text-white"
+								onClick={handleSignIn}
+							>
 								Sign in with GitHub
 							</Button>
 						</div>
 					</div>
-					<Card>
+					<Card className="shadow-xl">
 						<CardHeader>
 							<CardTitle>Try it out!</CardTitle>
 						</CardHeader>
