@@ -8,8 +8,8 @@ import { doc, getDoc } from "firebase/firestore";
 import Navbar from "@/components/component/navbars/navbar";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
-import { PanelGroup } from "@/components/component/panel-group";
-import { ConstructGridLayout } from "@/components/component/grid-layout-projects";
+import { PanelGroup } from "@/components/component/projects/panel-group";
+import GridProjects from "@/components/component/projects/grid-projects";
 
 const Projects = () => {
 	const router = useRouter();
@@ -42,6 +42,7 @@ const Projects = () => {
 				<h1 className="text-3xl font-bold">Projects</h1>
 				<p>Choose a project to view</p>
 			</div>
+			<GridProjects />
 		</main>
 	);
 };
