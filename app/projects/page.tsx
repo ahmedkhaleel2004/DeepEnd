@@ -5,11 +5,11 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import Navbar from "@/components/component/navbars/navbar";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { PanelGroup } from "@/components/component/projects/panel-group";
 import GridProjects from "@/components/component/projects/grid-projects";
+import NavbarLarge from "@/components/component/navbars/navbar-large";
 
 const Projects = () => {
 	const router = useRouter();
@@ -37,7 +37,9 @@ const Projects = () => {
 
 	return (
 		<main>
-			<Navbar mainPage={false} />
+			<div className="border flex flex-row w-full max-w-full">
+				<NavbarLarge projects={true} />
+			</div>
 			<div>
 				<h1 className="text-3xl font-bold">Projects</h1>
 				<p>Choose a project to view</p>
