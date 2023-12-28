@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useChat, type Message } from "ai/react";
 import ChatList from "./chat-list";
 import EmptyScreen from "./empty-screen";
@@ -6,6 +6,8 @@ import ChatPanel from "./chat-panel";
 import ChatScrollAnchor from "@/components/component/chatbot/chat-scroll-anchor";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export interface ChatProps extends React.ComponentProps<"div"> {
 	initialMessages?: Message[];
@@ -15,7 +17,8 @@ export interface ChatProps extends React.ComponentProps<"div"> {
 const Chat = ({ id, initialMessages }: ChatProps) => {
 	const { messages, append, input, setInput, stop, reload, isLoading } =
 		useChat({ initialMessages });
-	const userId = auth.currentUser?.uid ?? "";
+	const router = useRouter();
+	const [userId, setUserId] = useState<string | null>(null);
 
 	// set messages in firestore
 	const updateConversation = async (messages: Message[]) => {
@@ -32,25 +35,36 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 		await setDoc(conversationRef, conversationData, { merge: true }); // add dat message
 	};
 
+	const checkAndRedirect = async () => {
+		if (!userId || !id) return;
+		const conversationRef = doc(db, "conversations", userId);
+		const conversationSnap = await getDoc(conversationRef);
+		if (conversationSnap.exists()) {
+			const conversationData = conversationSnap.data();
+			if (conversationData?.general?.[id]) {
+				router.push(`/chatbot/${id}`);
+			}
+		}
+	};
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				setUserId(user.uid);
+			} else {
+				setUserId(null);
+			}
+		});
+
+		return () => unsubscribe(); // Clean up subscription on unmount
+	}, []);
+
 	useEffect(() => {
 		if (!isLoading) {
 			updateConversation(messages);
-			getMessages();
+			checkAndRedirect();
 		}
 	}, [messages, isLoading]);
-
-	// get messages from firestore
-	const getMessages = async () => {
-		if (!userId) return;
-		const conversationRef = doc(db, "conversations", userId);
-		const conversationSnap = await getDoc(conversationRef);
-		const conversationData = conversationSnap.data();
-		if (!conversationData) return;
-		console.log(userId);
-		console.log(conversationData);
-		const chatmessages = conversationData.general[id ?? ""] ?? [];
-		console.log(chatmessages);
-	};
 
 	return (
 		<>
