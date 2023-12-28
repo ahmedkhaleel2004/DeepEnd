@@ -35,7 +35,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 
 			await setDoc(conversationRef, conversationData, { merge: true }); // add dat message
 		},
-		[userId, id]
+		[userId, id, router]
 	);
 
 	const checkAndRedirect = useCallback(async () => {

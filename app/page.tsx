@@ -15,12 +15,17 @@ export default function Home() {
 	const router = useRouter();
 	const { theme, setTheme } = useTheme();
 
-	const prefersDarkMode =
-		window.matchMedia &&
-		window.matchMedia("(prefers-color-scheme: dark)").matches;
-	const prefersLightMode =
-		window.matchMedia &&
-		window.matchMedia("(prefers-color-scheme: light)").matches;
+	let prefersDarkMode;
+	let prefersLightMode;
+
+	useEffect(() => {
+		prefersDarkMode =
+			window.matchMedia &&
+			window.matchMedia("(prefers-color-scheme: dark)").matches;
+		prefersLightMode =
+			window.matchMedia &&
+			window.matchMedia("(prefers-color-scheme: light)").matches;
+	}, []);
 
 	const isDarkTheme =
 		theme === "dark" || (theme === "system" && prefersDarkMode);
