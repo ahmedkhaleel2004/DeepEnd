@@ -24,13 +24,20 @@ const getChat = async (chatID: string, userID: string) => {
 const ChatwithID = () => {
 	const [userId, setUserId] = useState<string | null>(null);
 	const pathname = usePathname();
+	const router = useRouter();
 	const chatId = pathname.split("/")[2];
 	const [chat, setChat] = useState<Message[] | undefined>(undefined);
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {
 				setUserId(user.uid);
-				getChat(chatId, user.uid).then((chatData) => setChat(chatData));
+				getChat(chatId, user.uid).then((chatData) => {
+					if (chatData) {
+						setChat(chatData);
+					} else {
+						router.push("/chatbot");
+					}
+				});
 			} else {
 				setUserId(null);
 			}
