@@ -51,8 +51,11 @@ const ProfileIcon = () => {
 					</Avatar>
 				</div>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent>
-				<DropdownMenuItem onClick={handleSignOut}>
+			<DropdownMenuContent align="end">
+				<DropdownMenuItem
+					className="cursor-pointer"
+					onClick={handleSignOut}
+				>
 					Sign Out
 				</DropdownMenuItem>
 			</DropdownMenuContent>
