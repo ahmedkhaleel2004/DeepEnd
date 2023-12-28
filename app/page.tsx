@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { signInWithGithub } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
@@ -17,27 +17,13 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { IconGitHub } from "@/components/ui/icons";
+import Image from "next/image";
+// import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
 	const router = useRouter();
-	const { theme, setTheme } = useTheme();
-
-	const prefersDarkMode = useRef(false);
-	const prefersLightMode = useRef(false);
-
-	useEffect(() => {
-		prefersDarkMode.current =
-			window.matchMedia &&
-			window.matchMedia("(prefers-color-scheme: dark)").matches;
-		prefersLightMode.current =
-			window.matchMedia &&
-			window.matchMedia("(prefers-color-scheme: light)").matches;
-	}, []);
-
-	const isDarkTheme =
-		theme === "dark" || (theme === "system" && prefersDarkMode);
-	const isLightTheme =
-		theme === "light" || (theme === "system" && prefersLightMode);
 
 	useEffect(() => {
 		const checkAuthState = async () => {
@@ -104,26 +90,28 @@ export default function Home() {
 
 	return (
 		<div>
-			<div className="sticky top-0 w-full bg-transparent">
-				<Navbar mainPage={true} />
-			</div>
-			<main className="px-12 mx-auto max-w-[90rem]">
-				<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-					<div className="border-b border-border/40 pb-10">
+			<Navbar mainPage={true} />
+			<main className="px-12 mx-auto max-w-[80rem]">
+				<div className="grid sm:grid-cols-1 mt-16 md:grid-cols-2">
+					<div>
 						<h1 className="text-5xl font-bold pt-24 pb-6">
 							Your Personal Project Partner
 						</h1>
 						<h2 className="text-base font-normal">
-							Self-learning copilot for aspiring software
-							engineers
+							Linus is the self-learning copilot for aspiring
+							software engineers
 						</h2>
-						<div className="pt-5">
-							<Button onClick={handleSignIn}>
+						<div className="mt-5">
+							<Button
+								className="hover:text-zinc-950 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+								onClick={handleSignIn}
+							>
+								<IconGitHub className="w-5 h-5 mr-2" />
 								Sign in with GitHub
 							</Button>
 						</div>
 					</div>
-					<Card>
+					<Card className="shadow-xl rounded-3xl bg-background/80">
 						<CardHeader>
 							<CardTitle>Try it out!</CardTitle>
 						</CardHeader>
@@ -132,40 +120,116 @@ export default function Home() {
 						</CardContent>
 					</Card>
 				</div>
-				<div id="features" className="border-b border-border/40 pb-10">
-					<h1 className="text-3xl font-bold pt-24 pb-6 ">Features</h1>
-					<h2>chatbot, project recommendations, timeline.</h2>
-				</div>
-				<div id="demo" className="border-b border-border/40 pb-10">
-					<h1 className="text-3xl font-bold pt-24 pb-6 ">Demo</h1>
-					<h2>Demo is probably going to be big</h2>
-				</div>
-				<div className="border-b border-border/40 pb-10">
-					<h1 className="text-3xl font-bold pt-24 pb-6 ">
-						this is just for space
+				<Separator className="my-16 bg-white dark:bg-zinc-700" />
+				{/* I was trying to add framer motion 💀
+				<motion.div
+					layoutId={"chatbot"}
+					onClick={() => setSelectedId("chatbot")}
+				>
+					<motion.h5>{"Subtitle"}</motion.h5>
+					<motion.h2>{"Title"}</motion.h2>
+				</motion.div>
+				<AnimatePresence>
+					{selectedId && (
+						<motion.div layoutId={selectedId}>
+							<motion.h5>{"New subtitle"}</motion.h5>
+							<motion.h2>{"New title"}</motion.h2>
+							<motion.button
+								onClick={() => setSelectedId(null)}
+							/>
+						</motion.div>
+					)}
+				</AnimatePresence> */}
+				<Card className="rounded-3xl pb-8 bg-background/80">
+					<CardHeader className="text-center my-4">
+						<CardTitle className="text-3xl">
+							An end-to-end solution
+						</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="flex space-x-16 mx-8">
+							<Card className="rounded-2xl">
+								<Image
+									src="/chatbot.png"
+									alt="Chatbot"
+									width={500}
+									height={300}
+									className="rounded-t-2xl"
+								/>
+								<CardContent className="h-auto p-5 rounded-b-xl">
+									<CardTitle className="mb-2">
+										Chatbot
+									</CardTitle>
+									<p>
+										Get personally curated advice on your
+										career in the tech industry.
+									</p>
+								</CardContent>
+							</Card>
+							<Card className="rounded-2xl">
+								<Image
+									src="/recommendation.png"
+									alt="Recommendation"
+									width={500}
+									height={300}
+									className="rounded-t-2xl"
+								/>
+								<CardContent className="h-auto p-5 rounded-b-xl">
+									<CardTitle className="mb-2">
+										Recommendation
+									</CardTitle>
+									<p>
+										Receive project ideas based on your own
+										experience and goals.
+									</p>
+								</CardContent>
+							</Card>
+							<Card className="rounded-2xl">
+								<Image
+									src="/timeline.png"
+									alt="Timeline"
+									width={500}
+									height={300}
+									className="rounded-t-2xl"
+								/>
+								<CardContent className="h-auto p-5 rounded-b-xl">
+									<CardTitle className="mb-2">
+										Timeline
+									</CardTitle>
+									<p>
+										Generate specific timelines including
+										technical guidance.
+									</p>
+								</CardContent>
+							</Card>
+						</div>
+					</CardContent>
+				</Card>
+				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />
+				<div>
+					<h1 className="text-3xl font-bold pb-6">
+						How could I interest you
 					</h1>
-					<h2>second last</h2>
+					<h2>In Jean Paul Baptiste?</h2>
 				</div>
-				<div className="border-b border-border/40 pb-10">
-					<h1 className="text-3xl font-bold pt-24 pb-6 ">
-						this is just for space
+				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />
+				<div>
+					<h1 className="text-3xl font-bold pb-6">
+						Another section here...
 					</h1>
-					<h2>second last</h2>
+					<h2>That describes our amazing product.</h2>
 				</div>
-				<div className="border-b border-border/40 pb-10">
-					<h1 className="text-3xl font-bold pt-24 pb-6 ">
-						this is just for space
-					</h1>
-					<h2>second last</h2>
-				</div>
+				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />
 				<div id="contact">
-					<h1 className="text-3xl font-bold pt-24 pb-6 ">Contact</h1>
-					<a href="mailto:zakamm@gmail.com?subject = Feedback&body = Message">
+					<h1 className="text-3xl font-bold pb-6">Contact</h1>
+					<a
+						className="hover:underline"
+						href="mailto:zakamm@gmail.com?subject = Feedback&body = Message"
+					>
 						Send Us Feedback
 					</a>
-					<a href="tel:365-883-2277">Click to call us</a>
 				</div>
-				<footer className="mt-5 pt-5 border-t border-border/40 text-center">
+				<footer className="mt-5 pt-5 text-center">
 					© LinusCorp 2023
 				</footer>
 			</main>

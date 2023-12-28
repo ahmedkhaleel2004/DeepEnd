@@ -45,11 +45,15 @@ const ChatMessage: React.FC<MessageProps> = ({ role, content }) => {
 			<div className="mt-2">
 				<strong>{role}</strong>
 				<MemoizedReactMarkdown
-					className="max-w-xs sm:max-w-xl md:max-w-2xl mr-[2rem] lg:max-w-none prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+					className="max-w-xs sm:max-w-xl md:max-w-2xl mr-[2rem] lg:max-w-screen prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
 					remarkPlugins={[remarkGfm, remarkMath]}
 					components={{
 						p({ children }) {
-							return <p className="mb-4 last:mb-0">{children}</p>;
+							return (
+								<p className="mb-4 last:mb-0 text-zinc-950 dark:text-zinc-50">
+									{children}
+								</p>
+							);
 						},
 						code({ node, inline, className, children, ...props }) {
 							const match = /language-(\w+)/.exec(
