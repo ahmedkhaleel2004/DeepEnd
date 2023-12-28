@@ -58,7 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 				<NavigationMenuList className="space-x-4 -mr-4">
 					{mainPage &&
 						mainNavItems.map((item, index) => (
-							<NavigationMenuItem>
+							<NavigationMenuItem key={index}>
 								<Link
 									href={`#${item.toLowerCase()}`}
 									legacyBehavior

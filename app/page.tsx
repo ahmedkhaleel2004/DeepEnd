@@ -24,15 +24,6 @@ import Image from "next/image";
 
 export default function Home() {
 	const router = useRouter();
-	const { resolvedTheme } = useTheme();
-	const [loading, setLoading] = useState(true);
-	const [selectedId, setSelectedId] = useState<string | null>(null);
-
-	useEffect(() => {
-		if (resolvedTheme) {
-			setLoading(false);
-		}
-	}, [resolvedTheme]);
 
 	useEffect(() => {
 		const checkAuthState = async () => {
@@ -56,10 +47,6 @@ export default function Home() {
 
 		checkAuthState();
 	}, [router]);
-
-	if (loading) {
-		return <div>Loading...</div>;
-	}
 
 	const handleSignIn = async () => {
 		if (auth.currentUser) {
