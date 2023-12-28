@@ -15,7 +15,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ButtonIcon } from "./button-right";
+import { FaChevronRight } from "react-icons/fa";
 
 const formSchema = z.object({
 	input: z.string().min(2, {
@@ -73,7 +73,9 @@ export function FormQuestion({
 						</FormItem>
 					)}
 				/>
-				<ButtonIcon />
+				<Button variant="outline" size="icon">
+					<FaChevronRight className="h-4 w-4" />
+				</Button>
 			</form>
 		</Form>
 	);

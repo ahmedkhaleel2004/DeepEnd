@@ -40,6 +40,7 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
+					<div className="fixed h-screen w-full bg-gradient-to-br dark:from-zinc-700 dark:to-zinc-900 from-zinc-50 to-zinc-400 -z-10" />
 					{children}
 				</ThemeProvider>
 			</body>

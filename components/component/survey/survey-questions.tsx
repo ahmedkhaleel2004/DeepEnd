@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card } from "../ui/card";
+import { Card } from "../../ui/card";
 import { FormQuestion } from "./input-form";
 import { auth, db } from "@/lib/firebase";
 import questions from "@/lib/questions";

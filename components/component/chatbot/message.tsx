@@ -12,7 +12,7 @@ interface MessageProps {
 	role: string;
 }
 
-const Message: React.FC<MessageProps> = ({ role, content }) => {
+const ChatMessage: React.FC<MessageProps> = ({ role, content }) => {
 	const [photoURL, setPhotoURL] = useState<string | null>("");
 
 	useEffect(() => {
@@ -45,7 +45,7 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 			<div className="mt-2">
 				<strong>{role}</strong>
 				<MemoizedReactMarkdown
-					className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+					className="max-w-xs sm:max-w-xl md:max-w-2xl mr-[2rem] lg:max-w-none prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
 					remarkPlugins={[remarkGfm, remarkMath]}
 					components={{
 						p({ children }) {
@@ -58,7 +58,7 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 							if (inline) {
 								return (
 									<code
-										className={`font-mono ${className}`}
+										className={`font-mono relative rounded bg-muted px-[0.3rem] py-[0.2rem] mx-[0.2rem] text-sm font-semibold ${className}`}
 										{...props}
 									>
 										{children}
@@ -84,4 +84,4 @@ const Message: React.FC<MessageProps> = ({ role, content }) => {
 	);
 };
 
-export default Message;
+export default ChatMessage;

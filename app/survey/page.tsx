@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import Navbar from "@/components/component/navbar";
-import SurveyQuestions from "@/components/component/survey-questions";
-import SurveyComplete from "@/components/component/survey-complete";
+import Navbar from "@/components/component/navbars/navbar";
+import SurveyQuestions from "@/components/component/survey/survey-questions";
+import SurveyComplete from "@/components/component/survey/survey-complete";
 
 const Survey = () => {
 	const router = useRouter();
