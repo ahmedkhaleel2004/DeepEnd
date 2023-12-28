@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useChat, type Message } from "ai/react";
 import ChatList from "./chat-list";
 import EmptyScreen from "./empty-screen";
@@ -21,21 +21,24 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 	const [userId, setUserId] = useState<string | null>(null);
 
 	// set messages in firestore
-	const updateConversation = async (messages: Message[]) => {
-		// adds the messages to the chat
-		if (!userId || messages.length === 0) return;
-		const conversationRef = doc(db, "conversations", userId);
+	const updateConversation = useCallback(
+		async (messages: Message[]) => {
+			// adds the messages to the chat
+			if (!userId || messages.length === 0) return;
+			const conversationRef = doc(db, "conversations", userId);
 
-		const conversationData = {
-			general: {
-				[id?.toString() ?? ""]: messages, // id was clutch my dargg (:joy_cat:)
-			},
-		};
+			const conversationData = {
+				general: {
+					[id?.toString() ?? ""]: messages, // id was clutch my dargg (:joy_cat:)
+				},
+			};
 
-		await setDoc(conversationRef, conversationData, { merge: true }); // add dat message
-	};
+			await setDoc(conversationRef, conversationData, { merge: true }); // add dat message
+		},
+		[userId, id]
+	);
 
-	const checkAndRedirect = async () => {
+	const checkAndRedirect = useCallback(async () => {
 		if (!userId || !id) return;
 		const conversationRef = doc(db, "conversations", userId);
 		const conversationSnap = await getDoc(conversationRef);
@@ -45,7 +48,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 				router.push(`/chatbot/${id}`);
 			}
 		}
-	};
+	}, [userId, id]);
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
