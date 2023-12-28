@@ -87,5 +87,8 @@ along with all zinc-50 to zinc-200 */
 } */
 
 .main-page-body {
-    background: linear-gradient(to right, #18181b, #3f3f46);
+    background: linear-gradient(to bottom right, #1a1a1f, #15153f);
+}
+.light-mode-body {
+    background: linear-gradient(to bottom right, #ffffff, #9e9e9e);
 }

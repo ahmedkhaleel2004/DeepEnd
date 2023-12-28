@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React, { useEffect } from "react";
 import { signInWithGithub } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
@@ -10,9 +9,23 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import Navbar from "@/components/component/navbars/navbar";
 import { getAdditionalUserInfo } from "firebase/auth";
+import { useTheme } from "next-themes";
 
 export default function Home() {
 	const router = useRouter();
+	const { theme, setTheme } = useTheme();
+
+	const prefersDarkMode =
+		window.matchMedia &&
+		window.matchMedia("(prefers-color-scheme: dark)").matches;
+	const prefersLightMode =
+		window.matchMedia &&
+		window.matchMedia("(prefers-color-scheme: light)").matches;
+
+	const isDarkTheme =
+		theme === "dark" || (theme === "system" && prefersDarkMode);
+	const isLightTheme =
+		theme === "light" || (theme === "system" && prefersLightMode);
 
 	useEffect(() => {
 		const checkAuthState = async () => {
@@ -78,8 +91,16 @@ export default function Home() {
 	};
 
 	return (
-		<div className="main-page-body">
-			<div className="navbar sticky top-0 bg-dark">
+		<div
+			className={
+				isDarkTheme
+					? "main-page-body"
+					: isLightTheme
+					? "light-mode-body"
+					: "default-mode-body"
+			}
+		>
+			<div className="navbar sticky top-0 bg-transparent">
 				<Navbar mainPage={true} />
 			</div>
 			<main className="mx-11">
@@ -100,7 +121,7 @@ export default function Home() {
 					</div>
 					<div
 						id="about"
-						className="dark:bg-gray-800 bg-white p-6 rounded-lg shadow-lg"
+						className=" bg-transparent p-6 rounded-lg shadow-lg border-b border-border/40 "
 					>
 						<h1 className="text-3xl font-bold pt-20 pb-6 dark:text-white">
 							What is Linus?

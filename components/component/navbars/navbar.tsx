@@ -28,9 +28,26 @@ function useUser() {
 interface NavbarProps {
 	mainPage?: boolean;
 }
+
 const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 	const mainNavItems = ["About", "Features", "Demo", "Contact"];
 	const user = useUser();
+
+	const [scrolled, setScrolled] = useState(false);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const isScrolled = window.scrollY > 50;
+			if (isScrolled !== scrolled) {
+				setScrolled(!scrolled);
+			}
+		};
+
+		document.addEventListener("scroll", handleScroll);
+		return () => {
+			document.removeEventListener("scroll", handleScroll);
+		};
+	}, [scrolled]);
 
 	const handleNavClick = (
 		event: React.MouseEvent<HTMLAnchorElement>,
@@ -42,8 +59,9 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 
 	return (
 		<NavigationMenu
-			className=" items-center justify-between max-w-full mb-2 px-2 border-b border-border/40 py-2"
-			style={{ backgroundColor: "hsl(var(--background))" }}
+			className={`items-center justify-between max-w-full mb-2 px-2 border-b border-border/40 py-2 backdrop-blur-lg transition-colors duration-300 ${
+				scrolled ? "bg-black bg-opacity-[0.15]" : "bg-transparent"
+			}`}
 		>
 			<div className="group list-none items-center space-x-1 flex justify-end ml-auto">
 				{mainPage &&
