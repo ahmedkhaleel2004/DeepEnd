@@ -60,7 +60,7 @@ export function NavigationMenuDemo() {
 	return (
 		<NavigationMenu>
 			<NavigationMenuList>
-				<NavigationMenuItem>
+				<NavigationMenuItem className="flex-col">
 					<NavigationMenuTrigger>
 						Getting started
 					</NavigationMenuTrigger>
@@ -104,7 +104,7 @@ export function NavigationMenuDemo() {
 						</ul>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
-				<NavigationMenuItem>
+				<NavigationMenuItem className="flex-col">
 					<NavigationMenuTrigger>Components</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
@@ -120,7 +120,7 @@ export function NavigationMenuDemo() {
 						</ul>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
-				<NavigationMenuItem>
+				<NavigationMenuItem className="flex-col">
 					<Link href="/docs" legacyBehavior passHref>
 						<NavigationMenuLink
 							className={navigationMenuTriggerStyle()}
