@@ -35,7 +35,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 
 			await setDoc(conversationRef, conversationData, { merge: true }); // add dat message
 		},
-		[userId, id, router]
+		[userId, id]
 	);
 
 	const checkAndRedirect = useCallback(async () => {
@@ -48,7 +48,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 				router.push(`/chatbot/${id}`);
 			}
 		}
-	}, [userId, id]);
+	}, [userId, id, router]);
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {

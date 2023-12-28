@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { signInWithGithub } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
@@ -15,14 +15,14 @@ export default function Home() {
 	const router = useRouter();
 	const { theme, setTheme } = useTheme();
 
-	let prefersDarkMode;
-	let prefersLightMode;
+	const prefersDarkMode = useRef(false);
+	const prefersLightMode = useRef(false);
 
 	useEffect(() => {
-		prefersDarkMode =
+		prefersDarkMode.current =
 			window.matchMedia &&
 			window.matchMedia("(prefers-color-scheme: dark)").matches;
-		prefersLightMode =
+		prefersLightMode.current =
 			window.matchMedia &&
 			window.matchMedia("(prefers-color-scheme: light)").matches;
 	}, []);
