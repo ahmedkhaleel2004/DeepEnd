@@ -114,7 +114,7 @@ export default function Home() {
 				<Navbar mainPage={true} />
 			</div>
 			<main className="px-12 mx-auto max-w-[90rem]">
-				<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+				<div className="grid sm:grid-cols-1 mt-16 md:grid-cols-2 gap-4">
 					<div className="border-b border-border/40 pb-10">
 						<h1 className="text-5xl font-bold pt-24 pb-6">
 							Your Personal Project Partner
@@ -124,12 +124,15 @@ export default function Home() {
 							engineers
 						</h2>
 						<div className="pt-5">
-							<Button onClick={handleSignIn}>
+							<Button
+								className="text-white"
+								onClick={handleSignIn}
+							>
 								Sign in with GitHub
 							</Button>
 						</div>
 					</div>
-					<Card>
+					<Card className="shadow-xl">
 						<CardHeader>
 							<CardTitle>Try it out!</CardTitle>
 						</CardHeader>
@@ -138,10 +141,48 @@ export default function Home() {
 						</CardContent>
 					</Card>
 				</div>
-				<div id="features" className="border-b border-border/40 pb-10">
-					<h1 className="text-3xl font-bold pt-24 pb-6 ">Features</h1>
-					<h2>chatbot, project recommendations, timeline.</h2>
-				</div>
+				<Card className="py-10 w-full text-center mt-10 bg-black bg-opacity-50">
+					<CardHeader>
+						<CardTitle>Features</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="flex justify-around">
+							<Card className="card border border-gray-300 rounded-2xl w-96 h-auto">
+								<img
+									src="/jbp.png"
+									alt="Image 1"
+									className="w-full h-5/5 object-cover rounded-t-2xl"
+								/>
+								<CardContent className="h-auto p-5 bg-zinc-800 rounded-b-xl">
+									<h1>Description 1</h1>
+									<p className="break-words ">hello</p>
+								</CardContent>
+							</Card>
+							<Card className="card border border-gray-300 rounded-2xl w-96 h-auto">
+								<img
+									src="/jbp.png"
+									alt="Image 1"
+									className="w-full h-5/5 object-cover rounded-t-2xl"
+								/>
+								<CardContent className="h-auto p-5 bg-zinc-800 rounded-b-xl">
+									<h1>Description 1</h1>
+									<p className="break-words ">hello</p>
+								</CardContent>
+							</Card>
+							<Card className="card border border-gray-300 rounded-xl w-96 h-auto">
+								<img
+									src="/jbp.png"
+									alt="Image 1"
+									className="w-full h-5/5 object-cover rounded-t-2xl"
+								/>
+								<CardContent className="h-auto p-5 bg-zinc-800 rounded-b-xl">
+									<h1>Description 1</h1>
+									<p className="break-words ">hello</p>
+								</CardContent>
+							</Card>
+						</div>
+					</CardContent>
+				</Card>
 				<div id="demo" className="border-b border-border/40 pb-10">
 					<h1 className="text-3xl font-bold pt-24 pb-6 ">Demo</h1>
 					<h2>Demo is probably going to be big</h2>

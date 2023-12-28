@@ -17,7 +17,7 @@ along with all zinc-50 to zinc-200 */
 		--popover-foreground: 240 6% 10%;
 
 		--primary: 240 5.9% 10%;
-		--primary-foreground: 240 6% 90%;
+		--primary-foreground: 0 0% 100%;
 
 		--secondary: 240 4.8% 95.9%;
 		--secondary-foreground: 240 5.9% 10%;
@@ -29,7 +29,7 @@ along with all zinc-50 to zinc-200 */
 		--accent-foreground: 240 5.9% 10%;
 
 		--destructive: 0 84.2% 60.2%;
-		--destructive-foreground: 240 6% 90%;
+		--destructive-foreground: 0 0% 100%;
 
 		--border: 240 5.9% 90%;
 		--input: 240 5.9% 90%;
@@ -40,28 +40,28 @@ along with all zinc-50 to zinc-200 */
 
 	.dark {
 		--background: 240 6% 10%;
-		--foreground: 240 6% 90%;
+		--foreground: 0 0% 100%;
 
 		--card: 240 6% 10%;
-		--card-foreground: 240 6% 90%;
+		--card-foreground: 0 0% 100%;
 
 		--popover: 240 6% 10%;
-		--popover-foreground: 240 6% 90%;
+		--popover-foreground: 0 0% 100%;
 
-		--primary: 240 6% 90%;
+		--primary: 0 0% 100%;
 		--primary-foreground: 240 5.9% 10%;
 
 		--secondary: 240 3.7% 15.9%;
-		--secondary-foreground: 240 6% 90%;
+		--secondary-foreground: 0 0% 100%;
 
 		--muted: 240 3.7% 15.9%;
 		--muted-foreground: 240 5% 64.9%;
 
 		--accent: 240 3.7% 15.9%;
-		--accent-foreground: 240 6% 90%;
+		--accent-foreground: 0 0% 100%;
 
 		--destructive: 0 62.8% 30.6%;
-		--destructive-foreground: 240 6% 90%;
+		--destructive-foreground: 0 0% 100%;
 
 		--border: 240 3.7% 15.9%;
 		--input: 240 3.7% 15.9%;
@@ -92,3 +92,8 @@ along with all zinc-50 to zinc-200 */
 .light-mode-body {
     background: linear-gradient(to bottom right, #ffffff, #9e9e9e);
 }
+.img {
+	object-fit: cover;
+	height: 100%;
+	width: 100%;
+  }
