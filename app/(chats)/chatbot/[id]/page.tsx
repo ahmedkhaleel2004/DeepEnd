@@ -37,7 +37,7 @@ const ChatwithID = () => {
 		});
 
 		return () => unsubscribe(); // Clean up subscription on unmount
-	}, []);
+	}, [chatId]);
 	return (
 		<main className="w-full flex justify-center">
 			<div className="flex flex-col max-w-4xl w-full">

@@ -64,7 +64,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 			updateConversation(messages);
 			checkAndRedirect();
 		}
-	}, [messages, isLoading]);
+	}, [messages, isLoading, checkAndRedirect, updateConversation]);
 
 	return (
 		<>
