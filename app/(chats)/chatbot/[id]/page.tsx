@@ -33,7 +33,7 @@ const ChatwithID = () => {
 				setUserId(user.uid);
 				getChat(chatId, user.uid).then((chatData) => {
 					if (chatData) {
-						setChat(chatData);
+						setChat(chatData.messages);
 					} else {
 						router.push("/chatbot");
 					}

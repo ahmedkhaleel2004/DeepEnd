@@ -22,7 +22,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 
 	const getConversationName = (messages: Message[]) => {
 		return messages.length > 0 ? messages[0].content.substring(0, 50) : "";
-	}; // gets the first 50 characters of the first message, need to add to firestore through updateConversation
+	}; // gets the first 50 characters of the first message and sets it as the name of the chat
 
 	// set messages in firestore
 	const updateConversation = useCallback(
@@ -33,7 +33,10 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 
 			const conversationData = {
 				general: {
-					[id?.toString() ?? ""]: messages, // id was clutch my dargg (:joy_cat:)
+					[id?.toString() ?? ""]: {
+						messages: messages,
+						name: getConversationName(messages),
+					},
 				},
 			};
 

@@ -21,8 +21,15 @@ interface SidebarProps {
 	userId: string;
 }
 
+interface Conversation {
+	id: string;
+	name: string;
+}
+
 const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
-	const [conversations, setConversations] = React.useState<string[]>([]);
+	const [conversations, setConversations] = React.useState<Conversation[]>(
+		[]
+	);
 	const router = useRouter();
 	const pathname = usePathname();
 
@@ -35,9 +42,12 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 					conversationRef,
 					(docSnapshot) => {
 						if (docSnapshot.exists()) {
-							const conversationData = Object.keys(
-								docSnapshot.data()?.general ?? {}
-							);
+							const general = docSnapshot.data()?.general ?? {};
+							const conversationData: Conversation[] =
+								Object.entries(general).map(([id, value]) => ({
+									id,
+									name: (value as Conversation).name,
+								}));
 							setConversations(conversationData);
 						} else {
 							console.log("No such document!");
@@ -65,7 +75,9 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 			}
 
 			setConversations(
-				conversations.filter((id) => id !== conversationId)
+				conversations.filter(
+					(conversation) => conversation.id !== conversationId
+				)
 			);
 		} catch (error) {
 			console.error("Error deleting conversation: ", error);
@@ -88,25 +100,23 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 							<AccordionTrigger className="text-2xl font-bold">
 								General
 							</AccordionTrigger>
-							{conversations.map((conversationId) => (
+							{conversations.map(({ id, name }) => (
 								<AccordionContent
-									key={conversationId}
+									key={id}
 									className="pb-0 pt-0 p-2 mb-2 flex items-center hover:bg-zinc-800 rounded-md duration-200"
 								>
 									<Link
-										href={`/chatbot/${conversationId}`}
+										href={`/chatbot/${id}`}
 										className=" flex grow items-center"
 									>
 										<div className="flex items-center gap-2">
 											<ChatBubbleIcon />
-											{conversationId}
+											{name}
 										</div>
 									</Link>
 									<div
 										className="hover:bg-zinc-700 rounded-md duration-200 cursor-pointer p-1"
-										onClick={() =>
-											deleteConversation(conversationId)
-										}
+										onClick={() => deleteConversation(id)}
 									>
 										<TrashIcon />
 									</div>
