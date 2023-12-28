@@ -110,9 +110,7 @@ export default function Home() {
 
 	return (
 		<div>
-			<div className="sticky top-0 w-full bg-transparent">
-				<Navbar mainPage={true} />
-			</div>
+			<Navbar mainPage={true} />
 			<main className="px-12 mx-auto max-w-[90rem]">
 				<div className="grid sm:grid-cols-1 mt-16 md:grid-cols-2 gap-4">
 					<div className="border-b border-border/40 pb-10">

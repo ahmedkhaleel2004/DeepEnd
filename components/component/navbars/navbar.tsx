@@ -6,24 +6,12 @@ import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import {
 	NavigationMenu,
+	NavigationMenuList,
 	NavigationMenuLink,
+	NavigationMenuItem,
+	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
-
-function useUser() {
-	const [user, setUser] = useState(getAuth().currentUser);
-
-	useEffect(() => {
-		const unsubscribe = getAuth().onAuthStateChanged((user) => {
-			setUser(user);
-		});
-
-		// Cleanup subscription on unmount
-		return () => unsubscribe();
-	}, []);
-
-	return user;
-}
 
 interface NavbarProps {
 	mainPage?: boolean;
@@ -31,8 +19,6 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 	const mainNavItems = ["About", "Features", "Demo", "Contact"];
-	const user = useUser();
-
 	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {
@@ -59,33 +45,41 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 
 	return (
 		<NavigationMenu
-			className={`items-center justify-between max-w-full mb-2 px-2 border-b border-border/40 py-2 backdrop-blur-lg transition-colors duration-300 ${
-				scrolled ? "bg-black bg-opacity-[0.15]" : "bg-transparent"
+			className={`sticky top-0 w-full bg-transparent max-w-none items-center mb-2 px-2 py-4 backdrop-blur-lg transition-colors duration-300 ${
+				scrolled &&
+				"bg-black bg-opacity-[0.15] border-b border-border/80 "
 			}`}
 		>
-			<div className="group list-none items-center space-x-1 flex justify-end ml-auto">
-				{mainPage &&
-					mainNavItems.map((item, index) => (
-						<NavigationMenuLink key={index} asChild>
-							<Link
-								href={`#${item.toLowerCase()}`}
-								className="px-2 py-1"
-								onClick={(event) =>
-									handleNavClick(event, item.toLowerCase())
-								}
-							>
-								{item}
-							</Link>
-						</NavigationMenuLink>
-					))}
-				<div className="flex space-x-4">
+			<div className="flex w-full px-12 max-w-[90rem] justify-between">
+				<Link className="font-bold text-2xl" href="/">
+					Logo
+				</Link>
+				<NavigationMenuList className="space-x-4 -mr-4">
+					{mainPage &&
+						mainNavItems.map((item, index) => (
+							<NavigationMenuItem>
+								<Link
+									href={`#${item.toLowerCase()}`}
+									legacyBehavior
+									passHref
+								>
+									<NavigationMenuLink
+										className={navigationMenuTriggerStyle()}
+										onClick={(event) =>
+											handleNavClick(
+												event,
+												item.toLowerCase()
+											)
+										}
+									>
+										{item}
+									</NavigationMenuLink>
+								</Link>
+							</NavigationMenuItem>
+						))}
 					<ModeToggle />
-					{mainPage ? (
-						<div className="w-5 h-8"></div>
-					) : (
-						!mainPage && user && <ProfileIcon />
-					)}
-				</div>
+					<div className="flex">{!mainPage && <ProfileIcon />}</div>
+				</NavigationMenuList>
 			</div>
 		</NavigationMenu>
 	);
