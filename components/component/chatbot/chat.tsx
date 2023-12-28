@@ -20,6 +20,10 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 	const router = useRouter();
 	const [userId, setUserId] = useState<string | null>(null);
 
+	const getConversationName = (messages: Message[]) => {
+		return messages.length > 0 ? messages[0].content.substring(0, 50) : "";
+	}; // gets the first 50 characters of the first message, need to add to firestore through updateConversation
+
 	// set messages in firestore
 	const updateConversation = useCallback(
 		async (messages: Message[]) => {
