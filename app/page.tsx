@@ -103,7 +103,7 @@ export default function Home() {
 						</h2>
 						<div className="mt-5">
 							<Button
-								className="hover:text-zinc-950 hover:bg-zinc-50 dark:hover:bg-zinc-950 dark:hover:text-zinc-50"
+								className="hover:text-zinc-950 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
 								onClick={handleSignIn}
 							>
 								<IconGitHub className="w-5 h-5 mr-2" />

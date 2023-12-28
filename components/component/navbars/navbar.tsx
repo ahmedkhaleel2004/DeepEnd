@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 		<NavigationMenu
 			className={`sticky top-0 w-full bg-transparent max-w-none items-center mb-2 px-2 py-4 backdrop-blur-lg transition-colors duration-300 ${
 				scrolled &&
-				"bg-black bg-opacity-[0.1] border-b border-border/80 "
+				"bg-black bg-opacity-[0.2] border-b border-border/80 "
 			}`}
 		>
 			<div className="items-center flex w-full px-12 max-w-[80rem] justify-between">
@@ -65,7 +65,7 @@ const Navbar: React.FC<NavbarProps> = ({ mainPage = false }) => {
 									passHref
 								>
 									<NavigationMenuLink
-										className={`bg-transparent dark:hover:bg-foreground/50 hover:text-foreground ${navigationMenuTriggerStyle()}`}
+										className={` bg-transparent dark:hover:bg-foreground/50 hover:text-foreground ${navigationMenuTriggerStyle()}`}
 										onClick={(event) =>
 											handleNavClick(
 												event,

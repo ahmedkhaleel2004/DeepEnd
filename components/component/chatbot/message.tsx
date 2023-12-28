@@ -49,7 +49,11 @@ const ChatMessage: React.FC<MessageProps> = ({ role, content }) => {
 					remarkPlugins={[remarkGfm, remarkMath]}
 					components={{
 						p({ children }) {
-							return <p className="mb-4 last:mb-0">{children}</p>;
+							return (
+								<p className="mb-4 last:mb-0 text-zinc-950 dark:text-zinc-50">
+									{children}
+								</p>
+							);
 						},
 						code({ node, inline, className, children, ...props }) {
 							const match = /language-(\w+)/.exec(
