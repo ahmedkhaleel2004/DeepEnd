@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import Navbar from "@/components/component/navbars/navbar";
+import Navbar from "@/components/component/navbars/navbar-large";
 import SurveyQuestions from "@/components/component/survey/survey-questions";
 import SurveyComplete from "@/components/component/survey/survey-complete";
 
@@ -36,9 +36,9 @@ const Survey = () => {
 
 	return (
 		<main className="max-w-2xl mx-auto">
-			<Navbar mainPage={false} />
+			<Navbar projects={false} />
 			{!surveyCompleted ? (
-				<div className="mb-4">
+				<div className="mb-4 px-4">
 					<h1 className="text-3xl font-bold">Survey</h1>
 					<p>Please answer the following questions</p>
 					<SurveyQuestions
