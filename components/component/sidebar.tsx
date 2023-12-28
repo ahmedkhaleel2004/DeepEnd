@@ -14,6 +14,7 @@ import { doc, onSnapshot, deleteField, updateDoc } from "firebase/firestore";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { ChatBubbleIcon, TrashIcon } from "@radix-ui/react-icons";
+import { useRouter, usePathname } from "next/navigation";
 
 interface SidebarProps {
 	loggedIn: boolean;
@@ -22,6 +23,8 @@ interface SidebarProps {
 
 const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 	const [conversations, setConversations] = React.useState<string[]>([]);
+	const router = useRouter();
+	const pathname = usePathname();
 
 	useEffect(() => {
 		if (loggedIn && userId) {
@@ -51,15 +54,16 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 
 	const deleteConversation = async (conversationId: string) => {
 		try {
-			// Reference to the user's document in Firestore
 			const userDocRef = doc(db, "conversations", userId);
 
-			// Update the document to delete the specific conversation
 			await updateDoc(userDocRef, {
 				[`general.${conversationId}`]: deleteField(),
 			});
 
-			// Update local state to remove the conversation from the UI
+			if (pathname === `/chatbot/${conversationId}`) {
+				router.push("/chatbot");
+			}
+
 			setConversations(
 				conversations.filter((id) => id !== conversationId)
 			);
