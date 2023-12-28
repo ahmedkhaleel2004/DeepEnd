@@ -10,10 +10,10 @@ import {
 import NavbarSmall from "./navbars/navbar-small";
 import { Separator } from "../ui/separator";
 import { db } from "@/lib/firebase";
-import { Firestore, doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, deleteField, updateDoc } from "firebase/firestore";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { ChatBubbleIcon } from "@radix-ui/react-icons";
+import { ChatBubbleIcon, TrashIcon } from "@radix-ui/react-icons";
 
 interface SidebarProps {
 	loggedIn: boolean;
@@ -49,6 +49,25 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 		}
 	}, [loggedIn, userId]);
 
+	const deleteConversation = async (conversationId: string) => {
+		try {
+			// Reference to the user's document in Firestore
+			const userDocRef = doc(db, "conversations", userId);
+
+			// Update the document to delete the specific conversation
+			await updateDoc(userDocRef, {
+				[`general.${conversationId}`]: deleteField(),
+			});
+
+			// Update local state to remove the conversation from the UI
+			setConversations(
+				conversations.filter((id) => id !== conversationId)
+			);
+		} catch (error) {
+			console.error("Error deleting conversation: ", error);
+		}
+	};
+
 	return (
 		<div className="p-6 w-full max-w-xs h-screen border-r">
 			<div className="pb-6 flex justify-between">
@@ -68,17 +87,25 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 							{conversations.map((conversationId) => (
 								<AccordionContent
 									key={conversationId}
-									className="pb-0 pt-0"
+									className="pb-0 pt-0 p-2 mb-2 flex items-center hover:bg-zinc-800 rounded-md duration-200"
 								>
 									<Link
 										href={`/chatbot/${conversationId}`}
-										className="hover:bg-zinc-800 rounded-md flex p-2 mb-2"
+										className=" flex grow items-center"
 									>
-										<div className="w-full flex items-center gap-2">
+										<div className="flex items-center gap-2">
 											<ChatBubbleIcon />
 											{conversationId}
 										</div>
 									</Link>
+									<div
+										className="hover:bg-zinc-700 rounded-md duration-200 cursor-pointer p-1"
+										onClick={() =>
+											deleteConversation(conversationId)
+										}
+									>
+										<TrashIcon />
+									</div>
 								</AccordionContent>
 							))}
 						</AccordionItem>
@@ -97,6 +124,3 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 };
 
 export default Sidebar;
-function collection(db: Firestore, arg1: string, userId: string) {
-	throw new Error("Function not implemented.");
-}
