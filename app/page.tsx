@@ -1,7 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { signInWithGithub } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
@@ -21,6 +22,19 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { IconGitHub } from "@/components/ui/icons";
 import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import {
+	HoverCard,
+	HoverCardContent,
+	HoverCardTrigger,
+} from "@radix-ui/react-hover-card";
+import { ExternalLinkIcon } from "lucide-react";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 // import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
@@ -213,14 +227,165 @@ export default function Home() {
 						</CardContent>
 					</Card>
 				</div>
-				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />
-				<div>
-					<h1 className="text-3xl font-bold pb-6">
-						How could I interest you
-					</h1>
-					<h2>In Jean Paul Baptiste?</h2>
-				</div>
-				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />
+				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />{" "}
+				{/* this is the about section */}
+				<Card
+					className="bg-white dark:bg-black"
+					style={{ height: "32rem" }}
+				>
+					<div className="h-96 pt-10">
+						<h1 className="text-center text-3xl font-bold pb-9">
+							About Us
+						</h1>
+						<div className="flex justify-between space-x-5">
+							<div>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Card className="w-64 cursor-pointer h-12 ml-10 ">
+											<CardContent className="flex items-center gap-4">
+												<Avatar className="h-11 w-11 pt-1">
+													<AvatarImage
+														alt="User's avatar"
+														src="/placeholder-avatar.jpg"
+													/>
+													<AvatarFallback>
+														NA
+													</AvatarFallback>
+												</Avatar>
+												<div className="space-y-2">
+													<div className="font-semibold">
+														User Name
+													</div>
+												</div>
+											</CardContent>
+										</Card>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent className="w-72  pt-2 space-y-1 text-sm max-h-[100px]">
+										<p className="p-2 text-gray-800 dark:text-gray-200">
+											Hello my name is Benmain Avdullahu I
+											like to spend time doing fun stuff
+											ydayda bru ok ima let let it do let
+											it be ima come to the tea mess with
+											me
+										</p>
+									</DropdownMenuContent>
+								</DropdownMenu>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Card className="w-64 cursor-pointer h-12 ml-10 mt-28">
+											<CardContent className="flex items-center gap-4">
+												<Avatar className="h-11 w-11 pt-1">
+													<AvatarImage
+														alt="User's avatar"
+														src="/placeholder-avatar.jpg"
+													/>
+													<AvatarFallback>
+														NA
+													</AvatarFallback>
+												</Avatar>
+												<div className="space-y-2">
+													<div className="font-semibold">
+														User Name
+													</div>
+												</div>
+											</CardContent>
+										</Card>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent className="w-72  pt-2 space-y-1 text-sm max-h-[100px]">
+										<p className="p-2 text-gray-800 dark:text-gray-200">
+											Hello my name is Benmain Avdullahu I
+											like to spend time doing fun stuff
+											ydayda bru ok ima let let it do let
+											it be ima come to the tea mess with
+											me
+										</p>
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</div>
+							<div>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Card className="w-64 cursor-pointer h-12 mt-20">
+											<CardContent className="flex items-center gap-4">
+												<Avatar className="h-11 w-11 pt-1">
+													<AvatarImage
+														alt="User's avatar"
+														src="/placeholder-avatar.jpg"
+													/>
+													<AvatarFallback>
+														NA
+													</AvatarFallback>
+												</Avatar>
+												<div className="space-y-2">
+													<div className="font-semibold">
+														User Name
+													</div>
+												</div>
+											</CardContent>
+										</Card>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent className="w-72 pt-2 space-y-1 text-sm max-h-[100px]">
+										<p className="p-2 text-gray-800 dark:text-gray-200">
+											Hello my name is Benmain Avdullahu I
+											like to spend time doing fun stuff
+											ydayda bru ok ima let let it do let
+											it be ima come to the tea mess with
+											me
+										</p>
+									</DropdownMenuContent>
+								</DropdownMenu>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Card className="w-64 cursor-pointer h-12 mt-28">
+											<CardContent className="flex items-center gap-4">
+												<Avatar className="h-11 w-11 pt-1">
+													<AvatarImage
+														alt="User's avatar"
+														src="/placeholder-avatar.jpg"
+													/>
+													<AvatarFallback>
+														NA
+													</AvatarFallback>
+												</Avatar>
+												<div className="space-y-2">
+													<div className="font-semibold">
+														User Name
+													</div>
+												</div>
+											</CardContent>
+										</Card>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent className="w-72 pt-2 space-y-1 text-sm max-h-[100px]">
+										<p className="p-2 text-gray-800 dark:text-gray-200">
+											Hello my name is Benmain Avdullahu I
+											like to spend time doing fun stuff
+											ydayda bru ok ima let let it do let
+											it be ima come to the tea mess with
+											me
+										</p>
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</div>
+
+							<div className="w-2/5">
+								<div>
+									<p className="break-words">
+										Our team members are new and aspiring
+										young software developers who are going
+										through the same process as you. We are
+										here to help you through your journey
+										and provide you with the best resources
+										to help you succeed. That is why we
+										created Linus, a personal project
+										partner that will help you through your
+										journey.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</Card>
+				<Separator className="mt-12 mb-12 bg-white dark:bg-zinc-700" />
 				<div>
 					<h1 className="text-3xl font-bold pb-6">
 						Another section here...
