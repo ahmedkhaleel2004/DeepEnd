@@ -24,22 +24,30 @@ const getChat = async (chatID: string, userID: string) => {
 const ChatwithID = () => {
 	const [userId, setUserId] = useState<string | null>(null);
 	const pathname = usePathname();
+	const router = useRouter();
 	const chatId = pathname.split("/")[2];
 	const [chat, setChat] = useState<Message[] | undefined>(undefined);
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {
 				setUserId(user.uid);
-				getChat(chatId, user.uid).then((chatData) => setChat(chatData));
+				getChat(chatId, user.uid).then((chatData) => {
+					if (chatData) {
+						setChat(chatData.messages);
+					} else {
+						router.push("/chatbot");
+					}
+				});
 			} else {
 				setUserId(null);
 			}
 		});
 
 		return () => unsubscribe(); // Clean up subscription on unmount
-	}, [chatId]);
+	}, [chatId, router]);
 	return (
 		<main className="w-full flex justify-center">
+			<div className="w-full h-[15vh] bg-gradient-to-t from-zinc-400 fixed bottom-0" />
 			<div className="flex flex-col max-w-4xl w-full">
 				<header className="my-4">
 					<h1 className="text-3xl font-bold">Chatbot</h1>

@@ -20,6 +20,10 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 	const router = useRouter();
 	const [userId, setUserId] = useState<string | null>(null);
 
+	const getConversationName = (messages: Message[]) => {
+		return messages.length > 0 ? messages[0].content.substring(0, 50) : "";
+	}; // gets the first 50 characters of the first message and sets it as the name of the chat
+
 	// set messages in firestore
 	const updateConversation = useCallback(
 		async (messages: Message[]) => {
@@ -29,7 +33,10 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 
 			const conversationData = {
 				general: {
-					[id?.toString() ?? ""]: messages, // id was clutch my dargg (:joy_cat:)
+					[id?.toString() ?? ""]: {
+						messages: messages,
+						name: getConversationName(messages),
+					},
 				},
 			};
 
@@ -83,7 +90,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 					</div>
 				)}
 			</div>
-			<div className="fixed w-[92%] lg:max-w-4xl lg:w-screen  bottom-0 py-6 bg-gradient-to-t from-zinc-900">
+			<div className="fixed w-[92%] lg:max-w-4xl lg:w-screen bottom-0 py-6">
 				<ChatPanel
 					id={id}
 					isLoading={isLoading}

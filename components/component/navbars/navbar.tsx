@@ -51,7 +51,7 @@ const Navbar: React.FC<NavbarProps> = () => {
 				"bg-black bg-opacity-[0.2] border-b border-border/80 "
 			}`}
 		>
-			<div className="items-center flex w-full justify-between">
+			<div className="max-w-[80rem] px-12 items-center flex w-full justify-between">
 				<Link className="font-bold text-2xl" href="/">
 					Logo
 				</Link>
@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = () => {
 								passHref
 							>
 								<NavigationMenuLink
-									className={` bg-transparent dark:hover:bg-foreground/50 hover:text-foreground ${navigationMenuTriggerStyle()}`}
+									className={` bg-transparent dark:hover:bg-foreground/20 hover:text-foreground ${navigationMenuTriggerStyle()}`}
 									onClick={(event) =>
 										handleNavClick(
 											event,

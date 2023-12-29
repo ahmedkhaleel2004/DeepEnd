@@ -42,14 +42,14 @@ function ChatLayout({ children }: ChatLayoutProps) {
 	}, [router]);
 
 	return (
-		<div className="relative flex h-screen">
+		<div className="flex h-screen">
 			<Sidebar userId={userId} loggedIn={loggedIn} />
 			<div className="flex grow overflow-hidden pl-0">
 				<div className="flex flex-col w-full h-full overflow-auto">
 					{children}
 				</div>
 			</div>
-			<div className="flex top-5 right-5 fixed space-x-4">
+			<div className="flex top-5 right-8 fixed space-x-4">
 				<ModeToggle />
 				<ProfileIcon />
 			</div>
