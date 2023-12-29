@@ -234,9 +234,7 @@ export default function Home() {
 						Send Us Feedback
 					</a>
 				</div>
-				<footer className="mt-5 pt-5 text-center">
-					© LinusCorp 2023
-				</footer>
+				<footer className="mt-5 pt-5 text-center">© fwd//</footer>
 			</main>
 		</div>
 	);

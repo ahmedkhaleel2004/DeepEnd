@@ -5,11 +5,28 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import { PanelGroup } from "@/components/component/projects/panel-group";
-import GridProjects from "@/components/component/projects/grid-projects";
 import NavbarLarge from "@/components/component/navbars/navbar-large";
+import GridContainer from "@/components/component/projects/grid-container";
+import GridItem from "@/components/component/projects/grid-item";
+
+const projects = [
+	{
+		title: "Project 1",
+		description: "This is a description of project 1",
+	},
+	{
+		title: "Project 2",
+		description: "This is a description of project 2",
+	},
+	{
+		title: "Project 3",
+		description: "This is a description of project 3",
+	},
+	{
+		title: "Project 4",
+		description: "This is a description of project 4",
+	},
+];
 
 const Projects = () => {
 	const router = useRouter();
@@ -36,16 +53,27 @@ const Projects = () => {
 	}, [router]);
 
 	return (
-		<main>
+		<>
 			<div className="border flex flex-row w-full max-w-full">
 				<NavbarLarge projects={true} />
 			</div>
-			<div>
-				<h1 className="text-3xl font-bold">Projects</h1>
-				<p>Choose a project to view</p>
-			</div>
-			<GridProjects />
-		</main>
+			<main className="p-12">
+				<div className="mb-6">
+					<h1 className="text-3xl font-bold">Projects</h1>
+					<p>Choose a project to view</p>
+				</div>
+				<div className="max-w-[60%]">
+					<GridContainer>
+						{projects.map((project) => (
+							<GridItem
+								title={project.title}
+								description={project.description}
+							/>
+						))}
+					</GridContainer>
+				</div>
+			</main>
+		</>
 	);
 };
 

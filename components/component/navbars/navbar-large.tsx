@@ -26,8 +26,8 @@ const NavbarLarge = ({ projects = true }) => {
 					alt="logo"
 					className="w-40 h-10 mr-4"
 				/>
-				<div className="flex flex-row items-center justify-start grow mr-4 space-x-4">
-					<NavigationMenuList>
+				<div className="flex flex-row items-center justify-start grow mr-4">
+					<NavigationMenuList className="space-x-4">
 						{projects &&
 							navbarItems.map((item, index) => (
 								<NavigationMenuItem key={index}>
@@ -37,7 +37,7 @@ const NavbarLarge = ({ projects = true }) => {
 										passHref
 									>
 										<NavigationMenuLink
-											className={` bg-transparent dark:hover:bg-foreground/50 hover:text-foreground ${navigationMenuTriggerStyle()}`}
+											className={` bg-transparent dark:hover:bg-foreground/20 hover:text-foreground ${navigationMenuTriggerStyle()}`}
 										>
 											{item}
 										</NavigationMenuLink>

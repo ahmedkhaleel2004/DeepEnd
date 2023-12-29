@@ -32,7 +32,7 @@ const NavbarSmall = () => {
 										paddingTop: "5px",
 										paddingBottom: "5px",
 									}}
-									className={`bg-transparent hover:bg-zinc-200 dark:hover:bg-foreground/50 hover:text-foreground ${navigationMenuTriggerStyle()}`}
+									className={`bg-transparent hover:bg-zinc-200 dark:hover:bg-foreground/20 hover:text-foreground ${navigationMenuTriggerStyle()}`}
 								>
 									{item}
 								</NavigationMenuLink>
