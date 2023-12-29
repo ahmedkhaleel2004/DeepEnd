@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
@@ -11,18 +11,22 @@ import GridItem from "@/components/component/projects/grid-item";
 
 const projects = [
 	{
+		id: 1,
 		title: "Project 1",
 		description: "This is a description of project 1",
 	},
 	{
+		id: 2,
 		title: "Project 2",
 		description: "This is a description of project 2",
 	},
 	{
+		id: 3,
 		title: "Project 3",
 		description: "This is a description of project 3",
 	},
 	{
+		id: 4,
 		title: "Project 4",
 		description: "This is a description of project 4",
 	},
@@ -64,8 +68,9 @@ const Projects = () => {
 				</div>
 				<div className="max-w-[60%]">
 					<GridContainer>
-						{projects.map((project) => (
+						{projects.map((project, index) => (
 							<GridItem
+								key={index}
 								title={project.title}
 								description={project.description}
 							/>
