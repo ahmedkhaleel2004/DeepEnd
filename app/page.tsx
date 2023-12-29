@@ -10,6 +10,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import Navbar from "@/components/component/navbars/navbar";
 import { getAdditionalUserInfo } from "firebase/auth";
 import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 import {
 	Card,
 	CardContent,
@@ -50,7 +51,7 @@ export default function Home() {
 
 	const handleSignIn = async () => {
 		if (auth.currentUser) {
-			// if he is signed in
+			// if they is signed in
 			const docRef = doc(db, "users", auth.currentUser.uid);
 			const docSnap = await getDoc(docRef);
 			if (docSnap.data()?.doneSurvey) {
@@ -111,7 +112,7 @@ export default function Home() {
 							</Button>
 						</div>
 					</div>
-					<Card className="shadow-xl rounded-3xl bg-background/80">
+					<Card className="shadow-lg rounded-3xl bg-background/80">
 						<CardHeader>
 							<CardTitle>Try it out!</CardTitle>
 						</CardHeader>
@@ -120,91 +121,95 @@ export default function Home() {
 						</CardContent>
 					</Card>
 				</div>
-				<Separator className="my-16 bg-white dark:bg-zinc-700" />
-				{/* I was trying to add framer motion 💀
-				<motion.div
-					layoutId={"chatbot"}
-					onClick={() => setSelectedId("chatbot")}
-				>
-					<motion.h5>{"Subtitle"}</motion.h5>
-					<motion.h2>{"Title"}</motion.h2>
-				</motion.div>
-				<AnimatePresence>
-					{selectedId && (
-						<motion.div layoutId={selectedId}>
-							<motion.h5>{"New subtitle"}</motion.h5>
-							<motion.h2>{"New title"}</motion.h2>
-							<motion.button
-								onClick={() => setSelectedId(null)}
-							/>
-						</motion.div>
-					)}
-				</AnimatePresence> */}
-				<Card className="rounded-3xl pb-8 bg-background/80">
-					<CardHeader className="text-center my-4">
-						<CardTitle className="text-3xl">
-							An end-to-end solution
-						</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<div className="flex space-x-16 mx-8">
-							<Card className="rounded-2xl">
-								<Image
-									src="/chatbot.png"
-									alt="Chatbot"
-									width={500}
-									height={300}
-									className="rounded-t-2xl"
-								/>
-								<CardContent className="h-auto p-5 rounded-b-xl">
-									<CardTitle className="mb-2">
-										Chatbot
-									</CardTitle>
-									<p>
-										Get personally curated advice on your
-										career in the tech industry.
-									</p>
-								</CardContent>
-							</Card>
-							<Card className="rounded-2xl">
-								<Image
-									src="/recommendation.png"
-									alt="Recommendation"
-									width={500}
-									height={300}
-									className="rounded-t-2xl"
-								/>
-								<CardContent className="h-auto p-5 rounded-b-xl">
-									<CardTitle className="mb-2">
-										Recommendation
-									</CardTitle>
-									<p>
-										Receive project ideas based on your own
-										experience and goals.
-									</p>
-								</CardContent>
-							</Card>
-							<Card className="rounded-2xl">
-								<Image
-									src="/timeline.png"
-									alt="Timeline"
-									width={500}
-									height={300}
-									className="rounded-t-2xl"
-								/>
-								<CardContent className="h-auto p-5 rounded-b-xl">
-									<CardTitle className="mb-2">
-										Timeline
-									</CardTitle>
-									<p>
-										Generate specific timelines including
-										technical guidance.
-									</p>
-								</CardContent>
-							</Card>
-						</div>
-					</CardContent>
-				</Card>
+				<div id="features">
+					<Separator className="my-16 bg-white dark:bg-zinc-700" />
+
+					<Card className="rounded-3xl pb-8 bg-background/80">
+						<CardHeader className="text-center my-4">
+							<CardTitle className="text-3xl">
+								An end-to-end solution
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<div className="flex space-x-16 mx-8">
+								<motion.a
+									whileHover={{ scale: 1.05 }}
+									onHoverStart={(e) => {}}
+									onHoverEnd={(e) => {}}
+								>
+									<Card className="rounded-2xl">
+										<Image
+											src="/chatbot.png"
+											alt="Chatbot"
+											width={500}
+											height={70}
+											className="rounded-t-2xl object-cover h-60"
+										/>
+										<CardContent className="h-auto p-5 rounded-b-xl">
+											<CardTitle className="mb-2">
+												Chatbot
+											</CardTitle>
+											<p>
+												Get personally curated advice on
+												your career in the tech
+												industry.
+											</p>
+										</CardContent>
+									</Card>
+								</motion.a>
+								<motion.a
+									whileHover={{ scale: 1.05 }}
+									onHoverStart={(e) => {}}
+									onHoverEnd={(e) => {}}
+								>
+									<Card className="rounded-2xl">
+										<Image
+											src="/recommendation.png"
+											alt="Recommendation"
+											width={500}
+											height={70}
+											className="rounded-t-2xl object-cover h-60"
+										/>
+
+										<CardContent className="h-auto p-5 rounded-b-xl">
+											<CardTitle className="mb-2">
+												Recommendation
+											</CardTitle>
+											<p>
+												Receive project ideas based on
+												your own experience and goals.
+											</p>
+										</CardContent>
+									</Card>
+								</motion.a>
+								<motion.a
+									whileHover={{ scale: 1.05 }}
+									onHoverStart={(e) => {}}
+									onHoverEnd={(e) => {}}
+								>
+									<Card className="rounded-2xl">
+										<Image
+											src="/timeline.png"
+											alt="Timeline"
+											width={500}
+											height={70}
+											className="rounded-t-2xl object-cover h-60"
+										/>
+										<CardContent className="h-auto p-5 rounded-b-xl">
+											<CardTitle className="mb-2">
+												Timeline
+											</CardTitle>
+											<p>
+												Generate specific timelines
+												including technical guidance.
+											</p>
+										</CardContent>
+									</Card>
+								</motion.a>
+							</div>
+						</CardContent>
+					</Card>
+				</div>
 				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />
 				<div>
 					<h1 className="text-3xl font-bold pb-6">
