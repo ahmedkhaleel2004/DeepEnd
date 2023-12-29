@@ -90,7 +90,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 					</div>
 				)}
 			</div>
-			<div className="fixed w-[92%] lg:max-w-4xl lg:w-screen  bottom-0 py-6 bg-gradient-to-t from-zinc-900">
+			<div className="fixed w-[92%] lg:max-w-4xl lg:w-screen bottom-0 py-6">
 				<ChatPanel
 					id={id}
 					isLoading={isLoading}

@@ -42,7 +42,7 @@ function ChatLayout({ children }: ChatLayoutProps) {
 	}, [router]);
 
 	return (
-		<div className="relative flex h-screen">
+		<div className="flex h-screen">
 			<Sidebar userId={userId} loggedIn={loggedIn} />
 			<div className="flex grow overflow-hidden pl-0">
 				<div className="flex flex-col w-full h-full overflow-auto">

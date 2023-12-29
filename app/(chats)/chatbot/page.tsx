@@ -9,6 +9,7 @@ const Chatbot = () => {
 
 	return (
 		<main className="w-full flex justify-center">
+			<div className="w-full h-60 bg-gradient-to-t from-zinc-900 fixed bottom-0" />
 			<div className="flex flex-col max-w-4xl w-full">
 				<header className="my-4">
 					<h1 className="text-3xl font-bold">Chatbot</h1>

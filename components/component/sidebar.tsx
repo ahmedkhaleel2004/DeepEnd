@@ -15,6 +15,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { ChatBubbleIcon, TrashIcon } from "@radix-ui/react-icons";
 import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
 
 interface SidebarProps {
 	loggedIn: boolean;
@@ -86,13 +87,18 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 
 	return (
 		<div className="p-6 w-full max-w-xs h-screen border-r">
-			<div className="pb-6 flex justify-between">
-				<NavbarSmall />
-			</div>
+			<NavbarSmall />
 			<Separator />
 			{loggedIn && userId && (
 				<>
 					<Button className="w-full my-4">
+						<Image
+							src="/jbp.png"
+							width={500}
+							height={300} // had to include this for some reason
+							alt="logo"
+							className="w-6 h-6 rounded-full mr-2"
+						/>
 						<Link href="/chatbot">New conversation</Link>
 					</Button>
 					<Accordion type="single" collapsible className="w-full">
@@ -103,7 +109,7 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 							{conversations.map(({ id, name }) => (
 								<AccordionContent
 									key={id}
-									className="pb-0 pt-0 p-2 mb-2 flex items-center hover:bg-zinc-800 rounded-md duration-200"
+									className="pb-0 pt-0 p-2 mb-2 flex items-center hover:bg-zinc-300 dark:hover:bg-zinc-700  rounded-md duration-200"
 								>
 									<Link
 										href={`/chatbot/${id}`}
@@ -115,7 +121,7 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 										</div>
 									</Link>
 									<div
-										className="hover:bg-zinc-700 rounded-md duration-200 cursor-pointer p-1"
+										className="hover:bg-zinc-50 dark:hover:bg-zinc-500 rounded-md duration-200 cursor-pointer p-1"
 										onClick={() => deleteConversation(id)}
 									>
 										<TrashIcon />
