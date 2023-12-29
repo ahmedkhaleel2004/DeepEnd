@@ -3,35 +3,13 @@ import {
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { GitHubRepo } from "@/components/component/projects/grid-projects";
 
-export function PanelGroup() {
-	interface Repo {
-		id: number;
-		name: string;
-		// include other properties as needed
-	}
+interface Props {
+	repo: GitHubRepo;
+}
 
-	const [repos, setRepos] = useState([]);
-
-	const getRepos = async () => {
-		try {
-			const response = await axios.get(
-				"https://api.github.com/users/linusromland/repos"
-			);
-			setRepos(response.data);
-		} catch (e) {
-			console.log(e);
-		}
-	};
-
-	console.log(repos);
-
-	useEffect(() => {
-		getRepos();
-	}, []);
-
+export function PanelGroup(somethings: Props) {
 	return (
 		<ResizablePanelGroup
 			direction="horizontal"
@@ -39,11 +17,7 @@ export function PanelGroup() {
 		>
 			<ResizablePanel defaultSize={75}>
 				<div className="flex h-full items-center justify-center p-6">
-					{repos.map((repo: Repo) => (
-						<span key={repo.id} className="font-semibold">
-							{repo.name}
-						</span>
-					))}
+					{somethings.repo.description}
 				</div>
 			</ResizablePanel>
 		</ResizablePanelGroup>
