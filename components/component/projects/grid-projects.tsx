@@ -96,9 +96,8 @@ export default function GridProjects(props: any) {
 						{props.projects && props.projects.length > 0
 							? props.projects.map(function (project: any) {
 									return (
-										<MantineProvider>
+										<MantineProvider key={project.id}>
 											<Grid.Col
-												key={project.id}
 												span={{
 													base: 12,
 													xl: 4,
