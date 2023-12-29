@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { PanelGroup } from "@/components/component/projects/panel-group";
 import GridProjects from "@/components/component/projects/grid-projects";
 import NavbarLarge from "@/components/component/navbars/navbar-large";
+import { Panel } from "react-resizable-panels";
 
 const Projects = () => {
 	const router = useRouter();
@@ -42,9 +43,11 @@ const Projects = () => {
 			</div>
 			<div>
 				<h1 className="text-3xl font-bold">Projects</h1>
-				<p>Choose a project to view</p>
+				<p>Choose a project to view </p>
 			</div>
-			<GridProjects />
+			<div className="flex flex-row">
+				<GridProjects />
+			</div>
 		</main>
 	);
 };
