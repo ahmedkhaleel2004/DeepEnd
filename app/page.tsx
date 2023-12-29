@@ -6,7 +6,7 @@ import { signInWithGithub } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, GithubAuthProvider } from "firebase/auth";
 import Navbar from "@/components/component/navbars/navbar";
 import { getAdditionalUserInfo } from "firebase/auth";
 import { useTheme } from "next-themes";
@@ -81,6 +81,9 @@ export default function Home() {
 							name: auth.currentUser.displayName
 								? auth.currentUser.displayName
 								: additionalUserInfo?.username,
+							accessToken:
+								GithubAuthProvider.credentialFromResult(result)
+									?.accessToken,
 						});
 						router.push("/survey");
 					}

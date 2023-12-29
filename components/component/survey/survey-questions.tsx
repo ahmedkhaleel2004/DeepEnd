@@ -3,7 +3,7 @@ import { Card } from "../../ui/card";
 import { FormQuestion } from "./input-form";
 import { auth, db } from "@/lib/firebase";
 import questions from "@/lib/questions";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 
 interface SurveyQuestionsProps {
 	onSurveyComplete: () => void;
@@ -38,11 +38,9 @@ const SurveyQuestions: React.FC<SurveyQuestionsProps> = ({
 			// Check if this was the last question
 			if (currentQuestionIndex === questions.length - 1) {
 				// Update the user document to indicate the survey is done
-				await setDoc(doc(db, "users", auth.currentUser.uid), {
+				const userDocRef = doc(db, "users", auth.currentUser.uid);
+				await updateDoc(userDocRef, {
 					doneSurvey: true,
-					email: auth.currentUser.email,
-					name: auth.currentUser.displayName,
-					photoURL: auth.currentUser.photoURL,
 				});
 			} else {
 				// Move to the next question

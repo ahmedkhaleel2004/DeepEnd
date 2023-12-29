@@ -32,6 +32,18 @@ const projects = [
 	},
 ];
 
+async function fetchUserRepositories(accessToken: string) {
+	const response = await fetch(`/api/repos?accessToken=${accessToken}`, {
+		method: "GET",
+	});
+
+	if (!response.ok) {
+		throw new Error("Failed to fetch repositories");
+	}
+
+	return response.json();
+}
+
 const Projects = () => {
 	const router = useRouter();
 
@@ -43,6 +55,13 @@ const Projects = () => {
 					const docSnap = await getDoc(docRef);
 					if (!docSnap.data()?.doneSurvey) {
 						router.push("/survey");
+					}
+					if (docSnap.data()?.accessToken) {
+						const accessToken = docSnap.data()?.accessToken;
+						const repositories = await fetchUserRepositories(
+							accessToken
+						);
+						console.log("THE REPOSITORIES ARE: ", repositories);
 					}
 				} else {
 					router.push("/");
