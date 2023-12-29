@@ -86,7 +86,7 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 	};
 
 	return (
-		<div className="p-6 w-full max-w-xs h-screen border-r">
+		<div className="p-6 w-full max-w-xs h-screen border-r relative z-10 bg-background">
 			<NavbarSmall />
 			<Separator />
 			{loggedIn && userId && (
