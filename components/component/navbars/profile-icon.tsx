@@ -46,7 +46,8 @@ const ProfileIcon = () => {
 						{photoURL ? (
 							<AvatarImage src={photoURL} />
 						) : (
-							<AvatarFallback>CN</AvatarFallback>
+							<AvatarFallback>//</AvatarFallback>
+							// N.P.^
 						)}
 					</Avatar>
 				</div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
@@ -33,15 +33,18 @@ const projects = [
 ];
 
 async function fetchUserRepositories(accessToken: string) {
-	const response = await fetch(`/api/repos?accessToken=${accessToken}`, {
-		method: "GET",
-	});
-
-	if (!response.ok) {
-		throw new Error("Failed to fetch repositories");
-	}
-
-	return response.json();
+	return fetch("https://api.github.com/user/repos", {
+		headers: {
+			Authorization: `token ${accessToken}`,
+		},
+	})
+		.then((response) => response.json())
+		.then((repositories) => {
+			if (repositories.message) {
+				throw new Error(repositories.message);
+			}
+			return repositories;
+		});
 }
 
 const Projects = () => {
