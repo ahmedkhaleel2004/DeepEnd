@@ -1,124 +1,109 @@
 import { Button } from "@/components/ui/button";
 import {
-	Grid,
-	Container,
-	Modal,
-	TextInput,
-	MantineProvider,
-} from "@mantine/core";
-import { useState } from "react";
+	navigationMenuTriggerStyle,
+	NavigationMenu,
+	NavigationMenuList,
+	NavigationMenuItem,
+	NavigationMenuContent,
+	NavigationMenuTrigger,
+	NavigationMenuLink,
+	NavigationMenuIndicator,
+	NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
+import { useEffect, useState } from "react";
 import { Alert } from "@/components/ui/alert";
 import { PanelGroup } from "./panel-group";
+import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { Card } from "@/components/ui/card";
+import { useAuthState } from "react-firebase-hooks/auth";
+export interface GitHubRepo {
+	id: string;
+	name: string;
+	description: string;
+	title: string;
+	// Add other properties as needed
+}
 
-export default function GridProjects(props: any) {
-	// know which project is open
-	const [open, setOpen] = useState(false);
+export default function GridProjects() {
 	interface Project {
+		id: string;
 		title: string;
 		description: string;
+		name: string;
 		// include other properties as needed
 	}
+
+	// know which project is open
+	// is there an error?
 	// know which project is current
+	const [open, setOpen] = useState(false);
+	const [isError, setIsError] = useState(false);
 	const [currentProject, setCurrentProject] = useState<Project>({
 		title: "",
 		description: "",
+		id: "",
+		name: "",
 	});
-	// is there an error?
-	const [isError, setIsError] = useState(false);
+	// fetch data from database and store it in repositories
+	const [repositories, setRepositories] = useState<GitHubRepo[]>([]);
 
-	const updateProject = (data: any) => {
-		return null;
+	// get data from database
+	const fetchRepositories = async () => {
+		const auth = getAuth();
+		const user = auth.currentUser;
+		if (user) {
+			const db = getFirestore();
+			const userDocRef = doc(db, "users", user.uid);
+			try {
+				const userDoc = await getDoc(userDocRef);
+				if (userDoc.exists()) {
+					const userData = userDoc.data();
+					const userRepositories =
+						userData.repositories as GitHubRepo[];
+					setRepositories(userRepositories);
+				} else {
+					console.log("No such document!");
+				}
+			} catch (error) {
+				console.error("Error fetching repositories:", error);
+				setIsError(true);
+			}
+		}
 	};
 
-	const deleteProject = (data: any) => {
-		return null;
+	useEffect(() => {
+		fetchRepositories();
+	});
+
+	// update project
+	const updateProject = async (project: Project) => {
+		const auth = getAuth();
+		const user = auth.currentUser;
+		if (user) {
+			const db = getFirestore();
+			const userDocRef = doc(db, "users", user.uid);
+			try {
+				await updateDoc(userDocRef, {
+					repositories: repositories.map((repo) => {
+						if (repo.id === project.id) {
+							return project;
+						} else {
+							return repo;
+						}
+					}),
+				});
+				fetchRepositories();
+			} catch (error) {
+				console.error("Error updating project:", error);
+				setIsError(true);
+			}
+		}
 	};
 
-	return (
-		<MantineProvider>
-			<Container>
-				<Modal
-					opened={open}
-					onClose={() => setOpen(false)}
-					title="Edit Project"
-				>
-					{/* these will be the project label */}
-					<TextInput
-						label="Project Name"
-						value={currentProject.title}
-						onChange={(event) =>
-							setCurrentProject({
-								...currentProject,
-								title: event.target.value,
-							})
-						}
-					/>
-					{/* these will be the project details of prject */}
-					<TextInput
-						label="Description"
-						value={currentProject.description}
-						onChange={(event) =>
-							setCurrentProject({
-								...currentProject,
-								description: event.target.value,
-							})
-						}
-					/>
-					{/* this will decide which project the user is looking at*/}
-					<Button
-						style={{
-							margin: "auto",
-							background: "linear-gradient(to right, teal, cyan)",
-						}}
-						variant="outline"
-						onClick={() => {
-							updateProject(currentProject);
-							setOpen(false);
-						}}
-					>
-						Update Project
-					</Button>
-				</Modal>
-				<div
-					style={{
-						flexDirection: "row",
-						width: "100%",
-					}}
-				>
-					{isError ? (
-						<Alert title="Error!" color="red">
-							<p>There was an error with your request.</p>
-						</Alert>
-					) : null}
+	const [user, loading, error] = useAuthState(getAuth());
 
-					{/* this will create projects of the user based on the data from the database */}
-					<Grid mt={10} /* this needs to have one of the features*/>
-						{props.projects && props.projects.length > 0
-							? props.projects.map(function (project: any) {
-									return (
-										<MantineProvider key={project.id}>
-											<Grid.Col
-												span={{
-													base: 12,
-													xl: 4,
-													lg: 4,
-													md: 6,
-													sm: 6,
-													xs: 12,
-												}}
-												onClick={() =>
-													setCurrentProject(project)
-												}
-											>
-												<PanelGroup />
-											</Grid.Col>
-										</MantineProvider>
-									);
-							  })
-							: null}
-					</Grid>
-				</div>
-			</Container>
-		</MantineProvider>
-	);
+	console.log("Loading: ", loading, "User: ", user, "Error: ", error);
+
+	return <div>hello</div>;
 }

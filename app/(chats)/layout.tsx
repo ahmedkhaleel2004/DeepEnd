@@ -49,7 +49,7 @@ function ChatLayout({ children }: ChatLayoutProps) {
 					{children}
 				</div>
 			</div>
-			<div className="flex top-5 right-5 fixed space-x-4">
+			<div className="flex top-5 right-8 fixed space-x-4">
 				<ModeToggle />
 				<ProfileIcon />
 			</div>
