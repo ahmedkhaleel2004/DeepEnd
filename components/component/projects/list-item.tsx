@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import {
 	Card,
@@ -9,24 +7,16 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import Image from "next/image";
 import Modal from "@/components/component/projects/modal";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-interface GridItemProps {
+interface ListItemProps {
 	title: string;
 	description: string;
-	points: string[];
-	technology: string[];
 }
 
-const GridItem = ({
-	title,
-	description,
-	points,
-	technology,
-}: GridItemProps) => {
+const ListItem = ({ title, description }: ListItemProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleOpen = () => setIsOpen(true);
@@ -40,37 +30,20 @@ const GridItem = ({
 						<CardDescription>{description}</CardDescription>
 					</CardHeader>
 					<CardContent className="flex justify-between">
-						<ul className="ml-6 list-disc [&>li]:mt-2">
-							<li>{points[0]}</li>
-							<li>{points[1]}</li>
-							<li>{points[2]}</li>
-						</ul>
-						<Image
-							src="/jbp.png"
-							alt="placeholder"
-							priority
-							width={200}
-							height={200}
-							className="rounded-3xl"
-						/>
+						Try this out!
 					</CardContent>
-					<CardFooter className="space-x-4">
-						{technology.map((tech, index) => (
-							<span key={index}>{tech}</span>
-						))}
-					</CardFooter>
 				</Card>
 			</motion.div>
 			{isOpen && (
 				<Modal>
 					<Card>
 						<CardHeader>
-							<CardTitle>Modal: {title}</CardTitle>
+							<CardTitle>Modal: (Recommended) {title}</CardTitle>
 							<CardDescription>
-								Modal: {description}
+								Modal: (Recommended) {description}
 							</CardDescription>
 						</CardHeader>
-						<CardContent>Modal!</CardContent>
+						<CardContent>(Recommended) Modal!</CardContent>
 						<CardFooter className="flex justify-between">
 							<Button variant="outline" onClick={handleClose}>
 								Cancel
@@ -84,4 +57,4 @@ const GridItem = ({
 	);
 };
 
-export default GridItem;
+export default ListItem;
