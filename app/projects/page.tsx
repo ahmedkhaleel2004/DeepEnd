@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import NavbarLarge from "@/components/component/navbars/navbar-large";
 import GridContainer from "@/components/component/projects/grid-container";
@@ -8,6 +8,7 @@ import GridItem from "@/components/component/projects/grid-item";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { Separator } from "@/components/ui/separator";
 import ListItem from "@/components/component/projects/list-item";
+import { getLanguages } from "@/lib/get-repos";
 
 const recommended_projects = [
 	{
@@ -32,53 +33,6 @@ const recommended_projects = [
 	},
 ];
 
-const projects = [
-	{
-		id: 1,
-		title: "Py-Kemon GO!",
-		description:
-			"A Python command line recreation of the popular mobile game, Pokemon GO!",
-		points: [
-			"Python based",
-			"Command line interface",
-			"Recreation of Pokemon GO",
-		],
-		technology: ["Python", "CLI"],
-	},
-	{
-		id: 2,
-		title: "ParkFinder",
-		description:
-			"Scans parking lots with YOLOv8 and finds shortest routes using A* pathfinding.",
-		points: ["Uses YOLOv8", "A* pathfinding", "Scans parking lots"],
-		technology: ["YOLOv8", "A* pathfinding"],
-	},
-	{
-		id: 3,
-		title: "ShipSafe",
-		description:
-			"Ship navigation system simulating and presenting data from a buoy network at a glance.",
-		points: [
-			"Ship navigation system",
-			"Simulates buoy network",
-			"Presents data at a glance",
-		],
-		technology: ["Navigation Systems", "Data Simulation"],
-	},
-	{
-		id: 4,
-		title: "Dexterity-Dash",
-		description:
-			"A custom physical therapy solution for MS patients to improve hand mobility and remain active.",
-		points: [
-			"Physical therapy solution",
-			"Improves hand mobility",
-			"Helps MS patients remain active",
-		],
-		technology: ["Physical Therapy", "Mobility Improvement"],
-	},
-];
-
 async function generateImageFromDescription(description: string) {
 	const response = await fetch("/api/image", {
 		method: "POST",
@@ -92,8 +46,43 @@ async function generateImageFromDescription(description: string) {
 const Projects = () => {
 	const router = useRouter();
 	const userData = useAuth(router);
+	const [languages, setLanguages] = useState<{ [key: string]: string }>({});
 
-	console.log(userData?.repositories);
+	useEffect(() => {
+		const fetchLanguages = async () => {
+			if (userData && userData.repositories) {
+				const fetchPromises = userData.repositories
+					.map((repo: { languages_url: string; name: any }) =>
+						repo.languages_url
+							? getLanguages(
+									repo.languages_url,
+									userData.accessToken
+							  ).then((langData) => ({
+									name: repo.name,
+									langData,
+							  }))
+							: null
+					)
+					.filter((p: null) => p !== null); // filters out null promises
+
+				const results = await Promise.all(fetchPromises);
+				const newLanguages = results.reduce(
+					// reduces the array of objects into a single object
+					(acc, { name, langData }) => {
+						acc[name] = langData;
+						return acc;
+					},
+					{}
+				);
+
+				setLanguages(newLanguages);
+			}
+		};
+
+		fetchLanguages();
+	}, [userData]);
+
+	console.log(languages);
 
 	return (
 		<>
@@ -108,15 +97,19 @@ const Projects = () => {
 					</div>
 					<div className="max-w-full">
 						<GridContainer>
-							{projects.map((project, index) => (
-								<GridItem
-									key={index}
-									title={project.title}
-									description={project.description}
-									points={project.points}
-									technology={project.technology}
-								/>
-							))}
+							{userData?.repositories.map(
+								(repository: any, index: number) => (
+									<GridItem
+										key={index}
+										title={repository.name}
+										description={repository.description}
+										points={["", "", ""]}
+										languages={
+											languages[repository.name] || {}
+										}
+									/>
+								)
+							)}
 						</GridContainer>
 					</div>
 				</div>
