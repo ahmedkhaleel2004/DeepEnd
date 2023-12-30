@@ -17,7 +17,7 @@ const MainCard = ({ title, description }: MainCardProps) => {
 		>
 			<Card className="rounded-2xl">
 				<Image
-					src={`/${title}.png`}
+					src={`/${title.toLowerCase()}.png`}
 					priority
 					alt={title}
 					width={500}
