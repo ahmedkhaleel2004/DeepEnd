@@ -26,6 +26,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "ai": "^2.2.30",
     "axios": "^1.6.3",
+    "base-64": "^1.0.0",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.3.3",
     "clsx": "^2.0.0",

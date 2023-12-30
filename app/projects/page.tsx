@@ -8,36 +8,13 @@ import GridItem from "@/components/component/projects/grid-item";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/hooks/use-auth";
 
-const projects = [
-	{
-		id: 1,
-		title: "Project 1",
-		description: "This is a description of project 1",
-	},
-	{
-		id: 2,
-		title: "Project 2",
-		description: "This is a description of project 2",
-	},
-	{
-		id: 3,
-		title: "Project 3",
-		description: "This is a description of project 3",
-	},
-	{
-		id: 4,
-		title: "Project 4",
-		description: "This is a description of project 4",
-	},
-];
-
 async function generateImageFromDescription(description: string) {
 	const response = await fetch("/api/image", {
 		method: "POST",
 		body: JSON.stringify({ description: description }),
 	});
 	const url = await response.json();
-
+	console.log(url);
 	return url;
 }
 
@@ -45,12 +22,14 @@ const Projects = () => {
 	const router = useRouter();
 	const userData = useAuth(router);
 
+	console.log(userData?.repositories);
+
 	return (
 		<>
 			<Button
 				onClick={() =>
 					generateImageFromDescription(
-						userData?.repositories[5].description
+						userData?.repositories[2].description
 					)
 				}
 			>
@@ -66,13 +45,21 @@ const Projects = () => {
 				</div>
 				<div className="max-w-[60%]">
 					<GridContainer>
-						{projects.map((project, index) => (
-							<GridItem
-								key={index}
-								title={project.title}
-								description={project.description}
-							/>
-						))}
+						{userData?.repositories?.map(
+							(
+								repository: {
+									name: string;
+									description: string;
+								},
+								index: React.Key | null | undefined
+							) => (
+								<GridItem
+									key={index}
+									title={repository.name}
+									description={repository.description}
+								/>
+							)
+						)}
 					</GridContainer>
 				</div>
 			</main>

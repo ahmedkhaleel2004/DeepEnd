@@ -47,10 +47,8 @@ const GridItem = ({ title, description }: GridItemProps) => {
 				<Modal>
 					<Card>
 						<CardHeader>
-							<CardTitle>Modal: {title}</CardTitle>
-							<CardDescription>
-								Modal: {description}
-							</CardDescription>
+							<CardTitle>{title}</CardTitle>
+							<CardDescription>{description}</CardDescription>
 						</CardHeader>
 						<CardContent>Modal!</CardContent>
 						<CardFooter className="flex justify-between">

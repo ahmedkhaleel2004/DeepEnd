@@ -9,6 +9,6 @@ export async function fetchUserRepositories(accessToken: string) {
 			if (repositories.message) {
 				throw new Error(repositories.message);
 			}
-			return repositories;
+			return repositories.filter((repos: { size: number; }) => repos.size > 5);
 		});
 }
