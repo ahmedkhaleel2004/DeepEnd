@@ -36,6 +36,7 @@ const GridItem = ({ title, description }: GridItemProps) => {
 						<Image
 							src="/jbp.png"
 							alt="placeholder"
+							priority
 							width={200}
 							height={200}
 						/>

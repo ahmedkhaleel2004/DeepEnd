@@ -32,31 +32,14 @@ const projects = [
 ];
 
 async function generateImageFromDescription(description: string) {
-	console.log("THE DESCRIPTION IS: ", description);
 	const response = await fetch("/api/image", {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ description }),
+		body: JSON.stringify({ description: description }),
 	});
+	const url = await response.json();
 
-	if (!response.ok) {
-		throw new Error(`HTTP error! status: ${response.status}`);
-	}
-
-	return response.json();
+	return url;
 }
-
-// if (docSnap.data()?.accessToken) {
-// 	const accessToken = docSnap.data()?.accessToken;
-// 	const repositories = await fetchUserRepositories(accessToken);
-// 	console.log("THE REPOSITORIES ARE: ", repositories);
-// 	const image = await generateImageFromDescription(
-// 		repositories[5].description
-// 	);
-// 	console.log("THE IMAGE IS: ", image);
-// }
 
 const Projects = () => {
 	const router = useRouter();
@@ -64,7 +47,13 @@ const Projects = () => {
 
 	return (
 		<>
-			<Button onClick={() => generateImageFromDescription("a pizza")}>
+			<Button
+				onClick={() =>
+					generateImageFromDescription(
+						userData?.repositories[5].description
+					)
+				}
+			>
 				Generate Image
 			</Button>
 			<div className="border flex flex-row w-full max-w-full">

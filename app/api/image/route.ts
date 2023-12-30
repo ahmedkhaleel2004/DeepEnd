@@ -1,19 +1,17 @@
 import OpenAI from "openai";
-import type { NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
 const openai = new OpenAI({
 	apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function POST(req: Request, res: NextApiResponse) {
+export async function POST(req: Request) {
 	const { description } = await req.json(); // accepts a description of the project
-	console.log("POST: description", description);
 	const response = await openai.images.generate({
 		model: "dall-e-3",
-		prompt: `IMPORTANT: dark blue and white theme. Create a very minimalist simple logo style, no text, show me the project: ${description}`,
+		prompt: `IMPORTANT: dark blue and white theme. Create a very minimalist and simple logo with no text of a project whose description is: ${description}`,
 		n: 1,
 		size: "1024x1024",
 	});
-	console.log("response: ", response);
-	res.status(200).json({ url: response.data[0].url });
+	return NextResponse.json(response.data[0].url);
 }
