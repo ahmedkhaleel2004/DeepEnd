@@ -9,8 +9,6 @@ import { useAuth } from "@/lib/hooks/use-auth";
 import { Separator } from "@/components/ui/separator";
 import ListItem from "@/components/component/projects/list-item";
 
-<<<<<<< HEAD
-=======
 const recommended_projects = [
 	{
 		id: 1,
@@ -81,7 +79,6 @@ const projects = [
 	},
 ];
 
->>>>>>> d482d576de529a63c67f35838d9d1e250447c25a
 async function generateImageFromDescription(description: string) {
 	const response = await fetch("/api/image", {
 		method: "POST",
@@ -100,18 +97,6 @@ const Projects = () => {
 
 	return (
 		<>
-<<<<<<< HEAD
-			<Button
-				onClick={() =>
-					generateImageFromDescription(
-						userData?.repositories[2].description
-					)
-				}
-			>
-				Generate Image
-			</Button>
-=======
->>>>>>> d482d576de529a63c67f35838d9d1e250447c25a
 			<div className="border flex flex-row w-full max-w-full">
 				<NavbarLarge projects={true} />
 			</div>
@@ -135,26 +120,6 @@ const Projects = () => {
 						</GridContainer>
 					</div>
 				</div>
-<<<<<<< HEAD
-				<div className="max-w-[60%]">
-					<GridContainer>
-						{userData?.repositories?.map(
-							(
-								repository: {
-									name: string;
-									description: string;
-								},
-								index: React.Key | null | undefined
-							) => (
-								<GridItem
-									key={index}
-									title={repository.name}
-									description={repository.description}
-								/>
-							)
-						)}
-					</GridContainer>
-=======
 				<Separator
 					orientation="vertical"
 					className="h-auto mx-12 bg-white dark:bg-zinc-700"
@@ -175,7 +140,6 @@ const Projects = () => {
 							/>
 						))}
 					</div>
->>>>>>> d482d576de529a63c67f35838d9d1e250447c25a
 				</div>
 			</main>
 		</>
