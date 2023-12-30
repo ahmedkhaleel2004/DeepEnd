@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import React from "react";
 import { useRouter } from "next/navigation";
-import { auth, db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
 import NavbarLarge from "@/components/component/navbars/navbar-large";
 import GridContainer from "@/components/component/projects/grid-container";
 import GridItem from "@/components/component/projects/grid-item";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/hooks/use-auth";
 
 const projects = [
 	{
@@ -32,54 +31,42 @@ const projects = [
 	},
 ];
 
-async function fetchUserRepositories(accessToken: string) {
-	return fetch("https://api.github.com/user/repos", {
+async function generateImageFromDescription(description: string) {
+	console.log("THE DESCRIPTION IS: ", description);
+	const response = await fetch("/api/image", {
+		method: "POST",
 		headers: {
-			Authorization: `token ${accessToken}`,
+			"Content-Type": "application/json",
 		},
-	})
-		.then((response) => response.json())
-		.then((repositories) => {
-			if (repositories.message) {
-				throw new Error(repositories.message);
-			}
-			return repositories;
-		});
+		body: JSON.stringify({ description }),
+	});
+
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+
+	return response.json();
 }
+
+// if (docSnap.data()?.accessToken) {
+// 	const accessToken = docSnap.data()?.accessToken;
+// 	const repositories = await fetchUserRepositories(accessToken);
+// 	console.log("THE REPOSITORIES ARE: ", repositories);
+// 	const image = await generateImageFromDescription(
+// 		repositories[5].description
+// 	);
+// 	console.log("THE IMAGE IS: ", image);
+// }
 
 const Projects = () => {
 	const router = useRouter();
-
-	useEffect(() => {
-		const checkAuthState = async () => {
-			const unsubscribe = onAuthStateChanged(auth, async (user) => {
-				if (user) {
-					const docRef = doc(db, "users", user.uid);
-					const docSnap = await getDoc(docRef);
-					if (!docSnap.data()?.doneSurvey) {
-						router.push("/survey");
-					}
-					if (docSnap.data()?.accessToken) {
-						const accessToken = docSnap.data()?.accessToken;
-						const repositories = await fetchUserRepositories(
-							accessToken
-						);
-						console.log("THE REPOSITORIES ARE: ", repositories);
-					}
-				} else {
-					router.push("/");
-				}
-			});
-
-			// Cleanup subscription on unmount
-			return () => unsubscribe();
-		};
-
-		checkAuthState();
-	}, [router]);
+	const userData = useAuth(router);
 
 	return (
 		<>
+			<Button onClick={() => generateImageFromDescription("a pizza")}>
+				Generate Image
+			</Button>
 			<div className="border flex flex-row w-full max-w-full">
 				<NavbarLarge projects={true} />
 			</div>

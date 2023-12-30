@@ -43,7 +43,7 @@ export const signOutFunc = () => {
 export const signInWithGithub = () => {
 	return new Promise<any>((resolve, reject) => {
 		signInWithPopup(auth, provider)
-			.then((result: any) => {
+			.then((result) => {
 				// Sign in successful.
 				// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 				const credential =

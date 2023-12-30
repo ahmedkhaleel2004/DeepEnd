@@ -1,38 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { auth, db } from "@/lib/firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
 import Navbar from "@/components/component/navbars/navbar-large";
 import SurveyQuestions from "@/components/component/survey/survey-questions";
 import SurveyComplete from "@/components/component/survey/survey-complete";
+import { useAuth } from "@/lib/hooks/use-auth";
 
 const Survey = () => {
 	const router = useRouter();
+	const userData = useAuth(router);
 	const [surveyCompleted, setSurveyCompleted] = useState(false);
-
-	useEffect(() => {
-		const checkAuthState = async () => {
-			const unsubscribe = onAuthStateChanged(auth, async (user) => {
-				if (user) {
-					const docRef = doc(db, "users", user.uid);
-					const docSnap = await getDoc(docRef);
-					if (docSnap.data()?.doneSurvey) {
-						router.push("/projects");
-					}
-				} else {
-					router.push("/");
-				}
-			});
-
-			// Cleanup subscription on unmount
-			return () => unsubscribe();
-		};
-
-		checkAuthState();
-	}, [router]);
 
 	return (
 		<main className="max-w-2xl mx-auto">

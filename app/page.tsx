@@ -1,16 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { signInWithGithub } from "@/lib/firebase";
+import React from "react";
 import { useRouter } from "next/navigation";
-import { auth, db } from "@/lib/firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
-import { onAuthStateChanged, GithubAuthProvider } from "firebase/auth";
 import Navbar from "@/components/component/navbars/navbar";
-import { getAdditionalUserInfo } from "firebase/auth";
-import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import {
 	Card,
@@ -21,89 +14,22 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { IconGitHub } from "@/components/ui/icons";
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-import {
-	HoverCard,
-	HoverCardContent,
-	HoverCardTrigger,
-} from "@radix-ui/react-hover-card";
-import { ExternalLinkIcon } from "lucide-react";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import { AnimatePresence, motion } from "framer-motion";
+import MainCard from "@/components/component/home/main-card";
+import { useAuth } from "@/lib/hooks/use-auth";
+import { signInFunc } from "@/lib/sign-in-or-create";
 
 export default function Home() {
 	const router = useRouter();
-
-	useEffect(() => {
-		const checkAuthState = async () => {
-			const unsubscribe = onAuthStateChanged(auth, async (user) => {
-				if (user) {
-					const docRef = doc(db, "users", user.uid);
-					const docSnap = await getDoc(docRef);
-					if (docSnap.data()?.doneSurvey) {
-						router.push("/projects");
-					} else if (!docSnap.data()?.doneSurvey) {
-						router.push("/survey");
-					}
-				} else {
-					router.push("/");
-				}
-			});
-
-			// Cleanup subscription on unmount
-			return () => unsubscribe();
-		};
-
-		checkAuthState();
-	}, [router]);
+	const userData = useAuth(router);
 
 	const handleSignIn = async () => {
-		if (auth.currentUser) {
-			// if they is signed in
-			const docRef = doc(db, "users", auth.currentUser.uid);
-			const docSnap = await getDoc(docRef);
-			if (docSnap.data()?.doneSurvey) {
-				router.push("/projects");
-			} else if (!docSnap.data()?.doneSurvey) {
-				router.push("/survey");
-			}
-		} else {
-			await signInWithGithub().then(async (result) => {
-				if (auth.currentUser) {
-					// should always be true
-					const docRef = doc(db, "users", auth.currentUser.uid);
-					const docSnap = await getDoc(docRef);
-					if (docSnap.exists()) {
-						if (docSnap.data()?.doneSurvey) {
-							router.push("/projects");
-						} else if (!docSnap.data()?.doneSurvey) {
-							router.push("/survey");
-						}
-					} else {
-						const additionalUserInfo =
-							getAdditionalUserInfo(result);
-						setDoc(doc(db, "users", auth.currentUser.uid), {
-							doneSurvey: false,
-							photoURL: auth.currentUser.photoURL,
-							email: auth.currentUser.email,
-							name: auth.currentUser.displayName
-								? auth.currentUser.displayName
-								: additionalUserInfo?.username,
-							accessToken:
-								GithubAuthProvider.credentialFromResult(result)
-									?.accessToken,
-						});
-						router.push("/survey");
-					}
-				}
-			});
-		}
+		await signInFunc(router);
 	};
 
 	return (
@@ -140,7 +66,6 @@ export default function Home() {
 				</div>
 				<div id="features">
 					<Separator className="my-16 bg-white dark:bg-zinc-700" />
-
 					<Card className="rounded-3xl pb-8 bg-background/80">
 						<CardHeader className="text-center my-4">
 							<CardTitle className="text-3xl">
@@ -149,80 +74,22 @@ export default function Home() {
 						</CardHeader>
 						<CardContent>
 							<div className="flex space-x-16 mx-8">
-								<motion.a
-									whileHover={{ scale: 1.05 }}
-									onHoverStart={(e) => {}}
-									onHoverEnd={(e) => {}}
-								>
-									<Card className="rounded-2xl">
-										<Image
-											src="/chatbot.png"
-											alt="Chatbot"
-											width={500}
-											height={70}
-											className="rounded-t-2xl object-cover h-60"
-										/>
-										<CardContent className="h-auto p-5 rounded-b-xl">
-											<CardTitle className="mb-2">
-												Chatbot
-											</CardTitle>
-											<p>
-												Get personally curated advice on
+								<MainCard
+									title="Chatbot"
+									description="Get personally curated advice on
 												your career in the tech
-												industry.
-											</p>
-										</CardContent>
-									</Card>
-								</motion.a>
-								<motion.a
-									whileHover={{ scale: 1.05 }}
-									onHoverStart={(e) => {}}
-									onHoverEnd={(e) => {}}
-								>
-									<Card className="rounded-2xl">
-										<Image
-											src="/recommendation.png"
-											alt="Recommendation"
-											width={500}
-											height={70}
-											className="rounded-t-2xl object-cover h-60"
-										/>
-
-										<CardContent className="h-auto p-5 rounded-b-xl">
-											<CardTitle className="mb-2">
-												Recommendation
-											</CardTitle>
-											<p>
-												Receive project ideas based on
-												your own experience and goals.
-											</p>
-										</CardContent>
-									</Card>
-								</motion.a>
-								<motion.a
-									whileHover={{ scale: 1.05 }}
-									onHoverStart={(e) => {}}
-									onHoverEnd={(e) => {}}
-								>
-									<Card className="rounded-2xl">
-										<Image
-											src="/timeline.png"
-											alt="Timeline"
-											width={500}
-											height={70}
-											className="rounded-t-2xl object-cover h-60"
-										/>
-										<CardContent className="h-auto p-5 rounded-b-xl">
-											<CardTitle className="mb-2">
-												Timeline
-											</CardTitle>
-											<p>
-												Generate specific timelines
-												including technical guidance.
-											</p>
-										</CardContent>
-									</Card>
-								</motion.a>
+												industry."
+								/>
+								<MainCard
+									title="Recommendation"
+									description="Receive project ideas based on
+												your own experience and goals."
+								/>
+								<MainCard
+									title="Timeline"
+									description="Generate specific timelines
+												including technical guidance."
+								/>
 							</div>
 						</CardContent>
 					</Card>
@@ -246,7 +113,7 @@ export default function Home() {
 												<Avatar className="h-11 w-11 pt-1">
 													<AvatarImage
 														alt="User's avatar"
-														src="/placeholder-avatar.jpg"
+														src="/jbp.png"
 													/>
 													<AvatarFallback>
 														NA
@@ -277,7 +144,7 @@ export default function Home() {
 												<Avatar className="h-11 w-11 pt-1">
 													<AvatarImage
 														alt="User's avatar"
-														src="/placeholder-avatar.jpg"
+														src="/jbp.png"
 													/>
 													<AvatarFallback>
 														NA
@@ -310,7 +177,7 @@ export default function Home() {
 												<Avatar className="h-11 w-11 pt-1">
 													<AvatarImage
 														alt="User's avatar"
-														src="/placeholder-avatar.jpg"
+														src="/jbp.png"
 													/>
 													<AvatarFallback>
 														NA
@@ -341,7 +208,7 @@ export default function Home() {
 												<Avatar className="h-11 w-11 pt-1">
 													<AvatarImage
 														alt="User's avatar"
-														src="/placeholder-avatar.jpg"
+														src="/jbp.png"
 													/>
 													<AvatarFallback>
 														NA
