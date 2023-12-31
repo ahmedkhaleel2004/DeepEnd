@@ -5,6 +5,7 @@ import { setDoc, doc } from "firebase/firestore";
 import { db } from "./firebase";
 import { fetchUserRepositories } from "./get-repos";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { uploadUserRepoImg } from "./upload-user-repo-img";
 
 export async function signInFunc(
 	router: AppRouterInstance,
@@ -28,6 +29,9 @@ export async function signInFunc(
 					GithubAuthProvider.credentialFromResult(
 						result
 					)?.accessToken;
+				const repositories = await fetchUserRepositories(
+					accessToken || ""
+				);
 				setDoc(doc(db, "users", result.user.uid), {
 					uid: result.user.uid,
 					doneSurvey: false,
@@ -37,9 +41,16 @@ export async function signInFunc(
 						? result.user.displayName
 						: additionalUserInfo?.username,
 					accessToken: accessToken,
-					repositories: await fetchUserRepositories(
-						accessToken || ""
-					),
+					repositories: repositories,
+				});
+				repositories.map(async (repo: any, index: number) => {
+					await uploadUserRepoImg(
+						repo.name,
+						repo.description,
+						repo.points,
+						result.user.uid,
+						index
+					);
 				});
 				finishCreatingAccount();
 				router.push("/survey");

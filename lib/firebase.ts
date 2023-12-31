@@ -79,5 +79,4 @@ export const signInWithGithub = () => {
 };
 
 export const db = getFirestore(app);
-const storage = getStorage();
-export const storageRef = ref(storage);
+export const storage = getStorage();

@@ -35,16 +35,6 @@ const recommended_projects = [
 	},
 ];
 
-async function generateImageFromDescription(description: string) {
-	const response = await fetch("/api/image", {
-		method: "POST",
-		body: JSON.stringify({ description: description }),
-	});
-	const url = await response.json();
-	console.log(url);
-	return url;
-}
-
 const Projects = () => {
 	const router = useRouter();
 	const userData = useAuth(router);
