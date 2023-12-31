@@ -7,7 +7,7 @@ interface LanguagesProps {
 
 const Languages: React.FC<LanguagesProps> = ({ languages }) => {
 	return (
-		<div className="space-x-4 w-full">
+		<div className="w-full">
 			{/* color bar */}
 			<div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 overflow-hidden">
 				<div className="h-full flex">
@@ -39,7 +39,7 @@ const Languages: React.FC<LanguagesProps> = ({ languages }) => {
 			</div>
 
 			{/* languages */}
-			<div className="flex flex-col">
+			<div className="mt-2 flex space-x-4">
 				{Object.entries(languages).map(([lang, percent]) => {
 					const color = languageColors[lang]?.color || "#ddd";
 					return (
@@ -49,9 +49,8 @@ const Languages: React.FC<LanguagesProps> = ({ languages }) => {
 								style={{ backgroundColor: color }}
 							></span>
 							<span className="ml-2 text-sm font-medium">
-								{lang}
+								{lang} - {percent}
 							</span>
-							<span className="ml-auto">{percent}</span>
 						</div>
 					);
 				})}

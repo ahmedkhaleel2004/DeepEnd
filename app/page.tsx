@@ -64,17 +64,18 @@ export default function Home() {
 							</Button>
 							{isCreatingAccount && (
 								<Modal>
-									<Card>
+									<Card className="flex flex-col items-center justify-center">
 										<CardHeader>
 											<CardTitle>
 												Creating Account
 											</CardTitle>
 										</CardHeader>
-										<CardContent>
+										<CardContent className="flex flex-col items-center justify-center">
 											<CardDescription>
 												Your account is being created.
 												This will take a few seconds.
 											</CardDescription>
+											<div className="mt-8 w-16 h-16 border-t-2  border-foreground rounded-full animate-spin" />
 										</CardContent>
 									</Card>
 								</Modal>

@@ -14,7 +14,7 @@ export async function fetchUserRepositories(accessToken: string) {
 			}
 			return Promise.all(
 				repositories
-					.filter((repos: { size: number }) => repos.size > 5)
+					.filter((repos: { size: number }) => repos.size > 7)
 					.map(async (repo: any) => {
 						// this already runs in parallel by default
 						const readme_data = await getReadme(
