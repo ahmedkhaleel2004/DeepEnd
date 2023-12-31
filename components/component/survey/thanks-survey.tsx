@@ -4,6 +4,8 @@ import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
+// this needs a lot of work
+
 export function ThankSurvey() {
 	const router = useRouter();
 

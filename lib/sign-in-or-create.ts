@@ -6,7 +6,11 @@ import { db } from "./firebase";
 import { fetchUserRepositories } from "./get-repos";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-export async function signInFunc(router: AppRouterInstance) {
+export async function signInFunc(
+	router: AppRouterInstance,
+	startCreatingAccount: any,
+	finishCreatingAccount: any
+) {
 	await signInWithGithub().then(async (result) => {
 		if (result.user.uid) {
 			// should always be true
@@ -19,6 +23,7 @@ export async function signInFunc(router: AppRouterInstance) {
 					router.push("/survey");
 				}
 			} else {
+				startCreatingAccount();
 				const accessToken =
 					GithubAuthProvider.credentialFromResult(
 						result
@@ -36,6 +41,7 @@ export async function signInFunc(router: AppRouterInstance) {
 						accessToken || ""
 					),
 				});
+				finishCreatingAccount();
 				router.push("/survey");
 			}
 		} else {

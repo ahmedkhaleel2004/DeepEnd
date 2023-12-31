@@ -5,7 +5,7 @@ const SurveyComplete = () => {
 	return (
 		<div>
 			<h1 className="text-3xl font-bold justify-center">Thank you!</h1>
-			<p className="text-gray-500 dark:text-gray-400">
+			<p className="text-muted-foreground">
 				Thank you for completing the survey. Below is a summary of your
 				responses.
 			</p>

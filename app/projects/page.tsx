@@ -82,8 +82,6 @@ const Projects = () => {
 		fetchLanguages();
 	}, [userData]);
 
-	console.log(languages);
-
 	return (
 		<>
 			<div className="border flex flex-row w-full max-w-full">
@@ -103,7 +101,10 @@ const Projects = () => {
 										key={index}
 										title={repository.name}
 										description={repository.description}
-										points={["", "", ""]}
+										points={
+											JSON.parse(repository.points)
+												?.bullet_points || ["", "", ""]
+										}
 										languages={
 											languages[repository.name] || {}
 										}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/component/navbars/navbar";
 import { motion } from "framer-motion";
@@ -23,13 +23,22 @@ import {
 import MainCard from "@/components/component/home/main-card";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { signInFunc } from "@/lib/sign-in-or-create";
+import Modal from "@/components/component/projects/modal";
 
 export default function Home() {
 	const router = useRouter();
 	const userData = useAuth(router);
+	const [isCreatingAccount, setIsCreatingAccount] = useState(false);
 
 	const handleSignIn = async () => {
-		await signInFunc(router);
+		await signInFunc(
+			router,
+			() => setIsCreatingAccount(true),
+			() => setIsCreatingAccount(false)
+		);
+		// creating account will take some time to the api
+		// so we need to update a state and show a modal
+		// that says creating account with a loading sign
 	};
 
 	return (
@@ -53,6 +62,23 @@ export default function Home() {
 								<IconGitHub className="w-5 h-5 mr-2" />
 								Sign in with GitHub
 							</Button>
+							{isCreatingAccount && (
+								<Modal>
+									<Card>
+										<CardHeader>
+											<CardTitle>
+												Creating Account
+											</CardTitle>
+										</CardHeader>
+										<CardContent>
+											<CardDescription>
+												Your account is being created.
+												This will take a few seconds.
+											</CardDescription>
+										</CardContent>
+									</Card>
+								</Modal>
+							)}
 						</div>
 					</div>
 					<Card className="shadow-lg rounded-3xl bg-background/80">
@@ -69,7 +95,7 @@ export default function Home() {
 					<Card className="rounded-3xl pb-8 bg-background/80">
 						<CardHeader className="text-center my-4">
 							<CardTitle className="text-3xl">
-								An end-to-end solution
+								End-to-end project guidance
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
