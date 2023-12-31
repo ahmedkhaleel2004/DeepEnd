@@ -1,4 +1,4 @@
-import { uploadString, ref } from "firebase/storage";
+import { uploadString, ref, listAll, deleteObject } from "firebase/storage";
 import { storage } from "@/lib/firebase";
 
 const imagesDir = "images/";
@@ -10,6 +10,15 @@ export async function uploadUserRepoImg(
 	uid: string,
 	repoNum: number
 ) {
+
+	const directoryRef = ref(storage, `${imagesDir}${uid}`);
+	const fileList = await listAll(directoryRef);
+	const existingImageRef = fileList.items.find(item => item.name.startsWith(`img_${repoNum}_`));
+
+	if (existingImageRef) {
+		await deleteObject(existingImageRef);
+	}
+
 	const response = await fetch("/api/image", {
 		method: "POST",
 		body: JSON.stringify({

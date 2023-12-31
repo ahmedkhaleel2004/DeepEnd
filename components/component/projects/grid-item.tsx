@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
+import { uploadUserRepoImg } from "@/lib/upload-user-repo-img";
 
 interface GridItemProps {
 	title: string;
@@ -42,6 +43,28 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 	};
 	const handleTitleChange = (newTitle: string) => setEditedTitle(newTitle);
 	const handleDescChange = (newDesc: string) => setEditedDesc(newDesc);
+
+	const handleRegenerateImg = async () => {
+		if (auth.currentUser) {
+			const docRef = doc(db, "users", auth.currentUser.uid);
+			const docSnap = await getDoc(docRef);
+			if (docSnap.exists()) {
+				const userData = docSnap.data();
+				const repositories = userData.repositories || [];
+				const repoIndex = repositories.findIndex(
+					(repo: { name: string }) => repo.name === title
+				);
+
+				await uploadUserRepoImg(
+					repositories[repoIndex].name,
+					repositories[repoIndex].description,
+					repositories[repoIndex].points,
+					auth.currentUser.uid,
+					repoIndex
+				);
+			}
+		}
+	};
 
 	const handleSave = async () => {
 		// updates title, description, points
@@ -166,7 +189,9 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 										height={200}
 										className="rounded-3xl m-4 h-64 w-64"
 									/>
-									<Button>Regenerate image</Button>
+									<Button onClick={handleRegenerateImg}>
+										Regenerate image
+									</Button>
 								</div>
 							</CardContent>
 							<CardFooter className="flex justify-between">
