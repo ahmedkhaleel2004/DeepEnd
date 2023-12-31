@@ -123,7 +123,8 @@ const Projects = () => {
 													key={index}
 													title={repository.name}
 													description={
-														repository.description
+														repository.description ||
+														""
 													}
 													points={
 														JSON.parse(

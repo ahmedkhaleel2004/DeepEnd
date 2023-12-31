@@ -29,11 +29,18 @@ interface GridItemProps {
 	languages: { [key: string]: string } | {};
 }
 
+interface Repository {
+	name: string;
+	description: string;
+	points: string[];
+}
+
 const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [editedPoints, setEditedPoints] = useState(points);
 	const [editedTitle, setEditedTitle] = useState(title);
 	const [editedDesc, setEditedDesc] = useState(description);
+	const [repos, setRepos] = useState<Repository>();
 	const [imageUrl, setImageUrl] = useState("");
 	const [isUpdatingImage, setIsUpdatingImage] = useState(false);
 
@@ -69,10 +76,13 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 
 			if (userData) {
 				const repositories = userData.repositories || [];
-				const repoIndex = findRepoIndex(repositories, title);
+				const repoIndex = findRepoIndex(
+					repositories,
+					repos?.name || title
+				);
 
 				if (repoIndex !== -1) {
-					await updateRepository(
+					const updatedRepositories = await updateRepository(
 						repositories,
 						repoIndex,
 						editedTitle,
@@ -80,6 +90,7 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 						editedPoints,
 						auth.currentUser.uid
 					);
+					setRepos(updatedRepositories);
 				} else {
 					console.error("repo not found");
 				}
@@ -91,7 +102,7 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 		}
 	};
 
-	useEffect(() => {
+	/* 	useEffect(() => { 
 		const fetchImage = async () => {
 			if (auth.currentUser) {
 				const userData = await getUserData(auth.currentUser.uid);
@@ -105,19 +116,24 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 		};
 
 		fetchImage();
-	}, []);
+	}, [title, description, points]); */
+
+	// TODO: uncomment when bandiwth issue is fixed
 
 	return (
 		<>
 			<motion.div whileHover={{ scale: 1.05 }}>
 				<Card className="cursor-pointer" onClick={handleOpen}>
 					<CardHeader>
-						<CardTitle>{title}</CardTitle>
-						<CardDescription>{description}</CardDescription>
+						<CardTitle>{repos?.name || title}</CardTitle>
+						<CardDescription>
+							{repos?.description || description}
+						</CardDescription>
 					</CardHeader>
 					<CardContent className="flex justify-between">
 						<ul className="ml-6 list-disc flex-grow [&>li]:mt-2">
-							<li>{points[0]}</li>
+							<li>{points[0]}</li>{" "}
+							{/* still need to update these values */}
 							<li>{points[1]}</li>
 							<li>{points[2]}</li>
 						</ul>

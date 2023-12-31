@@ -16,6 +16,9 @@ export const updateRepository = async (
     editedPoints: string[], 
     uid: string
 ) => {    
+
+    console.log(repositories[repoIndex])
+
     const pointsString = JSON.stringify({
         bullet_points: editedPoints,
     });
@@ -27,6 +30,8 @@ export const updateRepository = async (
     await updateDoc(doc(db, "users", uid), {
         repositories,
     });
+
+    return repositories[repoIndex];
 }; 
 
 export const fetchImageUrl = async (uid: string, repoIndex: number) => {
