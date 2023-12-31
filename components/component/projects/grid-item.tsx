@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Card,
 	CardContent,
@@ -14,10 +14,13 @@ import Modal from "@/components/component/projects/modal";
 import { AnimatePresence, motion } from "framer-motion";
 import Languages from "./languages";
 import { getUserData } from "@/lib/get-user-data";
-import { doc, updateDoc } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
-import { uploadUserRepoImg } from "@/lib/upload-user-repo-img";
+import { auth } from "@/lib/firebase";
 import ModalContent from "./modal-content";
+import {
+	fetchImageUrl,
+	findRepoIndex,
+	updateRepository,
+} from "@/lib/edit-projects";
 
 interface GridItemProps {
 	title: string;
@@ -31,6 +34,8 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 	const [editedPoints, setEditedPoints] = useState(points);
 	const [editedTitle, setEditedTitle] = useState(title);
 	const [editedDesc, setEditedDesc] = useState(description);
+	const [imageUrl, setImageUrl] = useState("");
+	const [isUpdatingImage, setIsUpdatingImage] = useState(false);
 
 	const handleOpen = () => setIsOpen(true);
 	const handleClose = () => setIsOpen(false);
@@ -44,23 +49,17 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 	const handleDescChange = (newDesc: string) => setEditedDesc(newDesc);
 
 	const handleRegenerateImg = async () => {
+		setIsUpdatingImage(true);
 		if (auth.currentUser) {
 			const userData = await getUserData(auth.currentUser.uid);
 			if (userData) {
 				const repositories = userData.repositories || [];
-				const repoIndex = repositories.findIndex(
-					(repo: { name: string }) => repo.name === title
-				);
-
-				await uploadUserRepoImg(
-					repositories[repoIndex].name,
-					repositories[repoIndex].description,
-					repositories[repoIndex].points,
-					auth.currentUser.uid,
-					repoIndex
-				);
+				const repoIndex = findRepoIndex(repositories, title);
+				const url = await fetchImageUrl(userData.uid, repoIndex);
+				setImageUrl(url?.toString() || "");
 			}
 		}
+		setIsUpdatingImage(false);
 	};
 
 	const handleSave = async () => {
@@ -70,25 +69,20 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 
 			if (userData) {
 				const repositories = userData.repositories || [];
-				const repoIndex = repositories.findIndex(
-					(repo: { name: string }) => repo.name === title
-				);
+				const repoIndex = findRepoIndex(repositories, title);
 
 				if (repoIndex !== -1) {
-					const pointsString = JSON.stringify({
-						bullet_points: editedPoints,
-					});
-
-					repositories[repoIndex].points = pointsString;
-					repositories[repoIndex].name = editedTitle;
-					repositories[repoIndex].description = editedDesc;
+					await updateRepository(
+						repositories,
+						repoIndex,
+						editedTitle,
+						editedDesc,
+						editedPoints,
+						auth.currentUser.uid
+					);
 				} else {
 					console.error("repo not found");
 				}
-
-				await updateDoc(doc(db, "users", auth.currentUser.uid), {
-					repositories,
-				});
 			} else {
 				console.error("user not found");
 			}
@@ -96,6 +90,22 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 			handleClose();
 		}
 	};
+
+	useEffect(() => {
+		const fetchImage = async () => {
+			if (auth.currentUser) {
+				const userData = await getUserData(auth.currentUser.uid);
+				if (userData) {
+					const repositories = userData.repositories || [];
+					const repoIndex = findRepoIndex(repositories, title);
+					const url = await fetchImageUrl(userData.uid, repoIndex);
+					setImageUrl(url?.toString() || "");
+				}
+			}
+		};
+
+		fetchImage();
+	}, []);
 
 	return (
 		<>
@@ -112,7 +122,7 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 							<li>{points[2]}</li>
 						</ul>
 						<Image
-							src="/jbp.png"
+							src={imageUrl || "/jbp.png"}
 							alt="placeholder"
 							priority
 							width={200}
@@ -132,6 +142,8 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 							editedTitle={editedTitle}
 							editedDesc={editedDesc}
 							editedPoints={editedPoints}
+							imageUrl={imageUrl}
+							isUpdatingImage={isUpdatingImage}
 							handleTitleChange={handleTitleChange}
 							handleDescChange={handleDescChange}
 							handlePointChange={handlePointChange}
