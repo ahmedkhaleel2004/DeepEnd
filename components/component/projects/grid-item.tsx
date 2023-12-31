@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import Languages from "./languages";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 
 interface GridItemProps {
 	title: string;
@@ -26,9 +28,57 @@ interface GridItemProps {
 
 const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [editedPoints, setEditedPoints] = useState(points);
+	const [editedTitle, setEditedTitle] = useState(title);
+	const [editedDesc, setEditedDesc] = useState(description);
 
 	const handleOpen = () => setIsOpen(true);
 	const handleClose = () => setIsOpen(false);
+
+	const handlePointChange = (index: number, newValue: string) => {
+		const updatedPoints = [...editedPoints];
+		updatedPoints[index] = newValue;
+		setEditedPoints(updatedPoints);
+	};
+	const handleTitleChange = (newTitle: string) => setEditedTitle(newTitle);
+	const handleDescChange = (newDesc: string) => setEditedDesc(newDesc);
+
+	const handleSave = async () => {
+		// updates title, description, points
+		if (auth.currentUser) {
+			const docRef = doc(db, "users", auth.currentUser.uid);
+
+			try {
+				const docSnap = await getDoc(docRef);
+				if (docSnap.exists()) {
+					const userData = docSnap.data();
+					const repositories = userData.repositories || [];
+					const repoIndex = repositories.findIndex(
+						(repo: { name: string }) => repo.name === title
+					);
+					if (repoIndex !== -1) {
+						const pointsString = JSON.stringify({
+							bullet_points: editedPoints,
+						});
+
+						repositories[repoIndex].points = pointsString;
+						repositories[repoIndex].name = editedTitle;
+						repositories[repoIndex].description = editedDesc;
+					} else {
+						console.error("Specific repository not found");
+					}
+
+					await updateDoc(docRef, { repositories });
+					console.log("Points updated successfully");
+				} else {
+					console.error("Document does not exist");
+				}
+			} catch (error) {
+				console.error("Error updating points:", error);
+			}
+		}
+		handleClose();
+	};
 
 	return (
 		<>
@@ -63,8 +113,26 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 					<Modal>
 						<Card className="w-[80vh]">
 							<CardHeader>
-								<CardTitle>{title}</CardTitle>
-								<CardDescription>{description}</CardDescription>
+								<div className="mb-2">
+									<Label htmlFor="title">Title</Label>
+									<Input
+										value={editedTitle}
+										onChange={(e) =>
+											handleTitleChange(e.target.value)
+										}
+									/>
+								</div>
+								<div className="mb-2">
+									<Label htmlFor="description">
+										Description
+									</Label>
+									<Input
+										value={editedDesc}
+										onChange={(e) =>
+											handleDescChange(e.target.value)
+										}
+									/>
+								</div>
 							</CardHeader>
 							<CardContent className="flex justify-between">
 								<div className="w-full">
@@ -74,30 +142,38 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 										</Label>
 									</div>
 									<div className="space-y-4">
-										{points.map((point, index) => (
+										{editedPoints.map((point, index) => (
 											<Input
 												key={index}
 												id={`point-${index}`}
 												value={point}
-												onChange={() => {}}
+												onChange={(e) => {
+													handlePointChange(
+														index,
+														e.target.value
+													);
+												}}
 											/>
 										))}
 									</div>
 								</div>
-								<Image
-									src="/jbp.png"
-									alt="placeholder"
-									priority
-									width={200}
-									height={200}
-									className="rounded-3xl m-4 h-64 w-64"
-								/>
+								<div className="w-full flex flex-col items-center">
+									<Image
+										src="/jbp.png"
+										alt="placeholder"
+										priority
+										width={200}
+										height={200}
+										className="rounded-3xl m-4 h-64 w-64"
+									/>
+									<Button>Regenerate image</Button>
+								</div>
 							</CardContent>
 							<CardFooter className="flex justify-between">
 								<Button variant="outline" onClick={handleClose}>
 									Cancel
 								</Button>
-								<Button onClick={handleClose}>Save</Button>
+								<Button onClick={handleSave}>Save</Button>
 							</CardFooter>
 						</Card>
 					</Modal>
