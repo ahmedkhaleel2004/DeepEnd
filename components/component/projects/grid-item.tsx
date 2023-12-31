@@ -13,24 +13,21 @@ import Image from "next/image";
 import Modal from "@/components/component/projects/modal";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import Languages from "./languages";
 
 interface GridItemProps {
 	title: string;
 	description: string;
 	points: string[];
-	technology: string[];
+	languages: { [key: string]: string } | {};
 }
 
-const GridItem = ({
-	title,
-	description,
-	points,
-	technology,
-}: GridItemProps) => {
+const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleOpen = () => setIsOpen(true);
 	const handleClose = () => setIsOpen(false);
+
 	return (
 		<>
 			<motion.div whileHover={{ scale: 1.05 }}>
@@ -55,9 +52,7 @@ const GridItem = ({
 						/>
 					</CardContent>
 					<CardFooter className="space-x-4">
-						{technology.map((tech, index) => (
-							<span key={index}>{tech}</span>
-						))}
+						<Languages languages={languages} />
 					</CardFooter>
 				</Card>
 			</motion.div>
