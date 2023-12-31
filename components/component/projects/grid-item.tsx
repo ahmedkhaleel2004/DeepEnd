@@ -12,13 +12,12 @@ import {
 import Image from "next/image";
 import Modal from "@/components/component/projects/modal";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import Languages from "./languages";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { getUserData } from "@/lib/get-user-data";
+import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { uploadUserRepoImg } from "@/lib/upload-user-repo-img";
+import ModalContent from "./modal-content";
 
 interface GridItemProps {
 	title: string;
@@ -46,10 +45,8 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 
 	const handleRegenerateImg = async () => {
 		if (auth.currentUser) {
-			const docRef = doc(db, "users", auth.currentUser.uid);
-			const docSnap = await getDoc(docRef);
-			if (docSnap.exists()) {
-				const userData = docSnap.data();
+			const userData = await getUserData(auth.currentUser.uid);
+			if (userData) {
 				const repositories = userData.repositories || [];
 				const repoIndex = repositories.findIndex(
 					(repo: { name: string }) => repo.name === title
@@ -69,38 +66,35 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 	const handleSave = async () => {
 		// updates title, description, points
 		if (auth.currentUser) {
-			const docRef = doc(db, "users", auth.currentUser.uid);
+			const userData = await getUserData(auth.currentUser.uid);
 
-			try {
-				const docSnap = await getDoc(docRef);
-				if (docSnap.exists()) {
-					const userData = docSnap.data();
-					const repositories = userData.repositories || [];
-					const repoIndex = repositories.findIndex(
-						(repo: { name: string }) => repo.name === title
-					);
-					if (repoIndex !== -1) {
-						const pointsString = JSON.stringify({
-							bullet_points: editedPoints,
-						});
+			if (userData) {
+				const repositories = userData.repositories || [];
+				const repoIndex = repositories.findIndex(
+					(repo: { name: string }) => repo.name === title
+				);
 
-						repositories[repoIndex].points = pointsString;
-						repositories[repoIndex].name = editedTitle;
-						repositories[repoIndex].description = editedDesc;
-					} else {
-						console.error("Specific repository not found");
-					}
+				if (repoIndex !== -1) {
+					const pointsString = JSON.stringify({
+						bullet_points: editedPoints,
+					});
 
-					await updateDoc(docRef, { repositories });
-					console.log("Points updated successfully");
+					repositories[repoIndex].points = pointsString;
+					repositories[repoIndex].name = editedTitle;
+					repositories[repoIndex].description = editedDesc;
 				} else {
-					console.error("Document does not exist");
+					console.error("repo not found");
 				}
-			} catch (error) {
-				console.error("Error updating points:", error);
+
+				await updateDoc(doc(db, "users", auth.currentUser.uid), {
+					repositories,
+				});
+			} else {
+				console.error("user not found");
 			}
+
+			handleClose();
 		}
-		handleClose();
 	};
 
 	return (
@@ -134,73 +128,17 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 			<AnimatePresence>
 				{isOpen && (
 					<Modal>
-						<Card className="w-[80vh]">
-							<CardHeader>
-								<div className="mb-2">
-									<Label htmlFor="title">Title</Label>
-									<Input
-										value={editedTitle}
-										onChange={(e) =>
-											handleTitleChange(e.target.value)
-										}
-									/>
-								</div>
-								<div className="mb-2">
-									<Label htmlFor="description">
-										Description
-									</Label>
-									<Input
-										value={editedDesc}
-										onChange={(e) =>
-											handleDescChange(e.target.value)
-										}
-									/>
-								</div>
-							</CardHeader>
-							<CardContent className="flex justify-between">
-								<div className="w-full">
-									<div className="mb-2">
-										<Label htmlFor="bullet-points">
-											Bullet Points
-										</Label>
-									</div>
-									<div className="space-y-4">
-										{editedPoints.map((point, index) => (
-											<Input
-												key={index}
-												id={`point-${index}`}
-												value={point}
-												onChange={(e) => {
-													handlePointChange(
-														index,
-														e.target.value
-													);
-												}}
-											/>
-										))}
-									</div>
-								</div>
-								<div className="w-full flex flex-col items-center">
-									<Image
-										src="/jbp.png"
-										alt="placeholder"
-										priority
-										width={200}
-										height={200}
-										className="rounded-3xl m-4 h-64 w-64"
-									/>
-									<Button onClick={handleRegenerateImg}>
-										Regenerate image
-									</Button>
-								</div>
-							</CardContent>
-							<CardFooter className="flex justify-between">
-								<Button variant="outline" onClick={handleClose}>
-									Cancel
-								</Button>
-								<Button onClick={handleSave}>Save</Button>
-							</CardFooter>
-						</Card>
+						<ModalContent
+							editedTitle={editedTitle}
+							editedDesc={editedDesc}
+							editedPoints={editedPoints}
+							handleTitleChange={handleTitleChange}
+							handleDescChange={handleDescChange}
+							handlePointChange={handlePointChange}
+							handleRegenerateImg={handleRegenerateImg}
+							handleClose={handleClose}
+							handleSave={handleSave}
+						/>
 					</Modal>
 				)}
 			</AnimatePresence>
