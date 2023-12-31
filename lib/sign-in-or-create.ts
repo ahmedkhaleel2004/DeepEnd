@@ -43,6 +43,21 @@ export async function signInFunc(
 					accessToken: accessToken,
 					repositories: repositories,
 				});
+				// await Promise.all(
+				// 	repositories.map((repo: any, index: number) => {
+				// 		return uploadUserRepoImg(
+				// 			repo.name,
+				// 			repo.description,
+				// 			repo.points,
+				// 			result.user.uid,
+				// 			index
+				// 		);
+				// 	})
+				// );
+
+				// this below is wrong since it moves on and gets
+				// rid of the loading screen without finishing all generations
+				//     - on fix of rate limit error use the above code!
 				repositories.map(async (repo: any, index: number) => {
 					await uploadUserRepoImg(
 						repo.name,
