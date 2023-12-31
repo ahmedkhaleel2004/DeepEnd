@@ -6,6 +6,7 @@ import {
 	signOut,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage, ref } from "firebase/storage";
 // import { getAdditionalUserInfo } from "@firebase/auth";
 
 const firebaseConfig = {
@@ -78,3 +79,5 @@ export const signInWithGithub = () => {
 };
 
 export const db = getFirestore(app);
+const storage = getStorage();
+export const storageRef = ref(storage);

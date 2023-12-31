@@ -14,6 +14,8 @@ import Modal from "@/components/component/projects/modal";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Languages from "./languages";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 interface GridItemProps {
 	title: string;
@@ -59,17 +61,43 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 			<AnimatePresence>
 				{isOpen && (
 					<Modal>
-						<Card>
+						<Card className="w-[80vh]">
 							<CardHeader>
 								<CardTitle>{title}</CardTitle>
 								<CardDescription>{description}</CardDescription>
 							</CardHeader>
-							<CardContent>Modal!</CardContent>
+							<CardContent className="flex justify-between">
+								<div className="w-full">
+									<div className="mb-2">
+										<Label htmlFor="bullet-points">
+											Bullet Points
+										</Label>
+									</div>
+									<div className="space-y-4">
+										{points.map((point, index) => (
+											<Input
+												key={index}
+												id={`point-${index}`}
+												value={point}
+												onChange={() => {}}
+											/>
+										))}
+									</div>
+								</div>
+								<Image
+									src="/jbp.png"
+									alt="placeholder"
+									priority
+									width={200}
+									height={200}
+									className="rounded-3xl m-4 h-64 w-64"
+								/>
+							</CardContent>
 							<CardFooter className="flex justify-between">
 								<Button variant="outline" onClick={handleClose}>
 									Cancel
 								</Button>
-								<Button onClick={handleClose}>Done</Button>
+								<Button onClick={handleClose}>Save</Button>
 							</CardFooter>
 						</Card>
 					</Modal>
