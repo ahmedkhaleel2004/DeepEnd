@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/component/navbars/navbar";
-import { motion } from "framer-motion";
 import {
 	Card,
 	CardContent,
@@ -14,20 +13,16 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { IconGitHub } from "@/components/ui/icons";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import MainCard from "@/components/component/home/main-card";
-import { useAuth } from "@/lib/hooks/use-auth";
+import ProfileCard from "@/components/component/home/profile-card";
+import AccordianQuestions from "@/components/component/home/accordian-questions";
 import { signInFunc } from "@/lib/sign-in-or-create";
 import Modal from "@/components/component/projects/modal";
+import { BiPhone } from "react-icons/bi";
 
 export default function Home() {
 	const router = useRouter();
-	const userData = useAuth(router);
 	const [isCreatingAccount, setIsCreatingAccount] = useState(false);
 
 	const handleSignIn = async () => {
@@ -36,17 +31,14 @@ export default function Home() {
 			() => setIsCreatingAccount(true),
 			() => setIsCreatingAccount(false)
 		);
-		// creating account will take some time to the api
-		// so we need to update a state and show a modal
-		// that says creating account with a loading sign
 	};
 
 	return (
 		<div>
 			<Navbar />
 			<main className="px-12 mx-auto max-w-[80rem]">
-				<div className="grid sm:grid-cols-1 mt-16 md:grid-cols-2">
-					<div>
+				<div className="grid sm:grid-cols-1 mt-16 md:grid-cols-2 ">
+					<div className="">
 						<h1 className="text-5xl font-bold pt-24 pb-6">
 							Your Personal Project Partner
 						</h1>
@@ -121,180 +113,94 @@ export default function Home() {
 						</CardContent>
 					</Card>
 				</div>
-				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />{" "}
-				{/* this is the about section */}
-				<Card
-					className="bg-white dark:bg-black"
-					style={{ height: "32rem" }}
-				>
-					<div className="h-96 pt-10">
-						<h1 className="text-center text-3xl font-bold pb-9">
-							About Us
+				<Separator className="mt-12 mb-12 bg-white dark:bg-zinc-700" />
+				<div>
+					<div>
+						<h1 className="text-center text-2xl font-bold pb-5">
+							Common Questions
 						</h1>
-						<div className="flex justify-between space-x-5">
-							<div>
-								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
-										<Card className="w-64 cursor-pointer h-12 ml-10 ">
-											<CardContent className="flex items-center gap-4">
-												<Avatar className="h-11 w-11 pt-1">
-													<AvatarImage
-														alt="User's avatar"
-														src="/jbp.png"
-													/>
-													<AvatarFallback>
-														NA
-													</AvatarFallback>
-												</Avatar>
-												<div className="space-y-2">
-													<div className="font-semibold">
-														User Name
-													</div>
-												</div>
-											</CardContent>
-										</Card>
-									</DropdownMenuTrigger>
-									<DropdownMenuContent className="w-72  pt-2 space-y-1 text-sm max-h-[100px]">
-										<p className="p-2 text-gray-800 dark:text-gray-200">
-											Hello my name is Benmain Avdullahu I
-											like to spend time doing fun stuff
-											ydayda bru ok ima let let it do let
-											it be ima come to the tea mess with
-											me
-										</p>
-									</DropdownMenuContent>
-								</DropdownMenu>
-								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
-										<Card className="w-64 cursor-pointer h-12 ml-10 mt-28">
-											<CardContent className="flex items-center gap-4">
-												<Avatar className="h-11 w-11 pt-1">
-													<AvatarImage
-														alt="User's avatar"
-														src="/jbp.png"
-													/>
-													<AvatarFallback>
-														NA
-													</AvatarFallback>
-												</Avatar>
-												<div className="space-y-2">
-													<div className="font-semibold">
-														User Name
-													</div>
-												</div>
-											</CardContent>
-										</Card>
-									</DropdownMenuTrigger>
-									<DropdownMenuContent className="w-72  pt-2 space-y-1 text-sm max-h-[100px]">
-										<p className="p-2 text-gray-800 dark:text-gray-200">
-											Hello my name is Benmain Avdullahu I
-											like to spend time doing fun stuff
-											ydayda bru ok ima let let it do let
-											it be ima come to the tea mess with
-											me
-										</p>
-									</DropdownMenuContent>
-								</DropdownMenu>
+					</div>
+					<AccordianQuestions
+						question={"How does it work?"}
+						answer={
+							"This is sample text. This is sample text. This is sampletext"
+						}
+						valueItem={"item-1"}
+					/>
+					<AccordianQuestions
+						question={"Can i Trust Linus with my Information?"}
+						answer={
+							"You can trust us. You can trust us. You can trust us. You can trust us. we are not facebook........"
+						}
+						valueItem={"item-2"}
+					/>
+					<AccordianQuestions
+						question={
+							"What sets this AI tool different from ones in the market?"
+						}
+						answer={"Its just better. Its just better. and better."}
+						valueItem={"item-3"}
+					/>
+				</div>
+				<Separator className="mt-12 mb-12 bg-white dark:bg-zinc-700" />
+				{/*about us*/}
+				<div className="h-80 pt-10">
+					<h1 className="text-center text-2xl font-bold pb-9">
+						About Us
+					</h1>
+					<div>
+						<div className="flex flex-wrap justify-between space-x-auto">
+							<div className="flex align-center m-4">
+								<ProfileCard
+									username="Benjamin Avdullahu"
+									description="Hello my name is ben, this is a test description for the website for people who wanna get better at making projects yes yes yes ahahaha."
+								/>
 							</div>
-							<div>
-								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
-										<Card className="w-64 cursor-pointer h-12 mt-20">
-											<CardContent className="flex items-center gap-4">
-												<Avatar className="h-11 w-11 pt-1">
-													<AvatarImage
-														alt="User's avatar"
-														src="/jbp.png"
-													/>
-													<AvatarFallback>
-														NA
-													</AvatarFallback>
-												</Avatar>
-												<div className="space-y-2">
-													<div className="font-semibold">
-														User Name
-													</div>
-												</div>
-											</CardContent>
-										</Card>
-									</DropdownMenuTrigger>
-									<DropdownMenuContent className="w-72 pt-2 space-y-1 text-sm max-h-[100px]">
-										<p className="p-2 text-gray-800 dark:text-gray-200">
-											Hello my name is Benmain Avdullahu I
-											like to spend time doing fun stuff
-											ydayda bru ok ima let let it do let
-											it be ima come to the tea mess with
-											me
-										</p>
-									</DropdownMenuContent>
-								</DropdownMenu>
-								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
-										<Card className="w-64 cursor-pointer h-12 mt-28">
-											<CardContent className="flex items-center gap-4">
-												<Avatar className="h-11 w-11 pt-1">
-													<AvatarImage
-														alt="User's avatar"
-														src="/jbp.png"
-													/>
-													<AvatarFallback>
-														NA
-													</AvatarFallback>
-												</Avatar>
-												<div className="space-y-2">
-													<div className="font-semibold">
-														User Name
-													</div>
-												</div>
-											</CardContent>
-										</Card>
-									</DropdownMenuTrigger>
-									<DropdownMenuContent className="w-72 pt-2 space-y-1 text-sm max-h-[100px]">
-										<p className="p-2 text-gray-800 dark:text-gray-200">
-											Hello my name is Benmain Avdullahu I
-											like to spend time doing fun stuff
-											ydayda bru ok ima let let it do let
-											it be ima come to the tea mess with
-											me
-										</p>
-									</DropdownMenuContent>
-								</DropdownMenu>
+							<div className="flex flex-col align-center m-4">
+								<ProfileCard
+									username="Benjamin Avdullahu"
+									description="Hello my name is ben, this is a test description for the website for people who wanna get better at making projects yes yes yes ahahaha."
+								/>
 							</div>
-
-							<div className="w-2/5">
-								<div>
-									<p className="break-words">
-										Our team members are new and aspiring
-										young software developers who are going
-										through the same process as you. We are
-										here to help you through your journey
-										and provide you with the best resources
-										to help you succeed. That is why we
-										created Linus, a personal project
-										partner that will help you through your
-										journey.
-									</p>
-								</div>
+							<div className="flex flex-col align-center m-4 pb-20">
+								<ProfileCard
+									username="Benjamin Avdullahu"
+									description="Hello my name is ben, this is a test description for the website for people who wanna get better at making projects yes yes yes ahahaha."
+								/>
+							</div>
+							<div className="flex flex-col align-center m-4 relative">
+								<ProfileCard
+									username="Benjamin Avdullahu"
+									description="Hello my name is ben, this is a test description for the website for people who wanna get better at making projects yes yes yes ahahaha."
+								/>
 							</div>
 						</div>
 					</div>
-				</Card>
-				<Separator className="mt-12 mb-12 bg-white dark:bg-zinc-700" />
-				<div>
-					<h1 className="text-3xl font-bold pb-6">
-						Another section here...
-					</h1>
-					<h2>That describes our amazing product.</h2>
 				</div>
 				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />
-				<div id="contact">
-					<h1 className="text-3xl font-bold pb-6">Contact</h1>
-					<a
-						className="hover:underline"
-						href="mailto:zakamm@gmail.com?subject = Feedback&body = Message"
-					>
-						Send Us Feedback
-					</a>
+				<div
+					id="contact"
+					className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center"
+				>
+					<div className="col-span-1">
+						<p className="text-lg">Contact Us</p>
+						<BiPhone className="w-12 h-12" />
+						<p className="mt-5">
+							<a href="mailto:zakamm@gmail.com?subject = Feedback&body = Message">
+								zakamm@gmail.com
+							</a>
+						</p>
+						<p className="mt-5">
+							<a href="tel:123-456-7890">123-456-7890</a>
+						</p>
+					</div>
+
+					<div className="col-span-1">
+						<p className="text-lg">More Content/</p>
+					</div>
+					<div className="col-span-1">
+						<p className="text-lg">Send Us Feedback</p>
+					</div>
 				</div>
 				<footer className="mt-5 pt-5 text-center">© fwd//</footer>
 			</main>
