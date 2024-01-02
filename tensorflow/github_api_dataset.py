@@ -6,7 +6,7 @@ import datetime
 
 
 # Your GitHub Personal Access Token
-TOKEN = "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"
+TOKEN = "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"
 
 
 """ RATE LIMITS """
@@ -19,10 +19,15 @@ TOKEN = "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"
 # 90 seconds of CPU time per 60 seconds of real time
 # No more than 100 concurrent request
 
-# by my calculation, 100 users = 2500 requests
+# by my calculation, 25 requests per user on average
 
 GITHUB_API = "https://api.github.com"
 HEADERS = {"Authorization": f"token {TOKEN}"}
+MIN_FOLLOWERS = 25
+MAX_FOLLOWERS = 80
+NUM_USERS = 50
+THREADS = 25
+NOT_ENOUGH = NUM_USERS * 25
 
 # getting the rate limit status
 before_response = requests.get(f"{GITHUB_API}/rate_limit", headers=HEADERS)
@@ -31,8 +36,15 @@ reset_time = datetime.datetime.fromtimestamp(reset_time)
 
 reset_time = reset_time.strftime('%Y-%m-%d %I:%M:%S %p')
 
-input(
-    f"\033[1m\033[31mWARNING: {before_response.headers['X-Ratelimit-Remaining']} requests remaining. Your rate limit resets at {reset_time}. Press Enter to continue...\033[0m\n")
+requests_remaining = int(before_response.headers['X-Ratelimit-Remaining'])
+
+if requests_remaining > NOT_ENOUGH:
+    input(
+        f"\033[1m\033[31mWARNING: {requests_remaining} requests remaining. Your rate limit resets at {reset_time}. Press Enter to continue...\033[0m\n")
+else:
+    print(
+        f"\033[1m\033[31mYou have {requests_remaining} requests remaining which is not enough. Rate limits will be reset at: {reset_time} Quitting the script.\033[0m\n")
+    quit()
 
 
 def fetch_user_details(username):
@@ -42,11 +54,6 @@ def fetch_user_details(username):
         return response.json()
     else:
         return None
-
-
-MIN_FOLLOWERS = 25
-MAX_FOLLOWERS = 80
-NUM_USERS = 10
 
 
 def search_users(min_followers=MIN_FOLLOWERS, max_followers=MAX_FOLLOWERS, page=1):
@@ -142,8 +149,6 @@ def create_dataset():
     data = []
     processed_count = 0
 
-    THREADS = 10
-
     with ThreadPoolExecutor(max_workers=THREADS) as executor:
         future_to_user = {executor.submit(
             fetch_user_data, user): user for user in users}
@@ -180,7 +185,7 @@ dataset = create_dataset()
 # requests used up and requests remaining
 after_response = requests.get(f"{GITHUB_API}/rate_limit", headers=HEADERS)
 
-requests_used = int(after_response.headers['X-Ratelimit-Used'])
+requests_remaining = int(after_response.headers['X-Ratelimit-Remaining'])
 
 print(
-    f"\033[1m\033[31mRate limits will be reset at: {reset_time} with {requests_used}/5000 requests used\033[0m\n")
+    f"\033[1m\033[31mRate limits will be reset at: {reset_time} with {requests_remaining} requests remaining\033[0m\n")
