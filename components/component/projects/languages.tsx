@@ -39,11 +39,11 @@ const Languages: React.FC<LanguagesProps> = ({ languages }) => {
 			</div>
 
 			{/* languages */}
-			<div className="mt-2 flex space-x-4">
+			<div className="mt-2 flex flex-wrap">
 				{Object.entries(languages).map(([lang, percent]) => {
 					const color = languageColors[lang]?.color || "#ddd";
 					return (
-						<div key={lang} className="flex items-center my-1">
+						<div key={lang} className="flex items-center my-1 mr-4">
 							<span
 								className="inline-block h-3 w-3 rounded-full"
 								style={{ backgroundColor: color }}

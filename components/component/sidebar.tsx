@@ -115,9 +115,13 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 										href={`/chatbot/${id}`}
 										className=" flex grow items-center"
 									>
-										<div className="flex items-center gap-2">
+										<div className="flex items-center w-full gap-2">
 											<ChatBubbleIcon />
-											{name}
+											<div className="relative max-h-5 w-10 flex-1 select-none overflow-hidden text-ellipsis break-all">
+												<span className="whitespace-nowrap">
+													{name}
+												</span>
+											</div>
 										</div>
 									</Link>
 									<div
