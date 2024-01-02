@@ -6,7 +6,7 @@ import datetime
 
 
 # INPUT YOUR GITHUB PERSONAL ACCESS TOKEN HERE
-TOKEN = "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"
+TOKEN = "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"
 
 
 """ RATE LIMITS """
@@ -39,11 +39,12 @@ reset_time = reset_time.strftime('%Y-%m-%d %I:%M:%S %p')
 requests_remaining = int(before_response.headers['X-Ratelimit-Remaining'])
 
 if requests_remaining > NOT_ENOUGH:
+    print("\033c")
     input(
-        f"\033[1m\033[31mWARNING: {requests_remaining} requests remaining. Your rate limit resets at {reset_time}. Press Enter to continue...\033[0m\n")
+        f"\033[1m\033[36mYou have {requests_remaining} requests remaining, which is more than {NOT_ENOUGH}. Your rate limit resets at {reset_time}.\n\nPress Enter to start...\033[0m\n")
 else:
     print(
-        f"\033[1m\033[31mYou have {requests_remaining} requests remaining which is not enough. Rate limits will be reset at: {reset_time} Quitting the script.\n\nNote: If it says you have 60 remaining, you probably didn't update the PAT token at the top of the file.\033[0m\n")
+        f"\033[1m\033[31mYou have {requests_remaining} requests remaining which is not enough (less than {NOT_ENOUGH}). Rate limits will be reset at: {reset_time}. Quitting the script.\n\nNote: If it says you have 60 remaining, you probably didn't update the PAT token at the top of the file.\033[0m\n")
     quit()
 
 
@@ -119,7 +120,7 @@ def fetch_user_data(user):
         repos = get_user_repos(user['login'])
         if repos:
             experience_level = "Beginner" if len(
-                repos) < 25 else "Intermediate" if len(repos) < 50 else "Expert"
+                repos) < 10 else "Intermediate" if len(repos) < 25 else "Expert"
             languages, tech_keywords, projects = analyze_repos(repos)
             print(f"Data fetched for user: {user['login']}")
             return {
@@ -181,7 +182,12 @@ def create_dataset():
 
 
 # Generate dataset
-dataset = create_dataset()
+try:
+    dataset = create_dataset()
+except PermissionError:
+    print(
+        f"\033[1m\033[31mYou must close the CSV file. Quitting the script.\033[0m\n")
+    quit()
 
 # requests used up and requests remaining
 after_response = requests.get(f"{GITHUB_API}/rate_limit", headers=HEADERS)
@@ -190,3 +196,11 @@ requests_remaining = int(after_response.headers['X-Ratelimit-Remaining'])
 
 print(
     f"\033[1m\033[32mRate limits will be reset at: {reset_time} with {requests_remaining} requests remaining\033[0m\n")
+
+if requests_remaining > NOT_ENOUGH:
+    print(
+        f"\033[1m\033[36mYou have {requests_remaining} requests remaining. You can run the script again.\033[0m\n"
+    )
+else:
+    print(
+        f"\033[1m\033[36mYou must now push the changes to the dataset. Please `git push`.\033[0m\n")
