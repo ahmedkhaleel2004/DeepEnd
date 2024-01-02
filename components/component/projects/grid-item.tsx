@@ -46,7 +46,11 @@ const GridItem = ({
 	const [editedPoints, setEditedPoints] = useState(points);
 	const [editedTitle, setEditedTitle] = useState(title);
 	const [editedDesc, setEditedDesc] = useState(description);
-	const [repos, setRepos] = useState<Repository>();
+	const [repos, setRepos] = useState<Repository>({
+		name: title,
+		description: description,
+		points: points,
+	});
 	const [imageUrl, setImageUrl] = useState("");
 	const [isUpdatingImage, setIsUpdatingImage] = useState(false);
 
@@ -125,10 +129,9 @@ const GridItem = ({
 					</CardHeader>
 					<CardContent className="flex justify-between">
 						<ul className="ml-6 list-disc flex-grow [&>li]:mt-2">
-							<li>{points[0]}</li>{" "}
-							{/* still need to update these values */}
-							<li>{points[1]}</li>
-							<li>{points[2]}</li>
+							<li>{repos?.points[0]}</li>
+							<li>{repos?.points[1]}</li>
+							<li>{repos?.points[2]}</li>
 						</ul>
 						<Image
 							src={imageUrl || "/jbp.png"}

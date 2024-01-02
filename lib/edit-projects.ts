@@ -17,8 +17,6 @@ export const updateRepository = async (
     uid: string
 ) => {    
 
-    console.log(repositories[repoIndex])
-
     const pointsString = JSON.stringify({
         bullet_points: editedPoints,
     });
@@ -30,6 +28,8 @@ export const updateRepository = async (
     await updateDoc(doc(db, "users", uid), {
         repositories,
     });
+
+    repositories[repoIndex].points = editedPoints;
 
     return repositories[repoIndex];
 }; 
