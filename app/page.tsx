@@ -19,7 +19,9 @@ import ProfileCard from "@/components/component/home/profile-card";
 import AccordianQuestions from "@/components/component/home/accordian-questions";
 import { signInFunc } from "@/lib/sign-in-or-create";
 import Modal from "@/components/component/projects/modal";
+import FeedbackForm from "@/components/ui/feedback-header";
 import { BiPhone } from "react-icons/bi";
+import { CgMail } from "react-icons/cg";
 
 export default function Home() {
 	const router = useRouter();
@@ -177,29 +179,37 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-				<Separator className="mt-16 mb-16 bg-white dark:bg-zinc-700" />
+				<Separator className="mt-16 mb-12 bg-white dark:bg-zinc-700" />
 				<div
 					id="contact"
 					className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center"
 				>
-					<div className="col-span-1">
+					<div className="col-span-1 justify-center">
 						<p className="text-lg">Contact Us</p>
-						<BiPhone className="w-12 h-12" />
-						<p className="mt-5">
-							<a href="mailto:zakamm@gmail.com?subject = Feedback&body = Message">
-								zakamm@gmail.com
+						<div className="flex justify-center items-center pt-7">
+							<a
+								href="tel:123123123"
+								className="text-blue-500 hover:text-blue-800 flex items-center"
+							>
+								<BiPhone className="justify-center" />
+								123-456-7890
 							</a>
-						</p>
-						<p className="mt-5">
-							<a href="tel:123-456-7890">123-456-7890</a>
-						</p>
+						</div>
+						<div className="flex justify-center items-center pt-6">
+							<a
+								href="mailto:zakamm@gmail.com?subject=Feedback&body=Message"
+								className="flex items-center"
+							>
+								<CgMail className="w-9 h-9" />
+							</a>
+						</div>
 					</div>
 
 					<div className="col-span-1">
 						<p className="text-lg">More Content/</p>
 					</div>
 					<div className="col-span-1">
-						<p className="text-lg">Send Us Feedback</p>
+						<FeedbackForm />
 					</div>
 				</div>
 				<footer className="mt-5 pt-5 text-center">© fwd//</footer>
