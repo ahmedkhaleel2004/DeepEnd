@@ -2,9 +2,19 @@ import requests
 import pandas as pd
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+""" RATE LIMITS """
+
+# Primary Rate Limiting Factors
+# 5000 requests per hour for authenticated requests
+# 60 requests per hour for unauthenticated requests
+
+# Secondary Rate Limiting Factors
+# 90 seconds of CPU time per 60 seconds of real time
+# No more than 100 concurrent request
+
 GITHUB_API = "https://api.github.com"
 # Replace with your GitHub token
-TOKEN = "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"
+TOKEN = "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"  # doesnt work anymore
 HEADERS = {"Authorization": f"token {TOKEN}"}
 
 
@@ -33,7 +43,11 @@ def get_user_repos(username):
     """ Get repositories of a user. """
     response = requests.get(
         f"{GITHUB_API}/users/{username}/repos", headers=HEADERS)
-    return response.json()
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error fetching repos: {response.json()}")
+        return []
 
 
 def analyze_repos(repos):
@@ -43,7 +57,6 @@ def analyze_repos(repos):
     project_descriptions = []
 
     for repo in repos:
-        print(f"Repo data: {repo}")  # Debugging line
         if 'languages_url' in repo:  # Check if languages_url exists in the repo
             response = requests.get(repo['languages_url'], headers=HEADERS)
             if response.status_code == 200:
@@ -96,7 +109,9 @@ def create_dataset():
     data = []
     processed_count = 0
 
-    with ThreadPoolExecutor(max_workers=50) as executor:
+    THREADS = 10
+
+    with ThreadPoolExecutor(max_workers=THREADS) as executor:
         future_to_user = {executor.submit(
             fetch_user_data, user): user for user in users}
         for future in as_completed(future_to_user):
@@ -104,7 +119,7 @@ def create_dataset():
             if user_data:
                 data.append(user_data)
                 processed_count += 1
-                if processed_count % 50 == 0:
+                if processed_count % THREADS == 0:
                     print(f"Processed {processed_count}/{len(users)} users")
 
     dataset = pd.DataFrame(data)
