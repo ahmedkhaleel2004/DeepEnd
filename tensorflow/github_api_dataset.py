@@ -6,7 +6,7 @@ import datetime
 
 
 # Your GitHub Personal Access Token
-TOKEN = "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"
+TOKEN = "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"
 
 
 """ RATE LIMITS """
@@ -18,6 +18,8 @@ TOKEN = "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"
 # Secondary Rate Limiting Factors
 # 90 seconds of CPU time per 60 seconds of real time
 # No more than 100 concurrent request
+
+# by my calculation, 100 users = 2500 requests
 
 GITHUB_API = "https://api.github.com"
 HEADERS = {"Authorization": f"token {TOKEN}"}
@@ -47,11 +49,11 @@ MAX_FOLLOWERS = 80
 NUM_USERS = 10
 
 
-def search_users(min_followers=MIN_FOLLOWERS, max_followers=MAX_FOLLOWERS):
+def search_users(min_followers=MIN_FOLLOWERS, max_followers=MAX_FOLLOWERS, page=1):
     """ Search for users with followers in a specified range and located in the USA. """
     query = f"followers:{min_followers}..{max_followers}+location:USA"
     response = requests.get(
-        f"{GITHUB_API}/search/users?q={query}&per_page={NUM_USERS}", headers=HEADERS)
+        f"{GITHUB_API}/search/users?q={query}&per_page={NUM_USERS}&page={page}", headers=HEADERS)
     if response.status_code == 200:
         return response.json()['items']
     else:
@@ -124,6 +126,17 @@ def fetch_user_data(user):
 
 
 def create_dataset():
+    current_dir = os.getcwd()
+    data_dir = os.path.join(current_dir, 'tensorflow')  # new directory layer
+    last_page_file = os.path.join(data_dir, 'last_page.txt')
+    csv_file = os.path.join(data_dir, 'github_users_dataset.csv')
+
+    if os.path.exists(last_page_file):
+        with open(last_page_file, 'r') as f:
+            last_page = int(f.read())
+    else:
+        last_page = 1
+
     users = search_users()
     print(f"Found {len(users)} users")
     data = []
@@ -151,8 +164,12 @@ def create_dataset():
     file_exists = os.path.isfile(csv_filename)
 
     # Save to CSV
-    dataset.to_csv(csv_filename, mode='a', index=False, header=not file_exists)
-    print(f"New dataset saved to {csv_filename}")
+    dataset.to_csv(csv_file, mode='a', index=False, header=not file_exists)
+    print(f"New data appended to {csv_file}")
+
+    # Write the next page number to fetch
+    with open(last_page_file, 'w') as f:
+        f.write(str(last_page + 1))
 
     return dataset
 
