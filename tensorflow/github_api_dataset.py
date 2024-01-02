@@ -5,8 +5,8 @@ import requests
 import datetime
 
 
-# Your GitHub Personal Access Token
-TOKEN = "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"
+# INPUT YOUR GITHUB PERSONAL ACCESS TOKEN HERE
+TOKEN = "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"
 
 
 """ RATE LIMITS """
@@ -43,7 +43,7 @@ if requests_remaining > NOT_ENOUGH:
         f"\033[1m\033[31mWARNING: {requests_remaining} requests remaining. Your rate limit resets at {reset_time}. Press Enter to continue...\033[0m\n")
 else:
     print(
-        f"\033[1m\033[31mYou have {requests_remaining} requests remaining which is not enough. Rate limits will be reset at: {reset_time} Quitting the script.\033[0m\n")
+        f"\033[1m\033[31mYou have {requests_remaining} requests remaining which is not enough. Rate limits will be reset at: {reset_time} Quitting the script.\n\nNote: If it says you have 60 remaining, you probably didn't update the PAT token at the top of the file.\033[0m\n")
     quit()
 
 
@@ -144,7 +144,7 @@ def create_dataset():
     else:
         last_page = 1
 
-    users = search_users()
+    users = search_users(page=last_page)
     print(f"Found {len(users)} users")
     data = []
     processed_count = 0
@@ -158,7 +158,8 @@ def create_dataset():
                 data.append(user_data)
                 processed_count += 1
                 if processed_count % THREADS == 0:
-                    print(f"Processed {processed_count}/{len(users)} users")
+                    print(
+                        f"\033[1m\033[32mProcessed {processed_count}/{len(users)} users\033[0m\n")
 
     dataset = pd.DataFrame(data)
 
@@ -188,4 +189,4 @@ after_response = requests.get(f"{GITHUB_API}/rate_limit", headers=HEADERS)
 requests_remaining = int(after_response.headers['X-Ratelimit-Remaining'])
 
 print(
-    f"\033[1m\033[31mRate limits will be reset at: {reset_time} with {requests_remaining} requests remaining\033[0m\n")
+    f"\033[1m\033[32mRate limits will be reset at: {reset_time} with {requests_remaining} requests remaining\033[0m\n")
