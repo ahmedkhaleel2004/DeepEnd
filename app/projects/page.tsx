@@ -147,6 +147,7 @@ const Projects = () => {
 																repository.name
 															] || {}
 														}
+														userData={userData}
 													/>
 												)
 											)}

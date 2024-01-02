@@ -13,7 +13,6 @@ import Image from "next/image";
 import Modal from "@/components/component/projects/modal";
 import { AnimatePresence, motion } from "framer-motion";
 import Languages from "./languages";
-import { getUserData } from "@/lib/get-user-data";
 import { auth } from "@/lib/firebase";
 import ModalContent from "./modal-content";
 import {
@@ -27,6 +26,7 @@ interface GridItemProps {
 	description: string;
 	points: string[];
 	languages: { [key: string]: string } | {};
+	userData: any;
 }
 
 interface Repository {
@@ -35,7 +35,13 @@ interface Repository {
 	points: string[];
 }
 
-const GridItem = ({ title, description, points, languages }: GridItemProps) => {
+const GridItem = ({
+	title,
+	description,
+	points,
+	languages,
+	userData,
+}: GridItemProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [editedPoints, setEditedPoints] = useState(points);
 	const [editedTitle, setEditedTitle] = useState(title);
@@ -57,61 +63,48 @@ const GridItem = ({ title, description, points, languages }: GridItemProps) => {
 
 	const handleRegenerateImg = async () => {
 		setIsUpdatingImage(true);
-		if (auth.currentUser) {
-			const userData = await getUserData(auth.currentUser.uid);
-			if (userData) {
-				const repositories = userData.repositories || [];
-				const repoIndex = findRepoIndex(repositories, title);
-				const url = await fetchImageUrl(userData.uid, repoIndex);
-				setImageUrl(url?.toString() || "");
-			}
+		if (auth.currentUser && userData) {
+			const repositories = userData.repositories || [];
+			const repoIndex = findRepoIndex(repositories, title);
+			const url = await fetchImageUrl(userData.uid, repoIndex);
+			setImageUrl(url?.toString() || "");
 		}
 		setIsUpdatingImage(false);
 	};
 
 	const handleSave = async () => {
 		// updates title, description, points
-		if (auth.currentUser) {
-			const userData = await getUserData(auth.currentUser.uid);
+		if (auth.currentUser && userData) {
+			const repositories = userData.repositories || [];
+			const repoIndex = findRepoIndex(repositories, repos?.name || title);
 
-			if (userData) {
-				const repositories = userData.repositories || [];
-				const repoIndex = findRepoIndex(
+			if (repoIndex !== -1) {
+				const updatedRepositories = await updateRepository(
 					repositories,
-					repos?.name || title
+					repoIndex,
+					editedTitle,
+					editedDesc,
+					editedPoints,
+					auth.currentUser.uid
 				);
-
-				if (repoIndex !== -1) {
-					const updatedRepositories = await updateRepository(
-						repositories,
-						repoIndex,
-						editedTitle,
-						editedDesc,
-						editedPoints,
-						auth.currentUser.uid
-					);
-					setRepos(updatedRepositories);
-				} else {
-					console.error("repo not found");
-				}
+				setRepos(updatedRepositories);
 			} else {
-				console.error("user not found");
+				console.error("repo not found");
 			}
-
-			handleClose();
+		} else {
+			console.error("user not found");
 		}
+
+		handleClose();
 	};
 
 	/* 	useEffect(() => { 
 		const fetchImage = async () => {
-			if (auth.currentUser) {
-				const userData = await getUserData(auth.currentUser.uid);
-				if (userData) {
-					const repositories = userData.repositories || [];
-					const repoIndex = findRepoIndex(repositories, title);
-					const url = await fetchImageUrl(userData.uid, repoIndex);
-					setImageUrl(url?.toString() || "");
-				}
+			if (auth.currentUser && userData) {
+				const repositories = userData.repositories || [];
+				const repoIndex = findRepoIndex(repositories, title);
+				const url = await fetchImageUrl(userData.uid, repoIndex);
+				setImageUrl(url?.toString() || "");
 			}
 		};
 
