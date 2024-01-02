@@ -1,6 +1,8 @@
+import datetime
 import requests
 import pandas as pd
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
 
 """ RATE LIMITS """
 
@@ -14,8 +16,22 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 GITHUB_API = "https://api.github.com"
 # Replace with your GitHub token
-TOKEN = "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"  # doesnt work anymore
+TOKEN = "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"  # doesnt work
 HEADERS = {"Authorization": f"token {TOKEN}"}
+
+
+# uncomment to get current rate limit headers
+# response = requests.get(f"{GITHUB_API}/rate_limit", headers=HEADERS)
+# print(response.headers)
+
+# reset_time = int(response.headers['X-Ratelimit-Reset'])
+# reset_time = datetime.datetime.fromtimestamp(reset_time)
+
+# # Convert to 12-hour time format
+# reset_time = reset_time.strftime('%Y-%m-%d %I:%M:%S %p')
+
+# print(f"Rate limits will be reset at: {reset_time}")
+# quit()
 
 
 def fetch_user_details(username):
