@@ -6,7 +6,7 @@ import datetime
 
 
 # Your GitHub Personal Access Token
-TOKEN = "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"
+TOKEN = "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"
 
 
 """ RATE LIMITS """
@@ -24,9 +24,13 @@ HEADERS = {"Authorization": f"token {TOKEN}"}
 
 # getting the rate limit status
 before_response = requests.get(f"{GITHUB_API}/rate_limit", headers=HEADERS)
+reset_time = int(before_response.headers['X-Ratelimit-Reset'])
+reset_time = datetime.datetime.fromtimestamp(reset_time)
+
+reset_time = reset_time.strftime('%Y-%m-%d %I:%M:%S %p')
 
 input(
-    f"\033[1m\033[31mWARNING: {before_response.headers['X-Ratelimit-Remaining']} requests remaining. Press Enter to continue...\033[0m\n")
+    f"\033[1m\033[31mWARNING: {before_response.headers['X-Ratelimit-Remaining']} requests remaining. Your rate limit resets at {reset_time}. Press Enter to continue...\033[0m\n")
 
 
 def fetch_user_details(username):
@@ -39,8 +43,8 @@ def fetch_user_details(username):
 
 
 MIN_FOLLOWERS = 25
-MAX_FOLLOWERS = 1000
-NUM_USERS = 100
+MAX_FOLLOWERS = 80
+NUM_USERS = 10
 
 
 def search_users(min_followers=MIN_FOLLOWERS, max_followers=MAX_FOLLOWERS):
@@ -158,10 +162,6 @@ dataset = create_dataset()
 
 # requests used up and requests remaining
 after_response = requests.get(f"{GITHUB_API}/rate_limit", headers=HEADERS)
-reset_time = int(before_response.headers['X-Ratelimit-Reset'])
-reset_time = datetime.datetime.fromtimestamp(reset_time)
-
-reset_time = reset_time.strftime('%Y-%m-%d %I:%M:%S %p')
 
 requests_used = int(after_response.headers['X-Ratelimit-Used'])
 
