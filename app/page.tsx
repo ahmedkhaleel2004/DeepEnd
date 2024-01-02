@@ -19,7 +19,6 @@ import ProfileCard from "@/components/component/home/profile-card";
 import AccordianQuestions from "@/components/component/home/accordian-questions";
 import { signInFunc } from "@/lib/sign-in-or-create";
 import Modal from "@/components/component/projects/modal";
-import FeedbackForm from "@/components/ui/feedback-header";
 import { BiPhone } from "react-icons/bi";
 import { CgMail } from "react-icons/cg";
 
@@ -40,42 +39,39 @@ export default function Home() {
 			<Navbar />
 			<main className="px-12 mx-auto max-w-[80rem]">
 				<div className="grid sm:grid-cols-1 mt-16 md:grid-cols-2 ">
-					<div className="">
-						<h1 className="text-5xl font-bold pt-24 pb-6">
-							Your Personal Project Partner
-						</h1>
-						<h2 className="text-base font-normal">
-							Linus is the self-learning copilot for aspiring
-							software engineers
-						</h2>
-						<div className="mt-5">
-							<Button
-								className="hover:text-zinc-950 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
-								onClick={handleSignIn}
-							>
-								<IconGitHub className="w-5 h-5 mr-2" />
-								Sign in with GitHub
-							</Button>
-							{isCreatingAccount && (
-								<Modal>
-									<Card className="flex flex-col items-center justify-center">
-										<CardHeader>
-											<CardTitle>
-												Creating Account
-											</CardTitle>
-										</CardHeader>
-										<CardContent className="flex flex-col items-center justify-center">
-											<CardDescription>
-												Your account is being created.
-												This will take a few seconds.
-											</CardDescription>
-											<div className="mt-8 w-16 h-16 border-t-2  border-foreground rounded-full animate-spin" />
-										</CardContent>
-									</Card>
-								</Modal>
-							)}
-						</div>
+					<h1 className="text-5xl font-bold pt-24 pb-6">
+						Your Personal Project Partner
+					</h1>
+					<h2 className="text-base font-normal">
+						Linus is the self-learning copilot for aspiring software
+						engineers
+					</h2>
+					<div className="mt-5">
+						<Button
+							className="hover:text-zinc-950 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+							onClick={handleSignIn}
+						>
+							<IconGitHub className="w-5 h-5 mr-2" />
+							Sign in with GitHub
+						</Button>
+						{isCreatingAccount && (
+							<Modal>
+								<Card className="flex flex-col items-center justify-center">
+									<CardHeader>
+										<CardTitle>Creating Account</CardTitle>
+									</CardHeader>
+									<CardContent className="flex flex-col items-center justify-center">
+										<CardDescription>
+											Your account is being created. This
+											will take a few seconds.
+										</CardDescription>
+										<div className="mt-8 w-16 h-16 border-t-2  border-foreground rounded-full animate-spin" />
+									</CardContent>
+								</Card>
+							</Modal>
+						)}
 					</div>
+
 					<Card className="shadow-lg rounded-3xl bg-background/80">
 						<CardHeader>
 							<CardTitle>Try it out!</CardTitle>
@@ -84,6 +80,10 @@ export default function Home() {
 							<h1>Demo here</h1>
 						</CardContent>
 					</Card>
+				</div>
+				<div className=" " id="about">
+					<Separator className="my-16 bg-white dark:bg-zinc-700" />
+					<h1 className="text-center text-3xl font-bold">About</h1>
 				</div>
 				<div id="features">
 					<Separator className="my-16 bg-white dark:bg-zinc-700" />
@@ -179,40 +179,33 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-				<Separator className="mt-16 mb-12 bg-white dark:bg-zinc-700" />
-				<div
-					id="contact"
-					className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center"
-				>
-					<div className="col-span-1 justify-center">
-						<p className="text-lg">Contact Us</p>
-						<div className="flex justify-center items-center pt-7">
+				<Separator className="mt-16 mb-6 bg-white dark:bg-zinc-700" />
+				<div id="contact" className="grid grid-cols-5 items-center">
+					<div className="col-span-1">
+						<img src="jbp.png" alt="Logo" className="w-24 h-24" />
+					</div>
+					<div className="col-span-4">
+						<p className="text-lg font-bold">Contact Us</p>
+						<div className="flex pt-4">
 							<a
 								href="tel:123123123"
 								className="text-blue-500 hover:text-blue-800 flex items-center"
 							>
-								<BiPhone className="justify-center" />
+								<BiPhone />
 								123-456-7890
 							</a>
 						</div>
-						<div className="flex justify-center items-center pt-6">
+						<div className="flex pt-4">
 							<a
 								href="mailto:zakamm@gmail.com?subject=Feedback&body=Message"
-								className="flex items-center"
+								className="flex "
 							>
 								<CgMail className="w-9 h-9" />
 							</a>
 						</div>
 					</div>
-
-					<div className="col-span-1">
-						<p className="text-lg">More Content/</p>
-					</div>
-					<div className="col-span-1">
-						<FeedbackForm />
-					</div>
 				</div>
-				<footer className="mt-5 pt-5 text-center">© fwd//</footer>
+				<footer className=" pt-5 text-center">© fwd//</footer>
 			</main>
 		</div>
 	);
