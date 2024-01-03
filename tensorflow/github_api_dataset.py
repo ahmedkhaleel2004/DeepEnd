@@ -6,7 +6,7 @@ import datetime
 
 
 # INPUT YOUR GITHUB PERSONAL ACCESS TOKEN HERE
-TOKEN = "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"
+TOKEN = "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"
 
 
 """ RATE LIMITS """
@@ -24,7 +24,7 @@ TOKEN = "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"
 GITHUB_API = "https://api.github.com"
 HEADERS = {"Authorization": f"token {TOKEN}"}
 MIN_FOLLOWERS = 25
-MAX_FOLLOWERS = 80
+MAX_FOLLOWERS = 57
 NUM_USERS = 50
 THREADS = 25
 NOT_ENOUGH = NUM_USERS * 25
