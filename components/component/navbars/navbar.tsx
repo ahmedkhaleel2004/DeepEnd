@@ -4,6 +4,7 @@ import { ModeToggle } from "./mode-toggle";
 import ProfileIcon from "./profile-icon";
 import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
+import Image from "next/image";
 import {
 	NavigationMenu,
 	NavigationMenuList,
@@ -53,7 +54,15 @@ const Navbar: React.FC<NavbarProps> = () => {
 		>
 			<div className="max-w-[80rem] px-12 items-center flex w-full justify-between">
 				<Link className="font-bold text-2xl" href="/">
-					Logo
+					<div className="flex  align-bottom">
+						<p className="pt-0.5">Linus</p>
+						<Image
+							src="/LinusLogoSVG.svg"
+							width={40}
+							height={40}
+							alt="Linus Logo"
+						/>
+					</div>
 				</Link>
 				<NavigationMenuList className="space-x-4">
 					{mainNavItems.map((item, index) => (

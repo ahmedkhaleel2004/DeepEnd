@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Card, CardContent } from "@/components/ui/card";
 import {
 	HoverCard,
@@ -11,9 +10,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 interface ProfileCardProps {
 	username: string;
 	description: string;
+	link: string;
 }
 
-const ProfileCard = ({ username, description }: ProfileCardProps) => {
+const ProfileCard = ({ username, description, link }: ProfileCardProps) => {
 	return (
 		<HoverCard>
 			<HoverCardTrigger asChild>
@@ -29,9 +29,14 @@ const ProfileCard = ({ username, description }: ProfileCardProps) => {
 					</CardContent>
 				</Card>
 			</HoverCardTrigger>
-			<HoverCardContent className="w-72 pt-2 text-sm max-h-[100px]">
+			<HoverCardContent className="w-72 pt-2 text-sm ">
 				<p className="p-2 text-gray-800 dark:text-gray-200 break-words">
 					{description}
+				</p>
+				<p>
+					<a href={link} target="_blank">
+						Linkedin
+					</a>
 				</p>
 			</HoverCardContent>
 		</HoverCard>
