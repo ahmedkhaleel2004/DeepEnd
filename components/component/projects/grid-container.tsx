@@ -23,7 +23,7 @@ const childVariants = {
 const GridContainer: React.FC<GridContainerProps> = ({ children }) => {
 	return (
 		<motion.div
-			className="grid grid-cols-2 p-12 gap-12 md:grid-cols-1"
+			className="grid grid-cols-1 p-8 gap-10 md:grid-cols-1 lg:grid-cols-2" // grid for different display types
 			variants={containerVariants}
 			initial="hidden"
 			animate="show"

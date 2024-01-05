@@ -42,6 +42,22 @@ const Projects = () => {
 	const userData = useAuth(router);
 	const [languages, setLanguages] = useState<{ [key: string]: string }>({});
 
+	// this will be used to show/hide the navbar when the modal is open
+	const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const handleOpenModal = () => {
+		console.log("Opening modal, hiding navbar");
+		setIsNavbarVisible(false);
+		setIsModalOpen(true);
+	};
+
+	//this is a
+	const handleCloseModal = () => {
+		console.log("Closing modal, showing navbar");
+		setIsNavbarVisible(true);
+		setIsModalOpen(false);
+	};
+
 	useEffect(() => {
 		const fetchLanguages = async () => {
 			if (userData && userData.repositories) {
@@ -78,9 +94,11 @@ const Projects = () => {
 
 	return (
 		<>
-			<div className="border flex flex-row w-full max-w-full">
-				<NavbarLarge projects={true} />
-			</div>
+			{isNavbarVisible && (
+				<div className="border flex flex-row w-full max-w-full">
+					<NavbarLarge projects={true} />
+				</div>
+			)}
 			<main className="flex p-12 justify-between">
 				<div className="flex-col flex w-full">
 					<div className="flex justify-between items-center ">
@@ -175,7 +193,7 @@ const Projects = () => {
 						</AnimatePresence>
 					</div>
 				</div>
-				<div className="flex">
+				{/* <div className="flex">
 					<Separator
 						orientation="vertical"
 						className="h-auto mx-12 bg-white dark:bg-zinc-700"
@@ -197,7 +215,7 @@ const Projects = () => {
 							))}
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</main>
 		</>
 	);
