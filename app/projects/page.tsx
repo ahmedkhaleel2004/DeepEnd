@@ -125,7 +125,10 @@ const Projects = () => {
 													repository: any,
 													index: number
 												) => (
-													<div className="w-full max-w-full h-full max-h-full ">
+													<div
+														key={index}
+														className="w-full max-w-full h-full max-h-full "
+													>
 														<GridItem
 															key={index}
 															title={
