@@ -90,7 +90,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 					</div>
 				)}
 			</div>
-			<div className="py-6 z-10">
+			<div className="fixed bottom-5 w-[80%] max-w-4xl py-6 z-10">
 				<ChatPanel
 					id={id}
 					isLoading={isLoading}
