@@ -22,7 +22,9 @@ function ChatLayout({ children }: ChatLayoutProps) {
 
 	return (
 		<div className="flex h-screen">
-			<Sidebar userId={userData?.uid} loggedIn={loggedIn} />
+			<div className="hidden lg:block">
+				<Sidebar userId={userData?.uid} loggedIn={loggedIn} />
+			</div>
 			<div className="flex grow overflow-hidden pl-0">
 				<div className="flex flex-col w-full h-full overflow-auto">
 					{children}
@@ -32,6 +34,7 @@ function ChatLayout({ children }: ChatLayoutProps) {
 				<ModeToggle />
 				<ProfileIcon />
 			</div>
+			<div className="w-full h-60 bg-gradient-to-t from-zinc-900 fixed bottom-0" />
 		</div>
 	);
 }

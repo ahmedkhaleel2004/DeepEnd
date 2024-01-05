@@ -8,14 +8,15 @@ const Chatbot = () => {
 	const id = nanoid(); //creating an id
 
 	return (
-		<main className="w-full flex justify-center">
-			<div className="w-full h-60 bg-gradient-to-t from-zinc-900 fixed bottom-0" />
-			<div className="flex flex-col max-w-4xl w-full">
-				<header className="my-4">
-					<h1 className="text-3xl font-bold">Chatbot</h1>
-					<Label>Interact with Linus!</Label>
-				</header>
-				<Chat id={id} />
+		<main className="flex justify-center h-full">
+			<div className="max-w-4xl w-[80%]">
+				<div className="h-full flex flex-col justify-between">
+					<header className="my-4">
+						<h1 className="text-3xl font-bold">Chatbot</h1>
+						<Label>Interact with Linus!</Label>
+					</header>
+					<Chat id={id} />
+				</div>
 			</div>
 		</main>
 	);
