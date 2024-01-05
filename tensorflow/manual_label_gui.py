@@ -3,7 +3,7 @@ import PySimpleGUI as sg
 import pandas as pd
 import random
 
-data = pd.read_csv('github_users_dataset.csv', header=None)
+data = pd.read_csv('tensorflow/github_users_dataset.csv', header=None)
 
 initial_rows = data.shape[0]
 
