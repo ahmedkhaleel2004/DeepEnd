@@ -40,68 +40,40 @@ export default function Home() {
 			<Navbar />
 			<main className="px-12 mx-auto max-w-[80rem]">
 				<div className="grid sm:grid-cols-1 mt-16 md:grid-cols-2 ">
-					<div>
-						<motion.div
-							initial={{
-								opacity: 0,
-								y: -20,
-							}}
-							animate={{
-								opacity: 1,
-								y: 0,
-							}}
-							transition={{
-								duration: 0.3,
-							}}
-						>
-							<h1 className="text-5xl font-bold pt-24 pb-6">
-								Your Personal Project Partner
-							</h1>
-							<h2 className="text-base font-normal">
-								Linus is the self-learning copilot for aspiring
-								software engineers
-							</h2>
-							<div className="mt-5">
-								<Button
-									className="hover:text-zinc-950 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
-									onClick={() => setIsCreatingAccount(true)}
-								>
-									Get Started
-								</Button>
-								{isCreatingAccount && (
-									<Modal>
-										<Card className="flex flex-col items-center justify-center">
-											<CardHeader>
-												<Image
-													src="/LinusLogoSVG.svg"
-													width={50}
-													height={50}
-													alt="Linus Logo"
-													className="justify-center"
-												/>
-												<CardTitle>
-													Get started for free
-												</CardTitle>
-											</CardHeader>
-											<CardContent className="flex flex-col items-center justify-center">
-												<Button
-													className="hover:text-zinc-950 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
-													onClick={handleSignIn}
-												>
-													<IconGitHub className="w-5 h-5 mr-2" />
-													Sign in with GitHub
-												</Button>
-												<CardDescription className="mt-4">
-													By signing up, you agree
-													with our terms and
-													conditions.
-												</CardDescription>
-											</CardContent>
-										</Card>
-									</Modal>
-								)}
-							</div>
-						</motion.div>
+					<div className="">
+						<h1 className="text-5xl font-bold pt-24 pb-6">
+							Your Personal Project Partner
+						</h1>
+						<h2 className="text-base font-normal">
+							Linus is the self-learning copilot for aspiring
+							software engineers
+						</h2>
+						<div className="mt-5">
+							<Button
+								className="hover:text-zinc-950 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+								onClick={handleSignIn}
+							>
+								<IconGitHub className="w-5 h-5 mr-2" />
+								Sign in with GitHub
+							</Button>
+							<Modal
+								isOpen={isCreatingAccount}
+								handleClose={() => {}}
+							>
+								<Card className="flex flex-col items-center justify-center">
+									<CardHeader>
+										<CardTitle>Creating Account</CardTitle>
+									</CardHeader>
+									<CardContent className="flex flex-col items-center justify-center">
+										<CardDescription>
+											Your account is being created. This
+											will take a few seconds.
+										</CardDescription>
+										<div className="mt-8 w-16 h-16 border-t-2  border-foreground rounded-full animate-spin" />
+									</CardContent>
+								</Card>
+							</Modal>
+						</div>
 					</div>
 					<Card className="shadow-lg rounded-3xl bg-background/80">
 						<CardHeader>
