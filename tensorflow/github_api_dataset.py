@@ -6,7 +6,7 @@ import datetime
 
 
 # INPUT YOUR GITHUB PERSONAL ACCESS TOKEN HERE
-TOKEN = "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"
+TOKEN = "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"
 
 
 """ RATE LIMITS """
