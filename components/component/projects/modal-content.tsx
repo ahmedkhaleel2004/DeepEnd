@@ -40,11 +40,14 @@ const ModalContent = ({
 	handleClose,
 	handleSave,
 }: ModalContentProps) => {
+	// making viewport smaller to fit the modal
 	return (
-		<Card className="w-[80vh]">
+		<Card className="w-[80vh] h-[90vh] overflow-y-auto">
 			<CardHeader>
 				<div className="mb-2">
-					<Label htmlFor="title">Title</Label>
+					<Label htmlFor="title" className="font-style">
+						Title
+					</Label>
 					<Input
 						value={editedTitle}
 						onChange={(e) => handleTitleChange(e.target.value)}
@@ -58,9 +61,10 @@ const ModalContent = ({
 					/>
 				</div>
 			</CardHeader>
-			<CardContent className="flex flex-col md:flex-row justify-between">
+			<CardContent className="flex flex-col md:flex-row justify-between md:h-[60vh] md:overflow-y-auto">
+				{/* making the modal scrollable */}
 				<div className="w-full">
-					<div className="mb-2">
+					<div className="w-full md:w-1/2">
 						<Label htmlFor="bullet-points">Bullet Points</Label>
 					</div>
 					<div className="space-y-8 list-disc ">
@@ -76,7 +80,7 @@ const ModalContent = ({
 						))}
 					</div>
 				</div>
-				<div className="w-full flex flex-col items-center">
+				<div className="w-full md:w-1/2 flex flex-col items-center">
 					<Image
 						src={imageUrl || "/jbp.png"}
 						alt="placeholder"

@@ -20,6 +20,7 @@ import {
 	findRepoIndex,
 	updateRepository,
 } from "@/lib/edit-projects";
+import { text } from "stream/consumers";
 
 interface GridItemProps {
 	title: string;
@@ -51,6 +52,7 @@ const GridItem = ({
 		description: description,
 		points: points,
 	});
+	const MAX_CHARS = 10; // this is for checking the amount of characters in the bullet points
 	const [imageUrl, setImageUrl] = useState("");
 	const [isUpdatingImage, setIsUpdatingImage] = useState(false);
 
@@ -111,36 +113,53 @@ const GridItem = ({
 	}, [isOpen]);
 
 	// TODO: uncomment when bandiwth issue is fixed
+	// im sorry but can you please bring this back
+
+	// this is for splitting the bullet points into chunks of 50 characters each so that it can fit in the image
+	const splitIntoLines = (text: string) => {
+		const lines = [];
+
+		for (let i = 0; i < text.length; i += MAX_CHARS) {
+			lines.push(text.substring(i, (i += MAX_CHARS)));
+		}
+		return lines.join("<br />");
+	};
 
 	return (
 		<>
 			<motion.div whileHover={{ scale: 1.05 }}>
 				<Card
-					className="cursor-pointer bg-clip-padding bg-opacity-10 bg-gradient-to-br from-zinc-900 to-zinc-950"
+					className="cursor-pointer bg-clip-padding bg-opacity-10 bg-gradient-to-br from-zinc-950 to-zinc-900"
+					// this css is for the background gradient
 					onClick={handleOpen}
 				>
-					<CardHeader className="flex m-10 ">
+					<CardHeader className="flex m-5">
 						<CardTitle>{repos?.name || title}</CardTitle>
 						<CardDescription>
 							{repos?.description || description}
 						</CardDescription>
 					</CardHeader>
-					<CardContent className="flex flex-col md:flex-row justify-between ">
-						<ul className="ml-6 list-disc flex-grow [&>li]:mt-2 overflow-auto space-y-8 ">
-							<li>{repos?.points[0]}</li>
-							<li>{repos?.points[1]}</li>
-							<li>{repos?.points[2]}</li>
+					<CardContent className="flex flex-row justify-between ">
+						<ul className="ml-2 list-disc flex-grow [&>li]:mt-2 space-y-8">
+							{repos?.points.map((point, index) => (
+								<li
+									key={index}
+									dangerouslySetInnerHTML={{
+										__html: splitIntoLines(point),
+									}}
+								/>
+							))}
 						</ul>
 						<Image
 							src={imageUrl || "/jbp.png"}
 							alt="placeholder"
 							priority
-							width={200}
-							height={200}
-							className=" rounded-3xl m-1"
+							width={300}
+							height={300}
+							className="rounded-3xl m-2 mn-[300px] md:[400px] lg:[500px] xl:[600px] 2xl:[700px]"
 						/>
 					</CardContent>
-					<CardFooter className="space-x-4 ">
+					<CardFooter className="space-x-4  ">
 						<Languages languages={languages} />
 					</CardFooter>
 				</Card>
