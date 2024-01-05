@@ -78,19 +78,19 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 
 	return (
 		<>
-			<div>
+			<div className="flex flex-col grow">
 				{messages.length ? (
 					<>
 						<ChatList messages={messages} />
 						<ChatScrollAnchor trackVisibility={isLoading} />
 					</>
 				) : (
-					<div className="max-w-4xl w-full flex justify-center">
+					<div>
 						<EmptyScreen setInput={setInput} />
 					</div>
 				)}
 			</div>
-			<div className="fixed w-[92%] lg:max-w-4xl lg:w-screen bottom-0 py-6">
+			<div className="py-6 z-10">
 				<ChatPanel
 					id={id}
 					isLoading={isLoading}
