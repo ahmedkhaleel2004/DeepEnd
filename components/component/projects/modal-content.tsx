@@ -58,12 +58,12 @@ const ModalContent = ({
 					/>
 				</div>
 			</CardHeader>
-			<CardContent className="flex justify-between">
+			<CardContent className="flex flex-col md:flex-row justify-between">
 				<div className="w-full">
 					<div className="mb-2">
 						<Label htmlFor="bullet-points">Bullet Points</Label>
 					</div>
-					<div className="space-y-4">
+					<div className="space-y-8 ">
 						{editedPoints.map((point, index) => (
 							<Input
 								key={index}
@@ -83,13 +83,16 @@ const ModalContent = ({
 						priority
 						width={200}
 						height={200}
-						className="rounded-3xl m-4 h-64 w-64"
+						className="rounded-3xl m-4 h-64 w-64 "
 					/>
 					<Button onClick={handleRegenerateImg}>
 						Regenerate image
 					</Button>
 					{isUpdatingImage && (
-						<Modal>
+						<Modal
+							isOpen={isUpdatingImage}
+							handleClose={handleClose}
+						>
 							<Card className="flex flex-col items-center justify-center">
 								<CardHeader>
 									<CardTitle>Regenerating Image</CardTitle>

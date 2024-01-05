@@ -101,34 +101,32 @@ const GridItem = ({
 
 		handleClose();
 	};
+	useEffect(() => {
+		if (isOpen) document.body.style.overflow = "hidden";
+		else document.body.style.overflow = "";
 
-	/* 	useEffect(() => { 
-		const fetchImage = async () => {
-			if (auth.currentUser && userData) {
-				const repositories = userData.repositories || [];
-				const repoIndex = findRepoIndex(repositories, title);
-				const url = await fetchImageUrl(userData.uid, repoIndex);
-				setImageUrl(url?.toString() || "");
-			}
+		return () => {
+			document.body.style.overflow = "";
 		};
-
-		fetchImage();
-	}, [title, description, points]); */
+	}, [isOpen]);
 
 	// TODO: uncomment when bandiwth issue is fixed
 
 	return (
 		<>
 			<motion.div whileHover={{ scale: 1.05 }}>
-				<Card className="cursor-pointer" onClick={handleOpen}>
-					<CardHeader>
+				<Card
+					className="cursor-pointer bg-clip-padding bg-opacity-10 bg-gradient-to-br from-zinc-900 to-zinc-950"
+					onClick={handleOpen}
+				>
+					<CardHeader className="flex m-10 ">
 						<CardTitle>{repos?.name || title}</CardTitle>
 						<CardDescription>
 							{repos?.description || description}
 						</CardDescription>
 					</CardHeader>
-					<CardContent className="flex justify-between">
-						<ul className="ml-6 list-disc flex-grow [&>li]:mt-2">
+					<CardContent className="flex flex-col md:flex-row justify-between ">
+						<ul className="ml-6 list-decimal flex-grow [&>li]:mt-2 overflow-auto max-h-64 space-y-8 ">
 							<li>{repos?.points[0]}</li>
 							<li>{repos?.points[1]}</li>
 							<li>{repos?.points[2]}</li>
@@ -139,17 +137,17 @@ const GridItem = ({
 							priority
 							width={200}
 							height={200}
-							className="rounded-3xl m-4 h-64 w-64"
+							className=" rounded-3xl m-1"
 						/>
 					</CardContent>
-					<CardFooter className="space-x-4">
+					<CardFooter className="space-x-4 ">
 						<Languages languages={languages} />
 					</CardFooter>
 				</Card>
 			</motion.div>
 			<AnimatePresence>
 				{isOpen && (
-					<Modal>
+					<Modal isOpen={isOpen} handleClose={handleClose}>
 						<ModalContent
 							editedTitle={editedTitle}
 							editedDesc={editedDesc}

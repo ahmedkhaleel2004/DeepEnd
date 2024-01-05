@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import ReactDOM from "react-dom";
 
 interface ModalProps {
 	children: React.ReactNode;
+	isOpen: boolean;
+	handleClose: () => void;
 }
 
-const Modal = ({ children }: ModalProps) => {
-	return (
+const Modal = ({ children, isOpen, handleClose }: ModalProps) => {
+	const modalRef = useRef<HTMLElement | null>(null);
+
+	useEffect(() => {
+		if (isOpen && modalRef.current) {
+			const focusableElements = modalRef.current.querySelectorAll(
+				"a[href], button:not([disabled]), textarea, input, select"
+			);
+			if (focusableElements.length)
+				(focusableElements[0] as HTMLElement).focus();
+		}
+	}, [isOpen]);
+
+	if (!isOpen) return null;
+
+	return ReactDOM.createPortal(
 		<motion.div
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
@@ -23,7 +40,8 @@ const Modal = ({ children }: ModalProps) => {
 			>
 				{children}
 			</motion.div>
-		</motion.div>
+		</motion.div>,
+		document.body
 	);
 };
 
