@@ -84,7 +84,7 @@ const Projects = () => {
 			<main className="flex p-12 justify-between">
 				<div className="flex-col flex w-full">
 					<div className="flex justify-between items-center ">
-						<div className="sticky">
+						<div>
 							<h1 className="text-3xl font-bold ">My Projects</h1>
 							<p>Click on any project to edit information</p>
 						</div>
