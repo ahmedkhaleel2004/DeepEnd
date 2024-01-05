@@ -83,9 +83,9 @@ const Projects = () => {
 			</div>
 			<main className="flex p-12 justify-between">
 				<div className="flex-col flex w-full">
-					<div className="flex justify-between items-center">
-						<div>
-							<h1 className="text-3xl font-bold">My Projects</h1>
+					<div className="flex justify-between items-center ">
+						<div className="sticky">
+							<h1 className="text-3xl font-bold ">My Projects</h1>
 							<p>Click on any project to edit information</p>
 						</div>
 						<Button className="mr-8">
@@ -125,30 +125,35 @@ const Projects = () => {
 													repository: any,
 													index: number
 												) => (
-													<GridItem
-														key={index}
-														title={repository.name}
-														description={
-															repository.description ||
-															""
-														}
-														points={
-															JSON.parse(
-																repository.points
-															)
-																?.bullet_points || [
-																"",
-																"",
-																"",
-															]
-														}
-														languages={
-															languages[
+													<div className="w-full max-w-full h-full max-h-full ">
+														<GridItem
+															key={index}
+															title={
 																repository.name
-															] || {}
-														}
-														userData={userData}
-													/>
+															}
+															description={
+																repository.description ||
+																""
+															}
+															points={
+																JSON.parse(
+																	repository.points
+																)
+																	?.bullet_points || [
+																	"",
+																	"",
+																	"",
+																]
+															}
+															languages={
+																languages[
+																	repository
+																		.name
+																] || {}
+															}
+															userData={userData}
+														/>
+													</div>
 												)
 											)}
 									</GridContainer>

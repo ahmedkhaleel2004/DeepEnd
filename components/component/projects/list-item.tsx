@@ -35,7 +35,7 @@ const ListItem = ({ title, description }: ListItemProps) => {
 				</Card>
 			</motion.div>
 			{isOpen && (
-				<Modal>
+				<Modal isOpen={isOpen} handleClose={handleClose}>
 					<Card>
 						<CardHeader>
 							<CardTitle>Modal: (Recommended) {title}</CardTitle>
