@@ -63,7 +63,7 @@ const ModalContent = ({
 					<div className="mb-2">
 						<Label htmlFor="bullet-points">Bullet Points</Label>
 					</div>
-					<div className="space-y-8 ">
+					<div className="space-y-8 list-disc ">
 						{editedPoints.map((point, index) => (
 							<Input
 								key={index}

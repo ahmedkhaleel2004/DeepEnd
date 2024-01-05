@@ -96,7 +96,7 @@ const Projects = () => {
 					<div className="w-full">
 						<AnimatePresence>
 							{userData ? (
-								<ScrollArea className="h-[70vh]">
+								<ScrollArea className="h-[95vh]">
 									<GridContainer>
 										{userData?.repositories
 											.sort((a: any, b: any) => {

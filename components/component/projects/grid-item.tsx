@@ -126,7 +126,7 @@ const GridItem = ({
 						</CardDescription>
 					</CardHeader>
 					<CardContent className="flex flex-col md:flex-row justify-between ">
-						<ul className="ml-6 list-decimal flex-grow [&>li]:mt-2 overflow-auto max-h-64 space-y-8 ">
+						<ul className="ml-6 list-disc flex-grow [&>li]:mt-2 overflow-auto space-y-8 ">
 							<li>{repos?.points[0]}</li>
 							<li>{repos?.points[1]}</li>
 							<li>{repos?.points[2]}</li>
