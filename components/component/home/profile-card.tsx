@@ -1,45 +1,45 @@
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-	HoverCard,
-	HoverCardContent,
-	HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card } from "@/components/ui/card";
+import Image from "next/image";
+
+interface Link {
+	url: string;
+	icon: JSX.Element;
+}
 
 interface ProfileCardProps {
 	username: string;
-	description: string;
-	link: string;
+	imageSrc: string;
+	links: Link[];
 }
 
-const ProfileCard = ({ username, description, link }: ProfileCardProps) => {
+const ProfileCard = ({ username, imageSrc, links }: ProfileCardProps) => {
 	return (
-		<HoverCard>
-			<HoverCardTrigger asChild>
-				<Card className="w-64 cursor-pointer h-12 ">
-					<CardContent className="flex items-center gap-4">
-						<Avatar className="h-11 w-11 pt-1">
-							<AvatarImage alt="User's avatar" src="/jbp.png" />
-							<AvatarFallback>NA</AvatarFallback>
-						</Avatar>
-						<div className="space-y-2">
-							<div className="font-semibold">{username}</div>
-						</div>
-					</CardContent>
-				</Card>
-			</HoverCardTrigger>
-			<HoverCardContent className="w-72 pt-2 text-sm ">
-				<p className="p-2 text-gray-800 dark:text-gray-200 break-words">
-					{description}
-				</p>
-				<p>
-					<a href={link} target="_blank">
-						Linkedin
-					</a>
-				</p>
-			</HoverCardContent>
-		</HoverCard>
+		<div className="flex flex-col">
+			<Image
+				className="object-cover rounded-t-md"
+				width={270}
+				height={220}
+				src={imageSrc}
+				alt="User's image"
+			/>
+			<Card className="flex flex-col gap-2 p-4 rounded-none">
+				<div className="font-semibold text-xl">{username}</div>
+				<div className="h-14">
+					{links.map((link, index) => (
+						<a
+							key={index}
+							href={link.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="flex items-center gap-2"
+						>
+							{React.cloneElement(link.icon, { size: "2em" })}
+						</a>
+					))}
+				</div>
+			</Card>
+		</div>
 	);
 };
 
