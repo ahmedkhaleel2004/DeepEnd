@@ -42,7 +42,7 @@ const ChatMessage: React.FC<MessageProps> = ({ role, content }) => {
 					<AvatarFallback></AvatarFallback>
 				)}
 			</Avatar>
-			<div className="mt-2">
+			<div className="mt-2 overflow-hidden">
 				<strong>{role}</strong>
 				<MemoizedReactMarkdown
 					className="max-w-xs sm:max-w-xl md:max-w-2xl mr-[2rem] lg:max-w-screen prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"

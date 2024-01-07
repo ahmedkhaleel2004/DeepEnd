@@ -17,6 +17,7 @@ export interface ChatProps extends React.ComponentProps<"div"> {
 const Chat = ({ id, initialMessages }: ChatProps) => {
 	const { messages, append, input, setInput, stop, reload, isLoading } =
 		useChat({ initialMessages });
+
 	const router = useRouter();
 	const [userId, setUserId] = useState<string | null>(null);
 
@@ -52,7 +53,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 		if (conversationSnap.exists()) {
 			const conversationData = conversationSnap.data();
 			if (conversationData?.general?.[id]) {
-				router.push(`/chatbot/${id}`);
+				router.push(`/chatbot/${id}`, { scroll: false });
 			}
 		}
 	}, [userId, id, router]);
