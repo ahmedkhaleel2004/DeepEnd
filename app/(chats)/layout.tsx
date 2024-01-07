@@ -34,7 +34,7 @@ function ChatLayout({ children }: ChatLayoutProps) {
 				<ModeToggle />
 				<ProfileIcon />
 			</div>
-			<div className="w-full h-60 bg-gradient-to-t from-zinc-900 fixed bottom-0" />
+			<div className="w-full h-36 bg-gradient-to-t dark:from-zinc-900 from-zinc-300 fixed bottom-0" />
 		</div>
 	);
 }

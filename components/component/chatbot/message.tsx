@@ -50,7 +50,7 @@ const ChatMessage: React.FC<MessageProps> = ({ role, content }) => {
 					components={{
 						p({ children }) {
 							return (
-								<p className="mb-4 w-[80%] last:mb-0 text-zinc-950 dark:text-zinc-50">
+								<p className="mb-4 last:mb-0 text-zinc-950 dark:text-zinc-50">
 									{children}
 								</p>
 							);
