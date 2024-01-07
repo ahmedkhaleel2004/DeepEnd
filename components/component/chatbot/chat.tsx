@@ -4,10 +4,10 @@ import ChatList from "./chat-list";
 import EmptyScreen from "./empty-screen";
 import ChatPanel from "./chat-panel";
 import ChatScrollAnchor from "@/components/component/chatbot/chat-scroll-anchor";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, Timestamp } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export interface ChatProps extends React.ComponentProps<"div"> {
 	initialMessages?: Message[];
@@ -20,6 +20,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 
 	const router = useRouter();
 	const [userId, setUserId] = useState<string | null>(null);
+	const pathname = usePathname();
 
 	const getConversationName = (messages: Message[]) => {
 		return messages.length > 0 ? messages[0].content.substring(0, 50) : "";
@@ -37,6 +38,7 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 					[id?.toString() ?? ""]: {
 						messages: messages,
 						name: getConversationName(messages),
+						timeUpdated: Timestamp.now(),
 					},
 				},
 			};
@@ -53,7 +55,9 @@ const Chat = ({ id, initialMessages }: ChatProps) => {
 		if (conversationSnap.exists()) {
 			const conversationData = conversationSnap.data();
 			if (conversationData?.general?.[id]) {
-				router.push(`/chatbot/${id}`, { scroll: false });
+				if (pathname !== `/chatbot/${id}`) {
+					router.push(`/chatbot/${id}`, { scroll: false });
+				}
 			}
 		}
 	}, [userId, id, router]);
