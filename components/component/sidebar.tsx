@@ -10,7 +10,13 @@ import {
 import NavbarSmall from "./navbars/navbar-small";
 import { Separator } from "../ui/separator";
 import { db } from "@/lib/firebase";
-import { doc, onSnapshot, deleteField, updateDoc } from "firebase/firestore";
+import {
+	doc,
+	onSnapshot,
+	deleteField,
+	updateDoc,
+	Timestamp,
+} from "firebase/firestore";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { ChatBubbleIcon, TrashIcon } from "@radix-ui/react-icons";
@@ -25,6 +31,7 @@ interface SidebarProps {
 interface Conversation {
 	id: string;
 	name: string;
+	timeUpdated: Date;
 }
 
 const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
@@ -48,7 +55,17 @@ const Sidebar = ({ loggedIn, userId }: SidebarProps) => {
 								Object.entries(general).map(([id, value]) => ({
 									id,
 									name: (value as Conversation).name,
+									timeUpdated: new Date(
+										(value as Conversation).timeUpdated
+									),
 								}));
+
+							conversationData.sort(
+								(a, b) =>
+									b.timeUpdated.getTime() -
+									a.timeUpdated.getTime()
+							);
+
 							setConversations(conversationData);
 						} else {
 							console.log("No such document!");

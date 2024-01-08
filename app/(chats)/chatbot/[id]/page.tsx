@@ -27,6 +27,7 @@ const ChatwithID = () => {
 	const router = useRouter();
 	const chatId = pathname.split("/")[2];
 	const [chat, setChat] = useState<Message[] | undefined>(undefined);
+
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {
@@ -45,6 +46,7 @@ const ChatwithID = () => {
 
 		return () => unsubscribe(); // Clean up subscription on unmount
 	}, [chatId, router]);
+
 	return (
 		<main className="flex justify-center h-full">
 			<div className="max-w-4xl w-[80%]">
