@@ -1,11 +1,13 @@
 "use client";
 
-import Sidebar from "@/components/component/sidebar";
-import React, { useState, useEffect, useRef } from "react";
+import Sidebar from "@/components/component/sidebar/sidebar";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ModeToggle } from "@/components/component/navbars/mode-toggle";
 import ProfileIcon from "@/components/component/navbars/profile-icon";
 import { useAuth } from "@/lib/hooks/use-auth";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 
 interface ChatLayoutProps {
 	children: React.ReactNode;
@@ -38,9 +40,7 @@ function ChatLayout({ children }: ChatLayoutProps) {
 
 	return (
 		<div className="flex h-screen">
-			<div className="hidden lg:block">
-				<Sidebar userId={userData?.uid} loggedIn={loggedIn} />
-			</div>
+			<Sidebar userId={userData?.uid} loggedIn={loggedIn} />
 			<div className="flex grow overflow-hidden pl-0">
 				<div
 					className="flex flex-col w-full h-full overflow-scroll"
@@ -49,13 +49,7 @@ function ChatLayout({ children }: ChatLayoutProps) {
 					{children}
 				</div>
 			</div>
-			<div
-				className={`flex top-5 right-8 fixed space-x-4 transition-opacity duration-200 ${
-					scrolled
-						? "lg:opacity-100 opacity-0 pointer-events-none"
-						: "lg-opacity-100 opacity-100"
-				}`}
-			>
+			<div className="lg:flex lg:top-5 lg:right-8 lg:fixed space-x-4 hidden">
 				<ModeToggle />
 				<ProfileIcon />
 			</div>
