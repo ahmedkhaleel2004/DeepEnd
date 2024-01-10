@@ -52,7 +52,7 @@ const GridItem = ({
 		description: description,
 		points: points,
 	});
-	const MAX_CHARS = 10; // this is for checking the amount of characters in the bullet points
+	const MAX_CHARS = 20; // this is for checking the amount of characters in the bullet points
 	const [imageUrl, setImageUrl] = useState("");
 	const [isUpdatingImage, setIsUpdatingImage] = useState(false);
 
