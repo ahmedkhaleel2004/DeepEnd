@@ -5,10 +5,7 @@ import {
 	AccordionContent,
 } from "@/components/ui/accordion";
 import { db } from "@/lib/firebase";
-import { ChatBubbleIcon } from "@radix-ui/react-icons";
-import { TrashIcon } from "@radix-ui/react-icons";
-import { doc, onSnapshot, updateDoc, deleteField } from "firebase/firestore";
-import Link from "next/link";
+import { doc, onSnapshot } from "firebase/firestore";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ConversationItem from "./conversation-item";

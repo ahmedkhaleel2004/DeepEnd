@@ -1,13 +1,11 @@
 "use client";
 
-import Sidebar from "@/components/component/sidebar/sidebar";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ModeToggle } from "@/components/component/navbars/mode-toggle";
 import ProfileIcon from "@/components/component/navbars/profile-icon";
 import { useAuth } from "@/lib/hooks/use-auth";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
+import SidebarContainer from "@/components/component/sidebar/sidebar-container";
 
 interface ChatLayoutProps {
 	children: React.ReactNode;
@@ -15,7 +13,8 @@ interface ChatLayoutProps {
 
 function ChatLayout({ children }: ChatLayoutProps) {
 	const [loggedIn, setLoggedIn] = useState(false);
-	const [scrolled, setScrolled] = useState(false);
+	const [sidebarOpen, setSidebarOpen] = useState(true);
+	const [isHovered, setIsHovered] = useState(false);
 	const router = useRouter();
 	const userData = useAuth(router, true);
 	const divRef = React.useRef<HTMLDivElement | null>(null);
@@ -24,26 +23,19 @@ function ChatLayout({ children }: ChatLayoutProps) {
 		setLoggedIn(!!userData?.uid);
 	}, [userData?.uid]);
 
-	useEffect(() => {
-		const handleScroll = () => {
-			const isScrolled = (divRef.current?.scrollTop ?? 0) > 30;
-			if (isScrolled !== scrolled) {
-				setScrolled(!scrolled);
-			}
-		};
-
-		divRef.current?.addEventListener("scroll", handleScroll);
-		return () => {
-			divRef.current?.removeEventListener("scroll", handleScroll);
-		};
-	}, [scrolled, divRef.current]);
-
 	return (
 		<div className="flex h-screen">
-			<Sidebar userId={userData?.uid} loggedIn={loggedIn} />
+			<SidebarContainer
+				userId={userData?.uid}
+				loggedIn={loggedIn}
+				sidebarOpen={sidebarOpen}
+				setSidebarOpen={setSidebarOpen}
+				isHovered={isHovered}
+				setIsHovered={setIsHovered}
+			/>
 			<div className="flex grow overflow-hidden pl-0">
 				<div
-					className="flex flex-col w-full h-full overflow-scroll"
+					className="flex flex-col w-full h-full overflow-y-auto"
 					ref={divRef}
 				>
 					{children}

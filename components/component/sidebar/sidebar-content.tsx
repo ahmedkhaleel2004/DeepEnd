@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { db } from "@/lib/firebase";
-import { doc, onSnapshot, deleteField, updateDoc } from "firebase/firestore";
-import { useRouter, usePathname } from "next/navigation";
+import React from "react";
 import Link from "next/link";
-import { ChatBubbleIcon, TrashIcon } from "@radix-ui/react-icons";
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import NavbarSmall from "../navbars/navbar-small";
 import { Separator } from "@/components/ui/separator";
 import ConversationsList from "./conversations-list";
-import { SheetClose } from "@/components/ui/sheet";
 import { ModeToggle } from "../navbars/mode-toggle";
 import ProfileIcon from "../navbars/profile-icon";
 
@@ -32,7 +21,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 }) => {
 	return (
 		<div
-			className={`lg:p-6 py-6 w-full max-w-xs h-full lg:border-r relative z-10 lg:bg-background bg-transparent ${
+			className={`lg:p-6 py-6 w-full max-w-xs h-full lg:border-r relative z-10 lg:bg-background bg-transparent overflow-hidden ${
 				isLargeScreen ? "" : "flex flex-col"
 			}`}
 		>
