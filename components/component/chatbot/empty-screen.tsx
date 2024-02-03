@@ -20,18 +20,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // ];
 
 function EmptyScreen({ setInput }: Pick<UseChatHelpers, "setInput">) {
-	return (
-		<div className="flex justify-center pt-[25vh]">
-			<div className="flex flex-col items-center text-center">
-				<h1 className="text-3xl text-muted-foreground">
-					General Conversation
-				</h1>
-				<h2 className="text-xl pt-2 text-muted-foreground">
-					Ask Linus about your journey in Software Engineering
-				</h2>
-			</div>
-		</div>
-	);
+  return (
+    <div className="flex justify-center pt-[25vh]">
+      <div className="flex flex-col items-center text-center">
+        <h1 className="text-3xl text-muted-foreground">General Conversation</h1>
+        <h2 className="pt-2 text-xl text-muted-foreground">
+          Ask Linus about your journey in Software Engineering
+        </h2>
+      </div>
+    </div>
+  );
 }
 
 export default EmptyScreen;
